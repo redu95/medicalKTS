@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:component-scan base-package="com.bannershallmark"/>
+
+    <mvc:annotation-driven/>
+
+    <mvc:resources mapping="/resources/**" location="resources/"/>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+  
+        <property name="jdbcUrl" value="${dburl}"/>
+        <property name="user" value="${dbusername}"/>
+        <property name="password" value="${dbpassword}"/> 
+        
+		<property name="initialPoolSize" value="8"/>
+        <property name="minPoolSize" value="8"/>
+        <property name="maxPoolSize" value="32"/>
+        <property name="maxIdleTime" value="3000"/>
+        
+    </bean>
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="myDataSource"/>
+        <property name="packagesToScan" value="com.bannershallmark.entity"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                  <prop key="hibernate.hbm2ddl.auto">update</prop>  
+            </props>
+        </property>
+    </bean>
+
+
+    <bean id="myTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    
+  <bean id="appProperties"
+    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+    <list>
+    <value>classpath:application${envName}.properties</value>
+    </list>
+    </property>
+</bean>
+
+    <tx:annotation-driven transaction-manager="myTransactionManager"/>
+
+	<bean id="multipartResolver"   
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+</beans>

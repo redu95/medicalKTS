@@ -1,0 +1,1079 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home page</title>
+	 <style>
+        .info-box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            background-color: white;
+        }
+
+        .icon {
+            font-size: 24px;
+        }
+
+        .title {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #2c2c2e;
+        }
+
+        .amount {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #2c2c2e;
+        }
+
+        .percentage {
+            font-size: 14px;
+        }
+
+        .increase {
+            color: green;
+        }
+
+        .decrease {
+            color: red;
+        }
+
+        .title2 {
+            font-size: 23px;
+            margin-top: 10px;
+            color: #2c2c2e;
+        }
+
+		.top-selling {
+            padding-left 0px;
+            margin-bottom: 0px;
+        }
+
+        .item {
+            margin-bottom: 0px;
+        }
+
+        .item-name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .item-price {
+            font-size: 13px;
+        }
+
+         .item-price2 {
+            font-size: 12px;
+            color: red;
+        }
+        
+        #backButton {
+			border-radius: 4px;
+			padding: 8px;
+			border: none;
+			font-size: 16px;
+			background-color: #2eacd1;
+			color: white;
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			cursor: pointer;
+		}
+		.invisible {
+			display: none;
+		}
+		
+		.svg-icon {
+			width: 28px; /* Adjust width to increase icon size */
+    		height: 28px;
+		}
+        
+    </style>
+</head>
+
+
+<body>
+	<div id="main" class='layout-navbar'>
+		<div id="main-content">
+
+				<section class="section blnk-db">
+				<!-- 
+					<div class="row">
+						<div class="card mb-0">
+							<div class="card-body">
+								<div class="col-12 col-md-6 order-md-1 order-last">
+									<h4>Dashboard</h4>
+		                            <h5 style="opacity: 0.6;">Welcome to E.T Dashboard</h5>
+								</div>
+							</div>
+						</div>
+						
+						
+					</div>
+				 -->
+					
+					<div class="card" style="background: none;">
+							<h4 style="color: #2c2c2e;">Dashboard</h4>
+							<div class="c-dflx">
+								
+								<h5 style="opacity: 0.7;">GENERAL STATISTICS</h5>
+								<!-- 
+								<img src="data:image/jpeg;base64,${base64Image}" alt="Image" style="width: 120px; height: 120px;">
+								-->
+								<fieldset class="form-group">
+									<select class="form-select form-select-lg" name="formal" id="filterReceived" onchange="changeFilter(this.value)" style="font-size: 16px;">
+											<option value="0">Weekly</option>
+											<option value="0">Monthly</option>
+											<option value="0">Annual</option>
+									</select>
+								</fieldset>
+							</div>
+							
+							<div class="row mt-3">
+						        <div class="col-6 col-sm-3" style="">
+						            <div class="info-box" style="border-radius: 15px;">
+						                <div class="icon">
+						                    <i class="bi bi-people-fill"></i>
+						                </div>
+						                <div class="title">Total Patients</div>
+						                <div class="amount" style="font-size: 16px;">7,349 <span>Patients</span></div>
+						                <div class="percentage decrease">-2%</div>
+						            </div>
+						        </div>
+						
+						        <div class="col-6 col-sm-3">
+						            <div class="info-box" style="border-radius: 15px;">
+						                <div class="icon">
+						                    <i class="bi bi-people-fill"></i>
+						                </div>
+						                <div class="title">New Patients</div>
+						                <div class="amount" style="font-size: 16px;">87 <span>Patients</span></div>
+						                <div class="percentage increase">+3%</div>
+						            </div>
+						        </div>
+						        
+						         <div class="col-6 col-sm-3">
+						            <div class="info-box" style="border-radius: 15px;">
+						                <div class="icon">
+						                    <i class="bi bi-people-fill"></i>
+						                </div>
+						                <div class="title">Total Revenue</div>
+						                <div class="amount" style="font-size: 16px;">2,463,493 ETB</div>
+						                <div class="percentage increase">+5%</div>
+						            </div>
+						        </div>
+						        
+						         <div class="col-6 col-sm-3">
+						            <div class="info-box" style="border-radius: 15px;">
+						                <div class="icon">
+						                    <i class="bi bi-people-fill"></i>
+						                </div>
+						                <div class="title">Total Stuff</div>
+						                <div class="amount" style="font-size: 16px;">122 <span>Stuffs</span></div>
+						                <div class="percentage increase" style="visibility: hidden;">+3%</div>
+						                
+						            </div>
+						        </div>
+					    	</div>
+					</div>
+					
+					<div class="card" style="background: none;">
+							<div class="c-dflx ">
+								<h5 style="opacity: 0.7;">GRAPHICAL DATA</h5>
+							</div>
+							
+							<div class="row mt-3">
+						       
+						        <div class="col-12 col-sm-4">
+						            <div class="info-box" style="text-align: left;">
+						               	<div id="chartContainer" style="height: 350px; width: 100%;"></div>
+										<button class="btn invisible" id="backButton"> Back</button>
+						            </div>
+						        </div>
+						        
+						         <div class="col-12 col-sm-4">
+						            <div class="info-box" style="text-align: left;">
+						               	<div id="chartContainer2" style="height: 320px; width: 100%;"></div>
+										<button class="btn invisible" id="backButton2"> Back</button>
+						            </div>
+						        </div>
+						        
+						        <div class="col-12 col-sm-4">
+						            <div class="info-box" style="text-align: left;">
+						               	<div id="chartContainer3" style="height: 320px; width: 100%;"></div>
+										<button class="btn invisible" id="backButton3"> Back</button>
+						            </div>
+						        </div>
+					    	</div>
+					    	<!-- 
+					    	<div class="row">
+					    	
+					    	 <div class="col-12 col-sm-6" style="line-height: 1;">
+						            <div class="info-box" style="text-align: left;">
+						                <div class="d-flex justify-content-between">
+						                	<div class="title2" style="font-size: 20px; font-weight: bold;">Services</div>
+						                	<div class="title2" style="font-size: 15px; color: blue; text-decoration: underline; font-weight: bold;">See more</div>
+						                </div>
+						                <div class="row">
+						                <hr>
+										<div class="col-12">
+												<div class="top-selling c-dflx">
+													<div class="item c-dflx">
+														<div class="item-name topSaleName me-5">1.</div>
+														<div class="ms-2 me-2">
+															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
+														</div>
+														<div>
+															<div class="item-name topSaleName">Blood Test</div>
+															<div class="item-price">Children</div>
+														</div>
+														
+													</div>
+													
+													<div class="item">
+														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
+													</div>
+
+													<div class="item">
+														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
+													</div>
+
+												</div>
+												<hr>
+												<div class="top-selling c-dflx">
+													<div class="item c-dflx">
+														<div class="item-name topSaleName me-5">2.</div>
+														<div class="ms-2 me-2">
+															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
+														</div>
+														<div>
+															<div class="item-name topSaleName">Blood Test</div>
+															<div class="item-price">Children</div>
+														</div>
+														
+													</div>
+													
+													<div class="item">
+														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
+													</div>
+
+													<div class="item">
+														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
+													</div>
+
+												</div>
+												<hr>
+												<div class="top-selling c-dflx">
+													<div class="item c-dflx">
+														<div class="item-name topSaleName me-5">3.</div>
+														<div class="ms-2 me-2">
+															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
+														</div>
+														<div>
+															<div class="item-name topSaleName">Blood Test</div>
+															<div class="item-price">Children</div>
+														</div>
+														
+													</div>
+													
+													<div class="item">
+														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
+													</div>
+
+													<div class="item">
+														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
+													</div>
+
+												</div>
+												<hr>
+												<div class="top-selling c-dflx" style="border-bottom: 0px;">
+													<div class="item c-dflx">
+														<div class="item-name topSaleName me-5">4.</div>
+														<div class="ms-2 me-2">
+															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
+														</div>
+														<div>
+															<div class="item-name topSaleName">Blood Test</div>
+															<div class="item-price">Children</div>
+														</div>
+														
+													</div>
+													
+													<div class="item">
+														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
+													</div>
+
+													<div class="item">
+														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
+													</div>
+
+												</div>
+										</div>
+										
+									
+
+									</div>
+						            </div>
+						        </div>
+						        <div class="col-12 col-sm-6" style="line-height: 1;">
+						            <div class="info-box" style="text-align: left;">
+						                <div class="d-flex justify-content-between">
+						                	<div class="title2" style="font-size: 20px; font-weight: bold;">Items</div>
+						                	<div class="title2" style="font-size: 13px; color: blue; text-decoration: underline; font-weight: bold;">SEE MORE</div>
+						                </div>
+						                <div class="row">
+						                <hr>
+										<div class="col-12">
+												<div class="top-selling c-dflx">
+													<div class="item c-dflx">
+														<div class="item-name topSaleName me-5">1.</div>
+														<div class="ms-2 me-2">
+															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
+														</div>
+														<div>
+															<div class="item-name topSaleName">Syringes</div>
+															<div class="item-price">Children</div>
+														</div>
+														
+													</div>
+													
+													<div class="item">
+														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
+													</div>
+
+													<div class="item">
+														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
+													</div>
+
+												</div>
+												<hr>
+												<div class="top-selling c-dflx">
+													<div class="item c-dflx">
+														<div class="item-name topSaleName me-5">2.</div>
+														<div class="ms-2 me-2">
+															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
+														</div>
+														<div>
+															<div class="item-name topSaleName">Syringes</div>
+															<div class="item-price">Children</div>
+														</div>
+														
+													</div>
+													
+													<div class="item">
+														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
+													</div>
+
+													<div class="item">
+														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
+													</div>
+
+												</div>
+												<hr>
+												<div class="top-selling c-dflx">
+													<div class="item c-dflx">
+														<div class="item-name topSaleName me-5">3.</div>
+														<div class="ms-2 me-2">
+															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
+														</div>
+														<div>
+															<div class="item-name topSaleName">Syringes</div>
+															<div class="item-price">Children</div>
+														</div>
+														
+													</div>
+													
+													<div class="item">
+														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
+													</div>
+
+													<div class="item">
+														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
+													</div>
+
+												</div>
+												<hr>
+												<div class="top-selling c-dflx" style="border-bottom: 0px;">
+													<div class="item c-dflx">
+														<div class="item-name topSaleName me-5">4.</div>
+														<div class="ms-2 me-2">
+															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
+														</div>
+														<div>
+															<div class="item-name topSaleName">Syringes</div>
+															<div class="item-price">Children</div>
+														</div>
+														
+													</div>
+													
+													<div class="item">
+														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
+													</div>
+
+													<div class="item">
+														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
+													</div>
+
+												</div>
+										</div>
+										
+									
+
+									</div>
+						            </div>
+						        </div>
+						     </div>  
+					    	 -->
+						     <div class="row">
+						     	<div class="col-6">
+						     		<div class="card">
+							     		<table class="table">
+							     			<thead>
+							     				<tr>
+							     					<th colspan="3">Services</th>
+							     					<th style="font-size: 13px; color: blue; text-decoration: underline; font-weight: bold; text-align: right;">SEE MORE</th>
+							     				</tr>
+							     				<tr>
+							     					<th width="5%">No</th>
+							     					<th>Service</th>
+							     					<th>Service Count</th>
+							     					<th style="text-align: right;">Revenue</th>
+							     				</tr>
+							     			</thead>
+							     			<tbody>
+							     				<tr>
+							     					<td>1.</td>
+							     					<td style="display: flex; align-items: center;">
+													    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16" style="margin-right: 8px;">
+													        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755"/>
+													    </svg>
+													    <div>
+													        <p style="margin: 0; font-weight: bold;">Blood Test</p>
+													        <p style="margin: 0; font-size: 14px;">Children</p>
+													    </div>
+													</td>
+							     					<td style="font-weight: bold;">330 <span style="font-size: 14px;">Tests</span> </td>
+							     					<td style="text-align: right; font-weight: bold;">173,375 <span style="font-size: 14px;">ETB</span></td>
+							     				</tr>
+							     				<tr>
+							     					<td>2.</td>
+							     					<td style="display: flex; align-items: center;">
+													    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16" style="margin-right: 8px;">
+													        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755"/>
+													    </svg>
+													    <div>
+													        <p style="margin: 0; font-weight: bold;">UltraSound</p>
+													        <p style="margin: 0; font-size: 14px;">Lab</p>
+													    </div>
+													</td>
+													<td style="font-weight: bold;">99 <span style="font-size: 13px;">Tests</span></td>
+							     					<td style="text-align: right; font-weight: bold;">92,737 <span style="font-size: 14px;">ETB</span></td>
+							     				</tr>
+							     				<tr>
+							     					<td>3.</td>
+							     					<td style="display: flex; align-items: center;">
+													    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16" style="margin-right: 8px;">
+													        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755"/>
+													    </svg>
+													    <div>
+													        <p style="margin: 0; font-weight: bold;">SVC Fixation</p>
+													        <p style="margin: 0; font-size: 14px;">Tendon</p>
+													    </div>
+													</td>
+													<td style="font-weight: bold;">12 <span style="font-size: 13px;">Tests</span></td>
+							     					<td style="text-align: right; font-weight: bold;">173,375 <span style="font-size: 14px;">ETB</span></td>
+							     				</tr>
+							     				<tr>
+							     					<td>4.</td>
+							     					<td style="display: flex; align-items: center;">
+													    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16" style="margin-right: 8px;">
+													        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755"/>
+													    </svg>
+													    <div>
+													        <p style="margin: 0; font-weight: bold;">Blood Test</p>
+													        <p style="margin: 0; font-size: 14px;">Children</p>
+													    </div>
+													</td>
+													<td style="font-weight: bold;">451 <span style="font-size: 13px;">Tests</span></td>
+							     					<td style="text-align: right; font-weight: bold;">173,375 <span style="font-size: 14px;">ETB</span></td>
+							     				</tr>
+							     			</tbody>
+							     		</table>
+						     		</div>
+						     	</div>
+						     	
+						     	<div class="col-6">
+						     		<div class="card">
+							     		<table class="table">
+							     			<thead>
+							     				<tr>
+							     					<th colspan="3">Items</th>
+							     					<th style="font-size: 13px; color: blue; text-decoration: underline; font-weight: bold; text-align: right;">SEE MORE</th>
+							     				</tr>
+							     				<tr>
+							     					<th width="5%">No</th>
+							     					<th>Item name</th>
+							     					<th>Min stock</th>
+							     					<th style="text-align: right;">On hand</th>
+							     				</tr>
+							     			</thead>
+							     			<tbody>
+							     				<tr>
+							     					<td>1.</td>
+							     					<td style="display: flex; align-items: center;">
+													    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16" style="margin-right: 8px;">
+													        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755"/>
+													    </svg>
+													    <div>
+													        <p style="margin: 0; font-weight: bold;">Blood Test</p>
+													        <p style="margin: 0; font-size: 14px;">Children</p>
+													    </div>
+													</td>
+							     					<td style="font-weight: bold;">330 <span style="font-size: 14px;">Units</span> </td>
+							     					<td style="text-align: right; font-weight: bold;">17 <span style="font-size: 14px;">Units</span></td>
+							     				</tr>
+							     				<tr>
+							     					<td>2.</td>
+							     					<td style="display: flex; align-items: center;">
+													    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16" style="margin-right: 8px;">
+													        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755"/>
+													    </svg>
+													    <div>
+													        <p style="margin: 0; font-weight: bold;">UltraSound</p>
+													        <p style="margin: 0; font-size: 14px;">Lab</p>
+													    </div>
+													</td>
+													<td style="font-weight: bold;">99 <span style="font-size: 13px;">Units</span></td>
+							     					<td style="text-align: right; font-weight: bold;">921 <span style="font-size: 14px;">Units</span></td>
+							     				</tr>
+							     				<tr>
+							     					<td>3.</td>
+							     					<td style="display: flex; align-items: center;">
+													    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16" style="margin-right: 8px;">
+													        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755"/>
+													    </svg>
+													    <div>
+													        <p style="margin: 0; font-weight: bold;">SVC Fixation</p>
+													        <p style="margin: 0; font-size: 14px;">Tendon</p>
+													    </div>
+													</td>
+													<td style="font-weight: bold;">12 <span style="font-size: 13px;">Units</span></td>
+							     					<td style="text-align: right; font-weight: bold;">561 <span style="font-size: 14px;">Units</span></td>
+							     				</tr>
+							     				<tr>
+							     					<td>4.</td>
+							     					<td style="display: flex; align-items: center;">
+													    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16" style="margin-right: 8px;">
+													        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0m2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755"/>
+													    </svg>
+													    <div>
+													        <p style="margin: 0; font-weight: bold;">Blood Test</p>
+													        <p style="margin: 0; font-size: 14px;">Children</p>
+													    </div>
+													</td>
+													<td style="font-weight: bold;">451 <span style="font-size: 13px;">Units</span></td>
+							     					<td style="text-align: right; font-weight: bold;">173 <span style="font-size: 14px;">Units</span></td>
+							     				</tr>
+							     			</tbody>
+							     		</table>
+						     		</div>
+						     	</div>
+						     	
+						   </div>
+					</div>
+					
+						       
+				</section>
+
+		</div>
+	</div>
+
+
+	<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+	<script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+		
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+		
+	<script>
+	window.onload = function () {
+
+		var visitorsData = {
+				"New vs Returning Visitors": [{
+					click: visitorsChartDrilldownHandler,
+					cursor: "pointer",
+					explodeOnClick: false,
+					innerRadius: "75%",
+					legendMarkerType: "square",
+					name: "Patients by Sex",
+					radius: "100%",
+					showInLegend: true,
+					startAngle: 90,
+					type: "doughnut",
+					dataPoints: [
+						{ y: 100, name: "0-5", color: "#E7823A" },
+						{ y: 120, name: "6-15", color: "#546BC1" },
+						{ y: 300, name: "15-30", color: "#8BD8DB" },
+						{ y: 300, name: "30-50", color: "#8480E6" },
+						{ y: 300, name: "50+", color: "#54B0B0" }
+					]
+				}],
+				"0-5": [{
+					color: "#E7823A",
+					name: "0-5",
+					type: "column",
+					xValueFormatString: "MMM YYYY",
+					dataPoints: [
+						{ x: new Date("1 Jan 2015"), y: 33000 },
+						{ x: new Date("1 Feb 2015"), y: 35960 },
+						{ x: new Date("1 Mar 2015"), y: 42160 },
+						{ x: new Date("1 Apr 2015"), y: 42240 },
+						{ x: new Date("1 May 2015"), y: 43200 },
+						{ x: new Date("1 Jun 2015"), y: 40600 },
+						{ x: new Date("1 Jul 2015"), y: 42560 },
+						{ x: new Date("1 Aug 2015"), y: 44280 },
+						{ x: new Date("1 Sep 2015"), y: 44800 },
+						{ x: new Date("1 Oct 2015"), y: 48720 },
+						{ x: new Date("1 Nov 2015"), y: 50840 },
+						{ x: new Date("1 Dec 2015"), y: 51600 }
+					]
+				}],
+				"6-15": [{
+					color: "#546BC1",
+					name: "Returning Visitors",
+					type: "column",
+					xValueFormatString: "MMM YYYY",
+					dataPoints: [
+						{ x: new Date("1 Jan 2015"), y: 22000 },
+						{ x: new Date("1 Feb 2015"), y: 26040 },
+						{ x: new Date("1 Mar 2015"), y: 25840 },
+						{ x: new Date("1 Apr 2015"), y: 23760 },
+						{ x: new Date("1 May 2015"), y: 28800 },
+						{ x: new Date("1 Jun 2015"), y: 29400 },
+						{ x: new Date("1 Jul 2015"), y: 33440 },
+						{ x: new Date("1 Aug 2015"), y: 37720 },
+						{ x: new Date("1 Sep 2015"), y: 35200 },
+						{ x: new Date("1 Oct 2015"), y: 35280 },
+						{ x: new Date("1 Nov 2015"), y: 31160 },
+						{ x: new Date("1 Dec 2015"), y: 34400 }
+					]
+				}],
+				"15-30": [{
+					color: "#546BC1",
+					name: "Returning Visitors",
+					type: "column",
+					xValueFormatString: "MMM YYYY",
+					dataPoints: [
+						{ x: new Date("1 Jan 2015"), y: 22000 },
+						{ x: new Date("1 Feb 2015"), y: 26040 },
+						{ x: new Date("1 Mar 2015"), y: 25840 },
+						{ x: new Date("1 Apr 2015"), y: 23760 },
+						{ x: new Date("1 May 2015"), y: 28800 },
+						{ x: new Date("1 Jun 2015"), y: 29400 },
+						{ x: new Date("1 Jul 2015"), y: 33440 },
+						{ x: new Date("1 Aug 2015"), y: 37720 },
+						{ x: new Date("1 Sep 2015"), y: 35200 },
+						{ x: new Date("1 Oct 2015"), y: 35280 },
+						{ x: new Date("1 Nov 2015"), y: 31160 },
+						{ x: new Date("1 Dec 2015"), y: 34400 }
+					]
+				}],
+				"30-50": [{
+					color: "#546BC1",
+					name: "Returning Visitors",
+					type: "column",
+					xValueFormatString: "MMM YYYY",
+					dataPoints: [
+						{ x: new Date("1 Jan 2015"), y: 22000 },
+						{ x: new Date("1 Feb 2015"), y: 26040 },
+						{ x: new Date("1 Mar 2015"), y: 25840 },
+						{ x: new Date("1 Apr 2015"), y: 23760 },
+						{ x: new Date("1 May 2015"), y: 28800 },
+						{ x: new Date("1 Jun 2015"), y: 29400 },
+						{ x: new Date("1 Jul 2015"), y: 33440 },
+						{ x: new Date("1 Aug 2015"), y: 37720 },
+						{ x: new Date("1 Sep 2015"), y: 35200 },
+						{ x: new Date("1 Oct 2015"), y: 35280 },
+						{ x: new Date("1 Nov 2015"), y: 31160 },
+						{ x: new Date("1 Dec 2015"), y: 34400 }
+					]
+				}],
+				"50+": [{
+					color: "#546BC1",
+					name: "Returning Visitors",
+					type: "column",
+					xValueFormatString: "MMM YYYY",
+					dataPoints: [
+						{ x: new Date("1 Jan 2015"), y: 22000 },
+						{ x: new Date("1 Feb 2015"), y: 26040 },
+						{ x: new Date("1 Mar 2015"), y: 25840 },
+						{ x: new Date("1 Apr 2015"), y: 23760 },
+						{ x: new Date("1 May 2015"), y: 28800 },
+						{ x: new Date("1 Jun 2015"), y: 29400 },
+						{ x: new Date("1 Jul 2015"), y: 33440 },
+						{ x: new Date("1 Aug 2015"), y: 37720 },
+						{ x: new Date("1 Sep 2015"), y: 35200 },
+						{ x: new Date("1 Oct 2015"), y: 35280 },
+						{ x: new Date("1 Nov 2015"), y: 31160 },
+						{ x: new Date("1 Dec 2015"), y: 34400 }
+					]
+				}]
+			};
+
+			var newVSReturningVisitorsOptions = {
+				animationEnabled: true,
+				theme: "light2",
+				title: {
+					text: "Patients by Age",
+					fontFamily: "calibri",
+				    fontSize: 20
+				},
+				legend: {
+					fontFamily: "calibri",
+					fontSize: 14,
+					itemTextFormatter: function (e) {
+						return e.dataPoint.name + ": " + Math.round(e.dataPoint.y);  
+					}
+				},
+				data: []
+			};
+
+			var visitorsDrilldownedChartOptions = {
+				animationEnabled: true,
+				theme: "light2",
+				axisX: {
+					labelFontColor: "#717171",
+					lineColor: "#a2a2a2",
+					tickColor: "#a2a2a2"
+				},
+				axisY: {
+					gridThickness: 0,
+					includeZero: false,
+					labelFontColor: "#717171",
+					lineColor: "#a2a2a2",
+					tickColor: "#a2a2a2",
+					lineThickness: 1
+				},
+				data: []
+			};
+
+			newVSReturningVisitorsOptions.data = visitorsData["New vs Returning Visitors"];
+			$("#chartContainer").CanvasJSChart(newVSReturningVisitorsOptions);
+
+			function visitorsChartDrilldownHandler(e) {
+				e.chart.options = visitorsDrilldownedChartOptions;
+				e.chart.options.data = visitorsData[e.dataPoint.name];
+				e.chart.options.title = { text: e.dataPoint.name }
+				e.chart.render();
+				$("#backButton").toggleClass("invisible");
+			}
+
+			$("#backButton").click(function() { 
+				$(this).toggleClass("invisible");
+				newVSReturningVisitorsOptions.data = visitorsData["New vs Returning Visitors"];
+				$("#chartContainer").CanvasJSChart(newVSReturningVisitorsOptions);
+			});
+		
+	
+	
+	
+	var visitorsData2 = {
+			"New vs Returning Visitors": [{
+				click: visitorsChartDrilldownHandler2,
+				cursor: "pointer",
+				explodeOnClick: false,
+				innerRadius: "75%",
+				legendMarkerType: "square",
+				name: "Patients by Sex",
+				radius: "100%",
+				showInLegend: true,
+				startAngle: 90,
+				type: "doughnut",
+				dataPoints: [
+					{ y: 100, name: "Male", color: "#E7823A" },
+					{ y: 120, name: "Female", color: "#546BC1" },
+				]
+			}],
+			"Male": [{
+				color: "#E7823A",
+				name: "0-5",
+				type: "column",
+				xValueFormatString: "MMM YYYY",
+				dataPoints: [
+					{ x: new Date("1 Jan 2015"), y: 33000 },
+					{ x: new Date("1 Feb 2015"), y: 35960 },
+					{ x: new Date("1 Mar 2015"), y: 42160 },
+					{ x: new Date("1 Apr 2015"), y: 42240 },
+					{ x: new Date("1 May 2015"), y: 43200 },
+					{ x: new Date("1 Jun 2015"), y: 40600 },
+					{ x: new Date("1 Jul 2015"), y: 42560 },
+					{ x: new Date("1 Aug 2015"), y: 44280 },
+					{ x: new Date("1 Sep 2015"), y: 44800 },
+					{ x: new Date("1 Oct 2015"), y: 48720 },
+					{ x: new Date("1 Nov 2015"), y: 50840 },
+					{ x: new Date("1 Dec 2015"), y: 51600 }
+				]
+			}],
+			"Female": [{
+				color: "#546BC1",
+				name: "Returning Visitors",
+				type: "column",
+				xValueFormatString: "MMM YYYY",
+				dataPoints: [
+					{ x: new Date("1 Jan 2015"), y: 22000 },
+					{ x: new Date("1 Feb 2015"), y: 26040 },
+					{ x: new Date("1 Mar 2015"), y: 25840 },
+					{ x: new Date("1 Apr 2015"), y: 23760 },
+					{ x: new Date("1 May 2015"), y: 28800 },
+					{ x: new Date("1 Jun 2015"), y: 29400 },
+					{ x: new Date("1 Jul 2015"), y: 33440 },
+					{ x: new Date("1 Aug 2015"), y: 37720 },
+					{ x: new Date("1 Sep 2015"), y: 35200 },
+					{ x: new Date("1 Oct 2015"), y: 35280 },
+					{ x: new Date("1 Nov 2015"), y: 31160 },
+					{ x: new Date("1 Dec 2015"), y: 34400 }
+				]
+			}]
+		};
+
+		var newVSReturningVisitorsOptions2 = {
+			animationEnabled: true,
+			theme: "light2",
+			title: {
+				text: "Patients by Sex",
+				fontFamily: "calibri",
+			    fontSize: 20
+			},
+			legend: {
+				fontFamily: "calibri",
+				fontSize: 14,
+				itemTextFormatter: function (e) {
+					return e.dataPoint.name + ": " + Math.round(e.dataPoint.y);  
+				}
+			},
+			data: []
+		};
+
+		var visitorsDrilldownedChartOptions2 = {
+			animationEnabled: true,
+			theme: "light2",
+			axisX: {
+				labelFontColor: "#717171",
+				lineColor: "#a2a2a2",
+				tickColor: "#a2a2a2"
+			},
+			axisY: {
+				gridThickness: 0,
+				includeZero: false,
+				labelFontColor: "#717171",
+				lineColor: "#a2a2a2",
+				tickColor: "#a2a2a2",
+				lineThickness: 1
+			},
+			data: []
+		};
+
+		newVSReturningVisitorsOptions2.data = visitorsData2["New vs Returning Visitors"];
+		$("#chartContainer2").CanvasJSChart(newVSReturningVisitorsOptions2);
+
+		function visitorsChartDrilldownHandler2(e) {
+			e.chart.options = visitorsDrilldownedChartOptions2;
+			e.chart.options.data = visitorsData2[e.dataPoint.name];
+			e.chart.options.title = { text: e.dataPoint.name }
+			e.chart.render();
+			$("#backButton2").toggleClass("invisible");
+		}
+
+		$("#backButton2").click(function() { 
+			$(this).toggleClass("invisible");
+			newVSReturningVisitorsOptions2.data = visitorsData2["New vs Returning Visitors"];
+			$("#chartContainer2").CanvasJSChart(newVSReturningVisitorsOptions2);
+		});
+		
+		var visitorsData3 = {
+				"New vs Returning Visitors": [{
+					click: visitorsChartDrilldownHandler3,
+					cursor: "pointer",
+					explodeOnClick: false,
+					innerRadius: "75%",
+					legendMarkerType: "square",
+					name: "Patients by Sex",
+					radius: "100%",
+					showInLegend: true,
+					startAngle: 90,
+					type: "doughnut",
+					dataPoints: [
+						{ y: 100, name: "Tendon", color: "#E7823A" },
+						{ y: 120, name: "Children", color: "#546BC1" },
+						{ y: 300, name: "Orthopedics", color: "#8480E6" },
+						{ y: 250, name: "Maternity", color: "#80D3E6" },
+						{ y: 60, name: "Internal", color: "#54B0B0" }
+					]
+				}],
+				"Tendon": [{
+					color: "#E7823A",
+					name: "0-5",
+					type: "column",
+					xValueFormatString: "MMM YYYY",
+					dataPoints: [
+						{ x: new Date("1 Jan 2015"), y: 33000 },
+						{ x: new Date("1 Feb 2015"), y: 35960 },
+						{ x: new Date("1 Mar 2015"), y: 42160 },
+						{ x: new Date("1 Apr 2015"), y: 42240 },
+						{ x: new Date("1 May 2015"), y: 43200 },
+						{ x: new Date("1 Jun 2015"), y: 40600 },
+						{ x: new Date("1 Jul 2015"), y: 42560 },
+						{ x: new Date("1 Aug 2015"), y: 44280 },
+						{ x: new Date("1 Sep 2015"), y: 44800 },
+						{ x: new Date("1 Oct 2015"), y: 48720 },
+						{ x: new Date("1 Nov 2015"), y: 50840 },
+						{ x: new Date("1 Dec 2015"), y: 51600 }
+					]
+				}],
+				"Children": [{
+					color: "#546BC1",
+					name: "Returning Visitors",
+					type: "column",
+					xValueFormatString: "MMM YYYY",
+					dataPoints: [
+						{ x: new Date("1 Jan 2015"), y: 22000 },
+						{ x: new Date("1 Feb 2015"), y: 26040 },
+						{ x: new Date("1 Mar 2015"), y: 25840 },
+						{ x: new Date("1 Apr 2015"), y: 23760 },
+						{ x: new Date("1 May 2015"), y: 28800 },
+						{ x: new Date("1 Jun 2015"), y: 29400 },
+						{ x: new Date("1 Jul 2015"), y: 33440 },
+						{ x: new Date("1 Aug 2015"), y: 37720 },
+						{ x: new Date("1 Sep 2015"), y: 35200 },
+						{ x: new Date("1 Oct 2015"), y: 35280 },
+						{ x: new Date("1 Nov 2015"), y: 31160 },
+						{ x: new Date("1 Dec 2015"), y: 34400 }
+					]
+				}],
+				"Orthopedics": [{
+					color: "#546BC1",
+					name: "Returning Visitors",
+					type: "column",
+					xValueFormatString: "MMM YYYY",
+					dataPoints: [
+						{ x: new Date("1 Jan 2015"), y: 22000 },
+						{ x: new Date("1 Feb 2015"), y: 26040 },
+						{ x: new Date("1 Mar 2015"), y: 25840 },
+						{ x: new Date("1 Apr 2015"), y: 23760 },
+						{ x: new Date("1 May 2015"), y: 28800 },
+						{ x: new Date("1 Jun 2015"), y: 29400 },
+						{ x: new Date("1 Jul 2015"), y: 33440 },
+						{ x: new Date("1 Aug 2015"), y: 37720 },
+						{ x: new Date("1 Sep 2015"), y: 35200 },
+						{ x: new Date("1 Oct 2015"), y: 35280 },
+						{ x: new Date("1 Nov 2015"), y: 31160 },
+						{ x: new Date("1 Dec 2015"), y: 34400 }
+					]
+				}],
+				"Maternity": [{
+					color: "#546BC1",
+					name: "Returning Visitors",
+					type: "column",
+					xValueFormatString: "MMM YYYY",
+					dataPoints: [
+						{ x: new Date("1 Jan 2015"), y: 22000 },
+						{ x: new Date("1 Feb 2015"), y: 26040 },
+						{ x: new Date("1 Mar 2015"), y: 25840 },
+						{ x: new Date("1 Apr 2015"), y: 23760 },
+						{ x: new Date("1 May 2015"), y: 28800 },
+						{ x: new Date("1 Jun 2015"), y: 29400 },
+						{ x: new Date("1 Jul 2015"), y: 33440 },
+						{ x: new Date("1 Aug 2015"), y: 37720 },
+						{ x: new Date("1 Sep 2015"), y: 35200 },
+						{ x: new Date("1 Oct 2015"), y: 35280 },
+						{ x: new Date("1 Nov 2015"), y: 31160 },
+						{ x: new Date("1 Dec 2015"), y: 34400 }
+					]
+				}],
+				"Internal": [{
+					color: "#546BC1",
+					name: "Returning Visitors",
+					type: "column",
+					xValueFormatString: "MMM YYYY",
+					dataPoints: [
+						{ x: new Date("1 Jan 2015"), y: 22000 },
+						{ x: new Date("1 Feb 2015"), y: 26040 },
+						{ x: new Date("1 Mar 2015"), y: 25840 },
+						{ x: new Date("1 Apr 2015"), y: 23760 },
+						{ x: new Date("1 May 2015"), y: 28800 },
+						{ x: new Date("1 Jun 2015"), y: 29400 },
+						{ x: new Date("1 Jul 2015"), y: 33440 },
+						{ x: new Date("1 Aug 2015"), y: 37720 },
+						{ x: new Date("1 Sep 2015"), y: 35200 },
+						{ x: new Date("1 Oct 2015"), y: 35280 },
+						{ x: new Date("1 Nov 2015"), y: 31160 },
+						{ x: new Date("1 Dec 2015"), y: 34400 }
+					]
+				}]
+			};
+
+			var newVSReturningVisitorsOptions3 = {
+				animationEnabled: true,
+				theme: "light2",
+				title: {
+					text: "Patients by Department",
+					fontFamily: "calibri",
+				    fontSize: 20
+				},
+				legend: {
+					fontFamily: "calibri",
+					fontSize: 14,
+					itemTextFormatter: function (e) {
+						return e.dataPoint.name + ": " + Math.round(e.dataPoint.y);  
+					}
+				},
+				data: []
+			};
+
+			var visitorsDrilldownedChartOptions3 = {
+				animationEnabled: true,
+				theme: "light2",
+				axisX: {
+					labelFontColor: "#717171",
+					lineColor: "#a2a2a2",
+					tickColor: "#a2a2a2"
+				},
+				axisY: {
+					gridThickness: 0,
+					includeZero: false,
+					labelFontColor: "#717171",
+					lineColor: "#a2a2a2",
+					tickColor: "#a2a2a2",
+					lineThickness: 1
+				},
+				data: []
+			};
+
+			newVSReturningVisitorsOptions3.data = visitorsData3["New vs Returning Visitors"];
+			$("#chartContainer3").CanvasJSChart(newVSReturningVisitorsOptions3);
+
+			function visitorsChartDrilldownHandler3(e) {
+				e.chart.options = visitorsDrilldownedChartOptions3;
+				e.chart.options.data = visitorsData3[e.dataPoint.name];
+				e.chart.options.title = { text: e.dataPoint.name }
+				e.chart.render();
+				$("#backButton2").toggleClass("invisible");
+			}
+
+			$("#backButton3").click(function() { 
+				$(this).toggleClass("invisible");
+				newVSReturningVisitorsOptions3.data = visitorsData3["New vs Returning Visitors"];
+				$("#chartContainer3").CanvasJSChart(newVSReturningVisitorsOptions3);
+			});
+
+	}
+		
+		
+	</script>
+
+</body>
+</html>

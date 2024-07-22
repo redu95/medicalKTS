@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<sitemesh>
+
+   <!--  old mapping -->
+
+	<mapping decorator="/decorators/dashboardtheme" path="/*" />
+	
+	<!-- Reception  -->
+	
+	<mapping decorator="/decorators/dashboardtheme2" path="/Patient/patientDataReception" />
+	<mapping decorator="/decorators/dashboardtheme2" path="/Patient/addNewPatient" />
+	<mapping decorator="/decorators/dashboardtheme2" path="/Patient/editExistingPatientData/*" />
+	<mapping decorator="/decorators/dashboardtheme2" path="/Patient/patientMedicalHistory/*" />
+	<mapping decorator="/decorators/dashboardtheme2" path="/Patient/editExistingPatientSchedule/*" />
+	
+	
+	<!-- Doctor  -->
+	<mapping decorator="/decorators/dashboardtheme3" path="/Patient/patientData" />
+	<mapping decorator="/decorators/dashboardtheme3" path="/Patient/patientHistory/*" />
+	<mapping decorator="/decorators/dashboardtheme3" path="/Patient/editMedicHistory/*" />
+	
+	<!-- Labratory  -->
+	<mapping decorator="/decorators/dashboardtheme4" path="/Patient/patientDataLabratory" />
+	<mapping decorator="/decorators/dashboardtheme4" path="/Patient/editMedicHistorylabratory/*" />
+	<mapping decorator="/decorators/dashboardtheme4" path="/Patient/editMedicHistory/*" />
+	
+	
+	<!--  -->	
+	
+	<mapping exclude="true" decorator="/decorators/dashboardtheme" path="/ajax/*" />
+	<mapping exclude="true" decorator="/decorators/dashboardtheme" path="/pages/examples/lockscreen" />
+	<mapping exclude="true" decorator="/decorators/dashboardtheme" path="/pages/examples/login" />
+	<mapping exclude="true" decorator="/decorators/dashboardtheme" path="/pages/examples/register" />
+	
+	
+	
+	<mapping exclude="true" decorator="/decorators/dashboardtheme" path="/login" />
+    <mapping exclude="true" decorator="/decorators/dashboardtheme" path="/users/reset/forgot" />
+    <mapping exclude="true" decorator="/decorators/dashboardtheme" path="/users/reset/resetPassword/*" />
+    
+    <!-- Menu Display -->
+    <mapping exclude="true" decorator="/decorators/dashboardtheme" path="/MenuController/getMenu" />  
+  
+	<!-- <mapping exclude="true" decorator="/decorators/dashboardtheme" path="/login/*" />
+	 -->  
+</sitemesh>
