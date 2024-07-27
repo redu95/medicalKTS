@@ -1,5 +1,27 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<style>
+ .kegeberew-medical-system {
+    width: 200px;
+    height: 25px;
+    font-family: 'Gilroy-Bold';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 15px;
+    leading-trim: both;
+    text-edge: cap;
+    text-align: center;
+    text-transform: uppercase;
+    color: #3388D7;
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    margin-top: 10px; 
+    margin-left: -60px;
+}
+</style>
 <div id="sidebar" class="active">
 	<div class="sidebar-wrapper active">
 		<div class="sidebar-header">
@@ -8,6 +30,9 @@
 					<a href="${pageContext.request.contextPath}"><img
 						src="${pageContext.request.contextPath}/resources/assets/images/logo/sideBarLogo.png"
 						alt="Logo" srcset=""></a>
+					<div class="kegeberew-medical-system">
+                        Kegeberew Medical System
+                    </div>
 				</div>
 				<div class="toggler">
 					<a href="#" class="sidebar-hide d-xl-none d-block"><i
