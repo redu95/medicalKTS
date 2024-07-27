@@ -7,7 +7,7 @@
 			<div class="d-flex justify-content-between">
 				<div class="logo ms-5">
 					<a href="${pageContext.request.contextPath}"><img
-						src="${pageContext.request.contextPath}/resources/assets/images/logo/asset1.png"
+						src="${pageContext.request.contextPath}/resources/assets/images/logo/sideBarLogo.png"
 						alt="Logo" srcset=""></a>
 				</div>
 				<div class="toggler">
