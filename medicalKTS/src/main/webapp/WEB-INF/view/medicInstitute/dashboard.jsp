@@ -4,6 +4,8 @@
 <html>
 <head>
 	<title>Home page</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	 <style>
         .info-box {
             border: 1px solid #ddd;
@@ -181,6 +183,35 @@
 					    	</div>
 					</div>
 					
+					<div class="grid grid-cols-2 gap-4">
+					    <!-- Revenue Card -->
+					    <div class="bg-white p-6 rounded-lg shadow-lg">
+					      <div class="flex justify-between items-center mb-4">
+					        <h2 class="text-xl font-semibold">REVENUE</h2>
+					        <div class="relative inline-block text-left">
+					          <button class="bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg">
+					            Weekly
+					          </button>
+					        </div>
+					      </div>
+					      <h3 class="text-lg font-medium mb-2">Weekly Overview</h3>
+					      <canvas id="revenueChart"></canvas>
+					    </div>
+					    
+					    <!-- Appointments Card -->
+					    <div class="bg-white p-6 rounded-lg shadow-lg">
+					      <div class="flex justify-between items-center mb-4">
+					        <h2 class="text-xl font-semibold">APPOINTMENTS</h2>
+					        <div class="relative inline-block text-left">
+					          <button class="bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg">
+					            Weekly
+					          </button>
+					        </div>
+					      </div>
+					      <h3 class="text-lg font-medium mb-2">Weekly Overview</h3>
+					      <canvas id="appointmentsChart"></canvas>
+					    </div>
+					</div>
 					<div class="card" style="background: none;">
 							<div class="c-dflx ">
 								<h5 style="opacity: 0.7;">GRAPHICAL DATA</h5>
@@ -1075,5 +1106,57 @@
 		
 	</script>
 
+	
+	
+	  <script>
+	    // Revenue Chart
+	    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+	    const revenueChart = new Chart(revenueCtx, {
+	      type: 'bar',
+	      data: {
+	        labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+	        datasets: [{
+	          label: 'Revenue',
+	          data: [12000, 15000, 8000, 6000, 18000, 20000, 7000],
+	          backgroundColor: [
+	            '#cbd5e1', '#cbd5e1', '#cbd5e1', '#cbd5e1', '#3b82f6', '#cbd5e1', '#cbd5e1'
+	          ],
+	          borderWidth: 1
+	        }]
+	      },
+	      options: {
+	        scales: {
+	          y: {
+	            beginAtZero: true
+	          }
+	        }
+	      }
+	    });
+	
+	    // Appointments Chart
+	    const appointmentsCtx = document.getElementById('appointmentsChart').getContext('2d');
+	    const appointmentsChart = new Chart(appointmentsCtx, {
+	      type: 'bar',
+	      data: {
+	        labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+	        datasets: [{
+	          label: 'Appointments',
+	          data: [11000, 9000, 14000, 8000, 16000, 22000, 9000],
+	          backgroundColor: [
+	            '#cbd5e1', '#cbd5e1', '#cbd5e1', '#cbd5e1', '#3b82f6', '#cbd5e1', '#cbd5e1'
+	          ],
+	          borderWidth: 1
+	        }]
+	      },
+	      options: {
+	        scales: {
+	          y: {
+	            beginAtZero: true
+	          }
+	        }
+	      }
+	    });
+	  </script>
+	
 </body>
 </html>
