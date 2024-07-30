@@ -90,7 +90,7 @@
 		}
 		
 		.svg-icon {
-			width: 28px; /* Adjust width to increase icon size */
+			width: 28px; 
     		height: 28px;
 		}
         
