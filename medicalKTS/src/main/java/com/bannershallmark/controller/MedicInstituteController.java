@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bannershallmark.entity.DateTimeSchedule;
@@ -103,11 +104,16 @@ public class MedicInstituteController {
 	}
 	
 	@GetMapping("/departmentsData")
-	public String departmentsData(Model model) throws Exception {
-		List<Department> departments = medicalService.allDepartment();
-		model.addAttribute("departments", departments);
-		return "medicInstitute/department";
-	}
+	  public String departmentsData(Model model) throws Exception {
+	    List<Department> departments = medicalService.allDepartment();
+	    model.addAttribute("departments", departments);
+	    Department department = new Department();
+	    List<Users> users = usersDetailsService.findAll();
+	    
+	    model.addAttribute("department", department);
+	    model.addAttribute("users", users);
+	    return "medicInstitute/department";
+	  }
 	
 	@GetMapping("/addDepartment")
 	public String addDepartment(Model model) throws Exception {
@@ -659,4 +665,13 @@ public class MedicInstituteController {
 			calender.add(Calendar.HOUR_OF_DAY, daysToDecrement);
 			return calender.getTime();
 		}
+		
+		@RequestMapping(value = "/getDepartmentDetails/{id}", method = RequestMethod.GET, produces = "application/json")
+		@ResponseBody
+		public Department getDepartmentData(@PathVariable("id") Integer id) throws Exception {
+		    Department department = medicalService.findbyIdDepartment(id);
+		    return department;
+		}
+
+		
 }
