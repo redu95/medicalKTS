@@ -46,7 +46,9 @@ public class UsersDetailsDaoImpl implements UsersDetailsDao{
 	@Override
 	public Users findById(Integer id) {
 		Session session=sessionFactory.getCurrentSession();
+		System.out.println(id + " DAO");
 		Users users=session.get(Users.class, id);
+		System.out.println(users.getFirstname());
 		return users;
 	}
 

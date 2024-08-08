@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Departments</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -43,7 +43,9 @@
             background-color: white;
             border: 1px solid #3b82f6;
             color: #3b82f6;
-            margin-left:125px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            margin-left: 125px;
         }
 
         .details-button:hover {
@@ -62,219 +64,310 @@
         .delete-icon:hover {
             color: #f87171;
         }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .col-12 {
+            width: 100%;
+        }
+
+        .col-md-6 {
+            width: 50%;
+        }
+
+        .order-md-1 {
+            order: 1;
+        }
+
+        .order-md-2 {
+            order: 2;
+        }
+
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+        }
+
+        .breadcrumb-item {
+            margin-right: 8px;
+        }
+
+        .breadcrumb-item a {
+            text-decoration: none;
+            color: #3b82f6;
+        }
+
+        .breadcrumb-item.active {
+            color: #6b7280;
+        }
+
+        .grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        .sm\:grid-cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .lg\:grid-cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .xl\:grid-cols-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .text-3xl {
+            font-size: 1.875rem;
+            line-height: 2.25rem;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .bg-white {
+            background-color: white;
+        }
+
+        .text-gray-600 {
+            color: #4b5563;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+
+        .mt-4 {
+            margin-top: 1rem;
+        }
+
+        .p-4 {
+            padding: 1rem;
+        }
+
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+
+        .border {
+            border-width: 1px;
+        }
+
+        .border-gray-300 {
+            border-color: #d1d5db;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        .right-4 {
+            right: 1rem;
+        }
+
+        .top-2 {
+            top: 0.5rem;
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
         
+        .btn {
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            margin-bottom: 0;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: 0.25rem;
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        
+         .col-8 {
+            width: 66.%;
+        }
+
+        .col-4 {
+            width: 33.%;
+        }
+
+        .ig-dflx {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
     </style>
 </head>
 
-<body class="bg-gray-100">
+<body >
     <div id="main" class="layout-navbar">
     	<div id="main-content">
-    		<div class="container mx-auto p-4">
-		        <div class="flex justify-between items-center mb-6">
-		            <h1 class="text-3xl font-bold">Departments</h1>
-		        </div>
-		        
-		        <div class="container row mb-6 ">
-		            <div class = "col-8 ">
-		            	<input type="text" id="poSearchValue" placeholder="Search by Name" class=" w-full border border-gray-300 px-4 py-2 rounded-lg">
-		            </div>
-		            <div class = "col-4">
-		            	<a href="#" class="btn btn-primary"data-dismiss="modal" id="newDepartmentBtnOriginal" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i class="bi bi-credit-card-2-back "></i> + Add Department</a>
-		            </div>
-		            <div class="absolute right-4 top-2">
-		                <i class="bi bi-x-square text-red-500 cursor-pointer" onclick="clearSearch()" style="display: none;"></i>
-		            </div>
-		        </div>
-		        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-		            <c:forEach var="department" items="${departments}">
-	                    <div class="department-card bg-white">
-	                        <img src="${pageContext.request.contextPath}/resources/assets/images/departments/department${department.id}.jpg" alt="Department Image">
-	                        <div class="p-4">
-	                            <h3 class="text-xl font-semibold">${department.departmentName}</h3>
-	                            <div class="flex items-center mt-2">
-	                                <span class="text-gray-600 text-sm mr-2">MEMBERS:</span>
-	                                <div class="member-avatars flex">
-	                                    <img src="https://picsum.photos/24?random=${department.id}1" alt="Member 1">
-	                                    <img src="https://picsum.photos/24?random=${department.id}2" alt="Member 2">
-	                                    <img src="https://picsum.photos/24?random=${department.id}3" alt="Member 3">
-	                                    <img src="https://picsum.photos/24?random=${department.id}4" alt="Member 4">
-	                                </div>
-	                            </div>
-	                            <p class="text-gray-600 mt-2">${department.description}</p>
-	                            <div class="flex justify-between items-center mt-4">
-	                                <a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails(${department.id})" class="details-button px-4 py-2 rounded-lg">Details</a>
-	                            </div>
-	                        </div>
-	                        <i class="bi bi-trash-fill delete-icon" onclick="deleteDept(${department.id})"></i>
-	                    </div>
-	                </c:forEach>
-		        </div>
-		    </div>
-    	</div>
-    	
-		<section class="section blnk-db">
-			<!-- Modal Structure -->
-			<div class="modal fade" id="editDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="editDepartmentModalLabel" aria-hidden="true">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="editDepartmentModalLabel">Edit Department</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body">
-			        <!-- Form goes here -->
-			        <form:form class="form-horizontals" method="post" id="user_form"
-						onsubmit="saveForm()" name="user_form" action="${pageContext.request.contextPath}/Institute/addDepartmentData"
-						modelAttribute="department">
-						<form:input type="hidden" path="id" />
-						<form:input type="hidden" path="instituteId" />
-						<form:input type="hidden" path="isActive" />
-						<form:input type="hidden" path="stuffNumber" />
-						<form:input type="hidden" path="registeredServices" />
-						
-						<%@ include file="../common/error-and-success-message.jsp"%>
-
-						<div class="card tp-inpt">
-							<div class="card-body">
-								<div class="row">
-									<div class="col-12">
-										<div class="form-group">
-											<label for="firstname">Department Name</label>
-											<form:input type="text" maxlength="50" name="departmentName"
-												id="departmentName" path="departmentName" class="form-control"
-												placeholder="Enter Dept Name " value="" required="true" />
-										</div>
-									</div>
-									
-								</div>
-								<div class="row">
-									<div class="col-12">
-										<div class="form-group">
-											<label for="lastname">Description</label>
-											<form:textarea type="text" name="description" rows="3"
-												id="description" path="description" class="form-control"
-												placeholder="Add Description" value="" required="true" />
-										</div>
-									</div>
-									<div class="col-4">
-										<fieldset class="form-group">
-											<label for="departmentHead" class="form-label">Department head</label>
-											<form:select class="form-select dropdown-group" name="departmentHead" id="departmentHead" path="departmentHead" style="width:100%;"  value="">
-												<form:option value="">-- Select Department Head --</form:option>
-												<c:forEach items="${users}" var="users">
-													<form:option value="${users.firstname}">${users.firstname}</form:option>
-												</c:forEach>
-												</form:select>
-										</fieldset>
-									</div>
-								</div>
-
-
-								<div class="row">
-									<div class="col-12">
-										<div class="form-group">
-											<label for="addressLine1">Extra Note</label>
-											<form:input type="text" maxlength="250" name="extraNote"
-												id="extraNote" path="extraNote" class="form-control"
-												placeholder="Extra Note" value="" />
-										</div>
-									</div>
-								</div>
-								 <div class="card">
-		                            <div class="inv-data-tble">
-		                                <table class="table table-striped" id="itemTable">
-		                                    <thead>
-		                                        <tr style="background-color: #D9DFF2;">
-		                                            <th>ServiceName</th>
-		                                            <th>Description</th>		
-													<th>Department</th>
-													<th>Type</th>
-													<th>Price</th>
-		                                        </tr>
-		                                    </thead>
-		                                </table>
+    		<div class="page-heading">
+	    		
+	    			<div class="page-title mb-5">
+                        <div class="row">
+                            <div class="col-12 col-md-6 order-md-1 order-last text-3xl font-bold">
+                                <h3>Departments</h3>
+                                <!-- <p class="text-subtitle text-muted">Navbar will appear in top of the page.</p> -->
+                            </div>
+                            <div class="col-12 col-md-6 order-md-2 order-first">
+                                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}">Dashboard</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Departments
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+	    		
+			        <div class="container row mb-6 ">
+			            <div class = "col">
+			            	<input type="text" id="poSearchValue" placeholder="Search by Name" class=" w-full border border-gray-300 px-4 py-2 rounded-lg">
+			            </div>
+			            <div class = "col-4 ig-dflx">
+			            	<a href="#" class="btn btn-primary"data-dismiss="modal" id="newDepartmentBtnOriginal" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i class="bi bi-credit-card-2-back "></i>New Department</a>
+			            </div>
+			            <div class="absolute right-4 top-2">
+			                <i class="bi bi-x-square text-red-500 cursor-pointer" onclick="clearSearch()" style="display: none;"></i>
+			            </div>
+			        </div>
+			        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+			            <c:forEach var="department" items="${departments}">
+		                    <div class="department-card bg-white">
+		                        <img src="${pageContext.request.contextPath}/resources/assets/images/departments/department${department.id}.jpg" alt="Department Image">
+		                        <div class="p-4">
+		                            <h3 class="text-xl font-semibold">${department.departmentName}</h3>
+		                            <div class="flex items-center mt-2">
+		                                <span class="text-gray-600 text-sm mr-2">MEMBERS:</span>
+		                                <div class="member-avatars flex">
+		                                    <img src="https://picsum.photos/24?random=${department.id}1" alt="Member 1">
+		                                    <img src="https://picsum.photos/24?random=${department.id}2" alt="Member 2">
+		                                    <img src="https://picsum.photos/24?random=${department.id}3" alt="Member 3">
+		                                    <img src="https://picsum.photos/24?random=${department.id}4" alt="Member 4">
+		                                </div>
 		                            </div>
+		                            <p class="text-gray-600 mt-2">${department.description}</p>
+		                            <div class="flex justify-between items-center mt-4">
+		                                <a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails(${department.id})" class="details-button px-4 py-2 rounded-lg">Details</a>
 		                            </div>
-									<nav aria-label="Page">
-											<ul class="pagination justify-content-center"
-												style="align-content: center;">
-												<li class="page-item"><a class="page-link"
-													onclick="handlePage(8)" href="#" aria-label="Previous"> <span
-														aria-hidden="true">&laquo;</span> <span class="sr-only"></span>
-												</a></li>
-												<li class="page-item"><a class="page-link"
-													onclick="handlePage(6)" href="#" aria-label="Previous"> <span
-														aria-hidden="true">&lsaquo;</span> <span class="sr-only"></span>
-												</a></li>
-												<li id="l2" class="page-item active"><a class="page-link"
-													id="p2" onclick="handlePage(2)" href="#">1</a></li>
-												<li id="l3" class="page-item"><a class="page-link"
-													id="p3" onclick="handlePage(3)" href="#">2</a></li>
-												<li id="l1" class="page-item"><a class="page-link"
-													id="p1" onclick="handlePage(1)" href="#">3</a></li>
-		
-												<li id="l4" class="page-item"><a class="page-link"
-													id="p4" onclick="handlePage(4)" href="#">4</a></li>
-												<li id="l5" class="page-item"><a class="page-link"
-													id="p5" onclick="handlePage(5)" href="#">5</a></li>
-		
-												<li class="page-item"><a class="page-link"
-													onclick="handlePage(7)" href="#" aria-label="Next"> <span
-														aria-hidden="true">&rsaquo;</span> <span class="sr-only"></span>
-												</a></li>
-												<li id="l9" class="page-item"><a class="page-link"
-													id="p9" data-initial-value="1" onclick="handlePage(9)"
-													href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-														<span class="sr-only"></span>
-												</a></li>
-											</ul>
-										</nav>
 		                        </div>
-						</div>
-
-
-						<div class="row">
-							<div class="col-12 d-flex justify-content-center">
-								<a href="${pageContext.request.contextPath}/Institute/departmentsData"
-									class="c-btn btn btn-primary me-3 mb-1" style="color: #435ebe; background-color: transparent;">Cancel</a>
-								<button type="submit" class=" c-btn btn btn-primary"
-									id="saveData">Save</button>
-
-							</div>
-						</div>
-					</form:form>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-	    	
-	    	<!-- Modal Add Dept -->
-	    	<div class="modal fade" id="newDepartmentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="newDepartmentModalLabel" aria-hidden="true">
-		        <div class="modal-dialog modal-lg" role="document">
-		            <div class="modal-content">
-		                <div class="modal-header">
-		                    <h5 class="modal-title" id="newServiceModalLabel">Register New Department</h5>
-		                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModalView()">
-		                        <span aria-hidden="true">&times;</span>
-		                    </button>
-		                </div>
-		                <div class="modal-body">
-		                	<form:form class="form-horizontals" method="post" id="user_form"
-								onsubmit="saveForm()" name="user_form" action="addDepartmentData"
+		                        <i class="bi bi-trash-fill delete-icon" onclick="deleteDept(${department.id})"></i>
+		                    </div>
+		                </c:forEach>
+			        </div>
+			    
+			    
+			    <section class="section blnk-db">
+					<!-- Modal Structure -->
+					<div class="modal fade" id="editDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="editDepartmentModalLabel" aria-hidden="true">
+					  <div class="modal-dialog modal-lg" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="editDepartmentModalLabel">Edit Department</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModalView()">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        <!-- Form goes here -->
+					        <form:form class="form-horizontals" method="post" id="user_form"
+								onsubmit="saveForm()" name="user_form" action="${pageContext.request.contextPath}/Institute/addDepartmentData"
 								modelAttribute="department">
+								<form:input type="hidden" path="id" />
+								<form:input type="hidden" path="instituteId" />
+								<form:input type="hidden" path="isActive" />
+								<form:input type="hidden" path="stuffNumber" />
+								<form:input type="hidden" path="registeredServices" />
+								
 								<%@ include file="../common/error-and-success-message.jsp"%>
 		
 								<div class="card tp-inpt">
 									<div class="card-body">
-		
 										<div class="row">
 											<div class="col-12">
 												<div class="form-group">
 													<label for="firstname">Department Name</label>
 													<form:input type="text" maxlength="50" name="departmentName"
-														id="departmentName" path="departmentName" class="form-control"
+														id="departmentName" path="departmentName" class="form-control" data-init-val=""
 														placeholder="Enter Dept Name " value="" required="true" />
 												</div>
 											</div>
@@ -292,7 +385,7 @@
 											<div class="col-4">
 												<fieldset class="form-group">
 													<label for="departmentHead" class="form-label">Department head</label>
-													<form:select class="form-select dropdown-group" name="departmentHead" id="departmentHead" path="departmentHead" style="width:100%;"  value="1">
+													<form:select class="form-select dropdown-group" name="departmentHead" id="departmentHead" path="departmentHead" style="width:100%;"  value="">
 														<form:option value="">-- Select Department Head --</form:option>
 														<c:forEach items="${users}" var="users">
 															<form:option value="${users.firstname}">${users.firstname}</form:option>
@@ -313,90 +406,167 @@
 												</div>
 											</div>
 										</div>
-									</div>
+										 <div class="card">
+				                            <div class="inv-data-tble">
+				                                <table class="table table-striped" id="itemTable">
+				                                    <thead>
+				                                        <tr style="background-color: #D9DFF2;">
+				                                            <th>ServiceName</th>
+				                                            <th>Description</th>		
+															<th>Department</th>
+															<th>Type</th>
+															<th>Price</th>
+				                                        </tr>
+				                                    </thead>
+				                                </table>
+				                            </div>
+				                            </div>
+											<nav aria-label="Page">
+													<ul class="pagination justify-content-center"
+														style="align-content: center;">
+														<li class="page-item"><a class="page-link"
+															onclick="handlePage(8)" href="#" aria-label="Previous"> <span
+																aria-hidden="true">&laquo;</span> <span class="sr-only"></span>
+														</a></li>
+														<li class="page-item"><a class="page-link"
+															onclick="handlePage(6)" href="#" aria-label="Previous"> <span
+																aria-hidden="true">&lsaquo;</span> <span class="sr-only"></span>
+														</a></li>
+														<li id="l2" class="page-item active"><a class="page-link"
+															id="p2" onclick="handlePage(2)" href="#">1</a></li>
+														<li id="l3" class="page-item"><a class="page-link"
+															id="p3" onclick="handlePage(3)" href="#">2</a></li>
+														<li id="l1" class="page-item"><a class="page-link"
+															id="p1" onclick="handlePage(1)" href="#">3</a></li>
+				
+														<li id="l4" class="page-item"><a class="page-link"
+															id="p4" onclick="handlePage(4)" href="#">4</a></li>
+														<li id="l5" class="page-item"><a class="page-link"
+															id="p5" onclick="handlePage(5)" href="#">5</a></li>
+				
+														<li class="page-item"><a class="page-link"
+															onclick="handlePage(7)" href="#" aria-label="Next"> <span
+																aria-hidden="true">&rsaquo;</span> <span class="sr-only"></span>
+														</a></li>
+														<li id="l9" class="page-item"><a class="page-link"
+															id="p9" data-initial-value="1" onclick="handlePage(9)"
+															href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+																<span class="sr-only"></span>
+														</a></li>
+													</ul>
+												</nav>
+				                        </div>
 								</div>
+		
 		
 								<div class="row">
 									<div class="col-12 d-flex justify-content-center">
 										<a href="${pageContext.request.contextPath}/Institute/departmentsData"
-											class="c-btn btn btn-primary me-3 mb-1" style="color: #435ebe; background-color: transparent;" >Cancel</a>
+											class="c-btn btn btn-primary me-3 mb-1" style="color: #435ebe; background-color: transparent;">Cancel</a>
 										<button type="submit" class=" c-btn btn btn-primary"
 											id="saveData">Save</button>
 		
 									</div>
 								</div>
-								
 							</form:form>
-		                </div>
-		               
-		            </div>
-		        </div>
-		    </div>
-		</section>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+			    	
+			    	<!-- Modal Add Dept -->
+			    	<div class="modal fade" id="newDepartmentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="newDepartmentModalLabel" aria-hidden="true">
+				        <div class="modal-dialog modal-lg" role="document">
+				            <div class="modal-content">
+				                <div class="modal-header">
+				                    <h5 class="modal-title" id="newServiceModalLabel">Register New Department</h5>
+				                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModalView()">
+				                        <span aria-hidden="true">&times;</span>
+				                    </button>
+				                </div>
+				                <div class="modal-body">
+				                	<form:form class="form-horizontals" method="post" id="user_form"
+										onsubmit="saveForm()" name="user_form" action="addDepartmentData"
+										modelAttribute="department">
+										<%@ include file="../common/error-and-success-message.jsp"%>
+				
+										<div class="card tp-inpt">
+											<div class="card-body">
+				
+												<div class="row">
+													<div class="col-12">
+														<div class="form-group">
+															<label for="firstname">Department Name</label>
+															<form:input type="text" maxlength="50" name="departmentName"
+																id="departmentName" path="departmentName" class="form-control"
+																placeholder="Enter Dept Name " value="" required="true" />
+														</div>
+													</div>
+													
+												</div>
+												<div class="row">
+													<div class="col-12">
+														<div class="form-group">
+															<label for="lastname">Description</label>
+															<form:textarea type="text" name="description" rows="3"
+																id="description" path="description" class="form-control"
+																placeholder="Add Description" value="" required="true" />
+														</div>
+													</div>
+													<div class="col-4">
+														<fieldset class="form-group">
+															<label for="departmentHead" class="form-label">Department head</label>
+															<form:select class="form-select dropdown-group" name="departmentHead" id="departmentHead" path="departmentHead" style="width:100%;"  value="1">
+																<form:option value="">-- Select Department Head --</form:option>
+																<c:forEach items="${users}" var="users">
+																	<form:option value="${users.firstname}">${users.firstname}</form:option>
+																</c:forEach>
+																</form:select>
+														</fieldset>
+													</div>
+												</div>
+				
+				
+												<div class="row">
+													<div class="col-12">
+														<div class="form-group">
+															<label for="addressLine1">Extra Note</label>
+															<form:input type="text" maxlength="250" name="extraNote"
+																id="extraNote" path="extraNote" class="form-control"
+																placeholder="Extra Note" value="" />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+				
+										<div class="row">
+											<div class="col-12 d-flex justify-content-center">
+												<a href="${pageContext.request.contextPath}/Institute/departmentsData"
+													class="c-btn btn btn-primary me-3 mb-1" style="color: #435ebe; background-color: transparent;" >Cancel</a>
+												<button type="submit" class=" c-btn btn btn-primary"
+													id="saveData">Save</button>
+				
+											</div>
+										</div>
+										
+									</form:form>
+				                </div>
+				               
+				            </div>
+				        </div>
+				    </div>
+				    <div id="deptData">
+				    </div>
+				</section>
+			</div>
+    	</div>
     </div>
 
     <script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
     <script>
-        function clearSearch() {
-            document.getElementById('poSearchValue').value = '';
-            // Add any additional logic to handle clearing the search input
-        }
-
-        $("#newDepartmentBtnOriginal").click(function(){
-            $("#newDepartmentModal").modal('show');
-        });
-        
-        function deleteDept(id) {
-            if (confirm('Are you sure to delete?')) {
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/Institute/deleteDepartment/' + id,
-                    success: function(response) {
-                        window.location.reload();
-                    }
-                });
-            }
-        }
-        
-        function saveForm() {
-			document.getElementById("saveData").disabled = true;
-		}
-        
-        function loadDepartmentDetails(departmentId) {
-        	
-        	console.log(departmentId)
-            $.ajax({
-                url: '${pageContext.request.contextPath}/Institute/getDepartmentDetails/' + departmentId,
-                type: 'GET',
-                dataType: 'json',
-                success: function (department) {
-                    // Populate the modal form fields with the department data
-                    $('#user_form').find('#departmentName').val(department.departmentName);
-                    $('#user_form').find('#description').val(department.description);
-                    $('#user_form').find('#departmentHead').val(department.departmentHead);
-                    $('#user_form').find('#extraNote').val(department.extraNote);
-                    
-                    console.log(department)
-                    // Show the modal
-                    $('#editDepartmentModal').modal('show');
-                },
-                error: function (xhr, status, error) {
-                    // Handle error
-                    alert('An error occurred while fetching department details: ' + error);
-                }
-            });
-        }
-
-        
-        
-        
-        
-        
-        function closeModalView(){
-			$('#newDepartmentModal').modal('hide');
-		}
-        
-
-		var aoColumns = [{
+    
+	    var aoColumns = [{
 			"mData" : null,
 			"mRender" : function(data) {
 				var status = data.serviceName;
@@ -427,39 +597,110 @@
 				return '<div class=\"form-check-Data\">'+status+' ETB</div>';
 			}
 		}];
-		
-		$(document).ready(function(){
-			$('.datetimepick').hide();
-			$.ajax({
-				url: '${pageContext.request.contextPath}/Institute/sendServiceData?dept=${department.departmentName}',
-				success : function(response) {
-					console.log(response);
-					$('#itemTable').DataTable( {
-						data: response.medicServices,
-						"aoColumns": aoColumns,
-						"scrollX": true,
-						ordering: false,
-						"processing": true,
-						info:           false,
-					    paging:         false,
-					    searching: 		false,
-						language: {
-								processing: "<div class='loader'></div>"
-							}
-					    
-					} );
-					$('#p1').text(response.page1);
-					$('#p2').text(response.page2);
-					$('#p3').text(response.page3);
-					$('#p4').text(response.page4);
-					$('#p5').text(response.page5);
-					$('#p9').attr("data-initial-value",response.countItem)
-				}
-			});
-			
-		});
-	   	
+    
+        function clearSearch() {
+            document.getElementById('poSearchValue').value = '';
+            // Add any additional logic to handle clearing the search input
+        }
+
+        $("#newDepartmentBtnOriginal").click(function(){
+            $("#newDepartmentModal").modal('show');
+        });
+        
+        function deleteDept(id) {
+            if (confirm('Are you sure to delete?')) {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/Institute/deleteDepartment/' + id,
+                    success: function(response) {
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+        
+        function saveForm() {
+			document.getElementById("saveData").disabled = true;
+		}
+        
+        function loadDepartmentDetails(departmentId) {
+        	
+        	console.log(departmentId)
+        	var deptName = "";
+            $.ajax({
+                url: '${pageContext.request.contextPath}/Institute/getDepartmentDetails/' + departmentId,
+                type: 'GET',
+                dataType: 'json',
+                success: function (department) {
+                    // Populate the modal form fields with the department data
+                    $('#user_form').find('#departmentName').val(department.departmentName);
+                    $('#user_form').find('#description').val(department.description);
+                    $('#user_form').find('#departmentHead').val(department.departmentHead);
+                    $('#user_form').find('#extraNote').val(department.extraNote);
+                    $('#user_form').find('#id').val(department.id);
+                    $('#user_form').find('#instituteId').val(department.id);
+                    $('#user_form').find('#isActive').val(department.id);
+                    $('#user_form').find('#registeredServices').val(department.id);
+                    $('#user_form').find('#stuffNumber').val(department.id);
+                    
+                    $('#deptData').val(department.departmentName);
+                    console.log(department)
+                    deptName = department.departmentName;
+                    
+                    console.log(department.departmentName + "DEPT NAME");
+                	$.ajax({
+        				url: '${pageContext.request.contextPath}/Institute/sendServiceData?dept='+deptName,
+        				success : function(response) {
+        					console.log(response);
+        					console.log(deptName);
+        					console.log("Dept section");
+        					$('#itemTable').DataTable( {
+        						data: response.medicServices,
+        						"aoColumns": aoColumns,
+        						"scrollX": true,
+        						ordering: false,
+        						"processing": true,
+        						info:           false,
+        					    paging:         false,
+        					    searching: 		false,
+        						language: {
+        								processing: "<div class='loader'></div>"
+        							}
+        					    
+        					} );
+        					$('#p1').text(response.page1);
+        					$('#p2').text(response.page2);
+        					$('#p3').text(response.page3);
+        					$('#p4').text(response.page4);
+        					$('#p5').text(response.page5);
+        					$('#p9').attr("data-initial-value",response.countItem)
+        				}
+        			});
+                	
+                    // Show the modal
+                    $('#editDepartmentModal').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    alert('An error occurred while fetching department details: ' + error);
+                }
+            });
+        	
+        	
+        }
+
+        
+        
+        
+        
+        
+        function closeModalView(){
+			$('#newDepartmentModal').modal('hide');
+		}
+        
+
 		function handlePage(x){
+			
+			var deptName = $('#deptData').val();
 			if(x===1){
 				var pagenum = $('#p1').text();
 			}
@@ -518,6 +759,7 @@
 				url: '${pageContext.request.contextPath}/Institute/sendServiceData',
 				data: {
 					page: pagenum,
+					dept: deptName,
 				},
 				success : function(response) {
 					console.log(response);
