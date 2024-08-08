@@ -37,20 +37,31 @@
 
 				<section class="section blnk-db">
 					<form:form class="form-horizontals" method="post" id="user_form"
-						onsubmit="saveForm()" name="user_form" action="addNewUsers"
+						onsubmit="saveForm()" name="user_form" action="updateUsers"
 						modelAttribute="users">
 						<%@ include file="../common/error-and-success-message.jsp"%>
 
 						<div class="card tp-inpt">
 							<div class="card-body">
 
+								<div class="row" id="row1" style="visibility: hidden;">
+									<div class="col-md-4 col-12">
+										<div class="form-group">
+											<label for="id">Id</label>
+											<form:input type="text" name="id"
+												id="id" path="id" class="form-control"
+												placeholder="" value="" required="true" />
+										</div>
+									</div>
+									
+								</div>
 								<div class="row" id="row1">
 									<div class="col-md-4 col-12">
 										<div class="form-group">
 											<label for="firstname">First Name</label>
 											<form:input type="text" maxlength="50" name="firstname"
 												id="firstname" path="firstname" class="form-control"
-												placeholder="First Name " value="Ermias" required="true" />
+												placeholder="First Name " value="" required="true" />
 										</div>
 									</div>
 									<div class="col-md-4 col-12">
@@ -58,7 +69,7 @@
 											<label for="lastname">Last Name</label>
 											<form:input type="text" maxlength="50" name="lastname"
 												id="lastname" path="lastname" class="form-control"
-												placeholder="Last Name" value="Ashebr" required="true" />
+												placeholder="Last Name" value="" required="true" />
 										</div>
 									</div>
 
@@ -66,7 +77,7 @@
 										<div class="form-group">
 											<label for="email">Email</label>
 											<form:input type="email" name="email" id="email" path="email"
-												class="form-control" placeholder="email" value="ermi@gmail.com"
+												class="form-control" placeholder="email" value=""
 												required="true" />
 										</div>
 									</div>
@@ -79,7 +90,7 @@
 											<label for="addressLine1">Address</label>
 											<form:input type="text" maxlength="250" name="addressLine1"
 												id="addressLine1" path="addressLine1" class="form-control"
-												placeholder="Address Line 1" value="A.A" />
+												placeholder="Address Line 1" value="" />
 										</div>
 									</div>
 									<div class="col-md-4 col-12">
@@ -87,7 +98,7 @@
 											<label for="country">Phone</label>
 											<form:input type="text" maxlength="20" name="phoneNumber"
 												id="phoneNumber" path="phoneNumber" class="form-control"
-												placeholder=" Phone Number" value="0925416359" />
+												placeholder=" Phone Number" value="" />
 										</div>
 									</div>
 									<div class="col-md-4 col-12">
@@ -132,38 +143,7 @@
 								</div>
 
 
-								<div class="row" id="row4">
-									<div class="col-md-4 col-12">
-										<div class="form-group">
-											<label for="username">Username</label>
-											<form:input type="text" maxlength="10" name="zipCode"
-												id="username" path="username" class="form-control"
-												placeholder="User Name" value="ErmiA" required="true" disabled="true"/>
-										</div>
-									</div>
-									<div class="col-md-4 col-12">
-										<div class="form-group">
-											<label for="createpassword">Password</label>
-											<form:input type="password" maxlength="20"
-												name="createpassword" id="createpassword" path="password"
-												class="form-control" placeholder="Password " value="1234"
-												required="true" />
-										</div>
-									</div>
-
-									<div class="col-md-4 col-12">
-										<div class="form-group">
-											<label for="confirmpassword">Confirm Password</label>
-											<form:input type="password" maxlength="20"
-												name="confirmpassword" id="confirmpassword" path=""
-												class="form-control" placeholder=" Confirm Password "
-												value="" required="true" />
-											<p class="text-danger" id="show"></p>
-
-										</div>
-									</div>
-
-								</div>
+								
 							</div>
 						</div>
 

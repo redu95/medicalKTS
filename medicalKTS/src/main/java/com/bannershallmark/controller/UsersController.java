@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bannershallmark.bean.DateTime;
@@ -88,6 +90,15 @@ public class UsersController {
 
 					List<Users> users = usersDetailsService.findAll();
 					model.addAttribute("users", users);
+					Users user = new Users();
+					model.addAttribute("user", user);
+					Users userEdit = new Users();
+					model.addAttribute("userEdit", userEdit);
+					List<Role> role = usersDetailsService.findAllRole();
+					//List<InventoryStore> stores = inventoryService.findAllStore();
+					List<Department> departments = medicalService.allDepartment();
+					model.addAttribute("departments", departments);
+					model.addAttribute("role", role);
 				} catch (Exception e) {
 					testNGlogger.info("users/usersData" + ",ERROR MESSAGES : " + e.getMessage());
 					return "errorpage/error";
@@ -172,6 +183,13 @@ public class UsersController {
 		
 
 	}
+	
+	@RequestMapping(value = "/getUsersDetails/{id}", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public Users getUsersData(@PathVariable("id") Integer id) throws Exception {
+		Users users = usersDetailsService.findById(id);
+	    return users;
+	}
 
 	@GetMapping("/getUsers")
 	public String getPayby(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes)
@@ -180,6 +198,7 @@ public class UsersController {
 				try {
 					String id = request.getParameter("id");
 					if (!id.equals("")) {
+						System.out.println(Integer.parseInt(id) + "IDD");
 						Users users = usersDetailsService.findById(Integer.parseInt(id));
 						model.addAttribute("users", users);
 						List<Role> role = usersDetailsService.findAllRole();
@@ -213,6 +232,19 @@ public class UsersController {
 //						return "redirect:/users/usersData";
 //					}
 //				}
+				System.out.println(users.getId());
+				System.out.println(users.getFirstname());
+
+				
+				Integer id = users.getId();
+				Users user = usersDetailsService.findById(id);
+				user.setFirstname(user.getFirstname());
+				user.setLastname(user.getLastname());
+				user.setEmail(user.getEmail());
+				user.setAddressLine1(user.getAddressLine1());
+				user.setPhoneNumber(user.getPhoneNumber());
+				user.setRole(user.getRole());
+				
 				usersDetailsService.save(users);
 				redirectAttributes.addFlashAttribute(Constants.AttributeNames.SUCCESS_MESSAGE,
 						"Users info updated successfully.");

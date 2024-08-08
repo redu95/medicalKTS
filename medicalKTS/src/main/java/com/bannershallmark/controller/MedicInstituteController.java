@@ -442,6 +442,7 @@ public class MedicInstituteController {
 			String byType = "";
 			String assignedTo = "";
 			
+			
 			try {
 				page = request.getParameter("page");
 			} catch (Exception e) {
@@ -522,6 +523,9 @@ public class MedicInstituteController {
 				orderByQuery = " order by id desc";
 			}
 			
+			
+			System.out.println(dept + "???????????????????????????/");
+
 			Integer pageFinal = Integer.parseInt(page);
 			
 			List<MedicService> service = medicalService.getServiceList(pageFinal, searchValue,dept, byType, orderByQuery);			
