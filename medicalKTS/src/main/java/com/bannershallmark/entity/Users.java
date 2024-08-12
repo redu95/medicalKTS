@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -50,6 +51,11 @@ public class Users {
 	private MedicalInstitute institute;
 	private Integer departmentId;
 
+	private String docName;
+	private String docType;
+	@Lob
+	private byte[] docData;
+	
 	public int getId() {
 		return id;
 	}
@@ -194,5 +200,33 @@ public class Users {
 		this.departmentId = departmentId;
 	}
 	
+	//Users.java(Entity)
+
+	
+
+	public String getDocName() {
+		return docName;
+	}
+
+	public void setDocName(String docName) {
+		this.docName = docName;
+	}
+
+	public String getDocType() {
+		return docType;
+	}
+
+	public void setDocType(String docType) {
+		this.docType = docType;
+	}
+
+	public byte[] getDocData() {
+		return docData;
+	}
+
+	public void setDocData(byte[] docData) {
+		this.docData = docData;
+	}
+
 	
 }

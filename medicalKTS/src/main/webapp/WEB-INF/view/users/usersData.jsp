@@ -96,8 +96,10 @@
 												<td>${users.role.name}</td>
 											    <td class="td-actions">
 					                                <div class="action-buttons">
-					                                   <a class="" href="#" data-toggle="modal" data-dismiss="modal" data-target="edit_form" onclick="loadUsersdata(${users.id})" >			
+					                                   <a class="" title="Edit" onClick="loadUsersdata(${users.id})" href="#">
 					                                   	<span class="badge" style="background-color: #8e9ed8;"><i class="bi bi-pencil"></i></span></a>
+					                                   	<a class="" title="Edit" href="${pageContext.request.contextPath}/users/downloadFile?id=${users.id}">
+					                                   	<span class="badge" style="background-color: #8e9ed8;"><i class="bi bi-eye"></i></span></a>
 					                                	
 					                                	<a class="red" href="${pageContext.request.contextPath}/users/deleteUsersgh/1" onclick="return confirm('Are you sure to delete?')" id="remove">
 					                                   		<span class="badge" style="background-color: #fe6e6e;"><i class="bi bi-trash-fill"></i></span></a>
@@ -107,6 +109,8 @@
 										</c:forEach>
                                     </tbody>
                                 </table>
+
+
                             </div>
                           </div>
 
@@ -124,7 +128,8 @@
 				                <div class="modal-body">
 				                	<form:form class="form-horizontals" method="post" id="user_form"
 										onsubmit="saveForm()" name="user_form" action="addNewUsers"
-										modelAttribute="user">
+										modelAttribute="user" enctype="multipart/form-data" >
+										
 										<%@ include file="../common/error-and-success-message.jsp"%>
 				
 										<div class="card tp-inpt">
@@ -250,6 +255,14 @@
 				
 														</div>
 													</div>
+													
+													<div class="col-md-4 col-12">
+														<div class="form-group">
+															<label for="file" class="form-label">User Profile</label>
+															<input type="file" name="file" id="file" class="form-control" value=""  />
+			
+														</div>
+													</div>
 				
 												</div>
 											</div>
@@ -370,13 +383,17 @@
 														<div class="col-md-4 col-12">
 															<div class="form-group">
 																<label for="role">Department</label>
+																
 																<form:select type="text" required="true" name="role"
 																	id="role" path="role.id" class="form-select" value="">
-																	<form:option value="1">Dept 1</form:option>
-																	<form:option value="2">Dept 2</form:option>
+																	<form:option value="">--Select Department--</form:option>
+																	<c:forEach items="${departments}" var="departments">
+																		<form:option value="${departments.departmentName}">${departments.departmentName}</form:option>
+																	</c:forEach>
 																</form:select>
 															</div>
 														</div>
+													
 														<div class="col-md-4 col-12" style="visibility: hidden;">
 															<div class="form-group">
 																<label for="id">Id</label>
@@ -388,14 +405,15 @@
 														
 														
 													</div>
-													</div>
+												
+												</div>
 					
 					
 													
-												</div>
 											</div>
+											
 					
-											<div class="row">
+											<div class="row mb-3">
 												<div class="col-12 d-flex justify-content-center">
 													<a href="${pageContext.request.contextPath}/users/usersData"
 														class="c-btn btn btn-primary me-3 mb-1" style="color: #435ebe; background-color: transparent;" >Cancel</a>
@@ -404,12 +422,14 @@
 												</div>
 											</div>
 										</form:form>
-					                </div>
-					               
+								    </div>
 					            </div>
+					               
 					        </div>
-					    </div>                        
+					    </div>
+					                            
                     </section>
+                
                 </div>
             </div>
         </div>

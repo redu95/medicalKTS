@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
- <div id="main" class='layout-navbar'>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+	<div id="main" class='layout-navbar'>
 			<header class='mb-3'>
                 <nav class="navbar navbar-expand navbar-light ">
                     <div class="container-fluid">
@@ -49,7 +49,12 @@
                                         </div>
                                         <div class="user-img d-flex align-items-center">
                                             <div class="avatar avatar-md">
-                                                <img src="${pageContext.request.contextPath}/resources/assets/images/faces/1.jpg">
+                                                 <c:if test="${not empty sessionScope.logoImg}">
+											        <img src="data:image/jpeg;base64,${sessionScope.logoImg}" alt="User Logo" />
+											    </c:if>
+											    <c:if test="${empty sessionScope.logoImg}">
+											         <img src="${pageContext.request.contextPath}/resources/assets/images/faces/1.jpg">
+											    </c:if>
                                             </div>
                                         </div>
                                     </div>
@@ -79,3 +84,4 @@
             </header>
            
 		</div>
+
