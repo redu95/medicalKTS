@@ -47,6 +47,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		HttpSession session = request.getSession();
 		session.setAttribute("path", userRoleAccessPermissionDao.findAccessPermissionByRole(r));
 		
+		session.removeAttribute("logoImg");
+		
 		MyUserDetails user = (MyUserDetails) authentication.getPrincipal();
 				
 		if(user==null) {

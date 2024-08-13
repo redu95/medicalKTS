@@ -1,12 +1,12 @@
 package com.bannershallmark.controller;
 
 import java.text.SimpleDateFormat;
-
-
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -243,7 +243,7 @@ public class UsersController {
 	}
 
 	@PostMapping("/updateUsers")
-	public String updatePayby(@ModelAttribute Users users, RedirectAttributes redirectAttributes) throws Exception {
+	public String updatePayby(@RequestParam(value = "file", required = false) MultipartFile file,@ModelAttribute Users users, RedirectAttributes redirectAttributes) throws Exception {
 
 			try {
 //				if(users.getRole().getId().equals(1)) {
@@ -256,22 +256,61 @@ public class UsersController {
 //				}
 				System.out.println(users.getId());
 				System.out.println(users.getFirstname());
-
+				
+				HttpSession session = request.getSession();
 				
 				Integer id = users.getId();
-				Users user = usersDetailsService.findById(id);
-				user.setFirstname(users.getFirstname());
-				user.setLastname(users.getLastname());
-				user.setEmail(users.getEmail());
-				user.setAddressLine1(users.getAddressLine1());
-				user.setPhoneNumber(users.getPhoneNumber());
-				user.setRole(users.getRole());
-				user.setDepartmentId(users.getDepartmentId());
+				Users dbUser = usersDetailsService.findById(id);
+				dbUser.setFirstname(users.getFirstname());
+				dbUser.setLastname(users.getLastname());
+				dbUser.setEmail(users.getEmail());
+				dbUser.setAddressLine1(users.getAddressLine1());
+				dbUser.setPhoneNumber(users.getPhoneNumber());
+				dbUser.setRole(users.getRole());
+				dbUser.setDepartmentId(users.getDepartmentId());
+				
+				if(file!=null) {
+					if(file.getContentType().equals("image/jpeg")) {
+						System.out.println("IS JPEG");
+					}
+					
+					
+					if(file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/png") || file.getContentType().equals("image/jpg")) {
+						System.out.println(file.getName());			
+						System.out.println(file.getBytes());			
+						System.out.println(file.getContentType());			
+						
+						dbUser.setDocName(file.getName());
+						dbUser.setDocType(file.getContentType());
+						dbUser.setDocData(file.getBytes());
+					} else {
+						redirectAttributes.addFlashAttribute(Constants.AttributeNames.MESSAGE,
+								"Please enter the correct data type.");
+						return "redirect:/users/usersData";
+					}
+					
+					
+					
+					long fileSizeInBytes = file.getBytes().length;
+					long fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+
+					System.out.println("Size in byte is " + fileSizeInBytes);
+					System.out.println("Size in mb is " + fileSizeInMB);
+					if (fileSizeInBytes >= 2000000) {
+					    redirectAttributes.addFlashAttribute(Constants.AttributeNames.MESSAGE,
+					            "File size should not exceed 2 MB.");
+					    return "redirect:/users/usersData";
+					}
+					
+					
+				}
 				
 				
-				usersDetailsService.save(user);
+				usersDetailsService.save(dbUser);
 				redirectAttributes.addFlashAttribute(Constants.AttributeNames.SUCCESS_MESSAGE,
 						"Users info updated successfully.");
+				String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
+			    session.setAttribute("logoImg", base64Image);
 				return "redirect:/users/usersData";
 
 			} catch (Exception e) {

@@ -213,8 +213,8 @@
 													<div class="col-md-4 col-12">
 														<div class="form-group">
 															<label for="role">Department</label>
-															<form:select type="text" required="true" name="role"
-																id="role" path="role.id" class="form-select" value="">
+															<form:select type="text" required="true" name="departmentId"
+																id="departmentId" path="departmentId" class="form-select" value="">
 																<form:option value="">--Select Department--</form:option>
 																<c:forEach items="${departments}" var="departments">
 																	<form:option value="${departments.departmentName}">${departments.departmentName}</form:option>
@@ -289,9 +289,9 @@
 					            <div class="modal-content">
 					                <div class="modal-header">
 					                    <h5 class="modal-title" id="newUsersModalLabel">Edit  User</h5>
-					                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModalView()">
-					                        <span aria-hidden="true">&times;</span>
-					                    </button>
+					                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModalViewE()">
+				                        <span aria-hidden="true">&times;</span>
+				                    </button>
 					                </div>
 					                <div class="modal-body">
 					                	<form:form class="form-horizontals" method="post" id="edit_form"
@@ -462,6 +462,7 @@
                     $('#edit_form').find('#role').val(users.role.id);
                     $('#edit_form').find('#addressLine1').val(users.addressLine1);
                     $('#edit_form').find('#addressLine1').val(users.addressLine1);
+                    $('#edit_form').find('#departmentId').val(users.departmentId);
                     
                     
                 	
@@ -478,6 +479,10 @@
 		function closeModalView(){
 				$('#newUsersModal').modal('hide');
 			};
+			
+		function closeModalViewE(){
+			$('#editUsersModal').modal('hide');
+		};
 		function checkPasswordMatch() {
 			var newpassword = $("#createpassword").val();
 			var confirmPassword = $("#confirmpassword").val();

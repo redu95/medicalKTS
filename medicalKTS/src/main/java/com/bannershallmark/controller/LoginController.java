@@ -60,6 +60,7 @@ public class LoginController {
 	public String logout(HttpSession session) {
 		try {
 			session.removeAttribute("username");
+			session.removeAttribute("logoImg");
 		} catch (Exception e) {
 			e.printStackTrace();
 			testNGlogger.info("/logout" + ",ERROR MESSAGES : " + e.getMessage());

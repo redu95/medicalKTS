@@ -6,6 +6,7 @@ package com.bannershallmark.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +30,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bannershallmark.entity.DateTimeSchedule;
 import com.bannershallmark.entity.Department;
@@ -110,6 +117,14 @@ public class MedicInstituteController {
 	    Department department = new Department();
 	    List<Users> users = usersDetailsService.findAll();
 	    
+	    
+	    for(Department d: departments) {
+	    	byte[] imageByte = d.getDocData();
+			String base64Image = Base64.getEncoder().encodeToString(imageByte);
+			d.setDepartmentHead(base64Image);
+			System.out.println();			System.out.println("Image data is not null");
+	    }
+		
 	    model.addAttribute("department", department);
 	    model.addAttribute("users", users);
 	    return "medicInstitute/department";
@@ -127,7 +142,7 @@ public class MedicInstituteController {
 	}
 	
 	@PostMapping("/addDepartmentData")
-	public String addDepartmentData(@ModelAttribute Department department) throws Exception {
+	public String addDepartmentData(@RequestParam(value = "file", required = false) MultipartFile file, @ModelAttribute Department department) throws Exception {
 		
 		System.out.println(department.getId());
 		System.out.println(department.getDepartmentName());
@@ -137,10 +152,24 @@ public class MedicInstituteController {
 		department.setStuffNumber(0);
 		department.setRegisteredServices(0);
 		department.setIsActive(1);
-
+		
+		if(file!=null) {
+			System.out.println(file.getName());			
+			System.out.println(file.getBytes());			
+			System.out.println(file.getContentType());			
+			
+			department.setDocName(file.getName());
+			department.setDocType(file.getContentType());
+			department.setDocData(file.getBytes());
+		}
+		
+	
+		
 		medicalService.save(department);
 		return "redirect:/Institute/departmentsData";
 	}
+	
+
 	
 	@RequestMapping(value = "/deleteDepartment/{id}")
 	@ResponseBody
