@@ -1,16 +1,20 @@
 package com.bannershallmark.controller;
 
 import java.text.SimpleDateFormat;
-
-
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +24,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.telegram.telegrambots.meta.api.objects.File;
 
 import com.bannershallmark.bean.DateTime;
 import com.bannershallmark.bean.RandomString;
@@ -97,6 +104,7 @@ public class UsersController {
 					List<Role> role = usersDetailsService.findAllRole();
 					//List<InventoryStore> stores = inventoryService.findAllStore();
 					List<Department> departments = medicalService.allDepartment();
+					model.addAttribute("users", users);
 					model.addAttribute("departments", departments);
 					model.addAttribute("role", role);
 				} catch (Exception e) {
@@ -135,7 +143,7 @@ public class UsersController {
 	}
 
 	@PostMapping("/addNewUsers")
-	public String addNewPayby(@ModelAttribute Users users, RedirectAttributes redirectAttributes) throws Exception {
+	public String addNewPayby(@RequestParam(value = "file", required = false) MultipartFile file, @ModelAttribute Users users, RedirectAttributes redirectAttributes) throws Exception {
 
 			try {
 
@@ -151,22 +159,24 @@ public class UsersController {
 					return "redirect:/users/usersData";
 				} else {
 					System.out.println("IN here here here");
-
-//					if(users.getRole().getId().equals(1)) {
-//						users.setStore(null);
-//					} else {
-//						if (users.getStore().getId() == null) {
-//							redirectAttributes.addFlashAttribute(Constants.AttributeNames.MESSAGE, "Select a store to assign for the manager");
-//							return "redirect:/users/usersData";
-//						}
-//					}
-					
 					BCryptPasswordEncoder encryptPwd = webSecurityConfig.passwordEncoder();
-					// System.out.println("================="+users.getPassword());
-
+					if(file!=null) {
+						System.out.println(file.getName());			
+						System.out.println(file.getBytes());			
+						System.out.println(file.getContentType());			
+						
+						users.setDocName(file.getName());
+						users.setDocType(file.getContentType());
+						users.setDocData(file.getBytes());
+					}
 					
+					System.out.println(users.getFirstname());			
+					System.out.println(users.getLastname());			
+					System.out.println(users.getAddressLine1());		
+					System.out.println(users.getPassword());
 					
 					users.setPassword(encryptPwd.encode(users.getPassword()));
+					
 					usersDetailsService.save(users);
 					redirectAttributes.addFlashAttribute(Constants.AttributeNames.SUCCESS_MESSAGE,
 							"New user successfully added");
@@ -183,6 +193,18 @@ public class UsersController {
 		
 
 	}
+
+	@GetMapping("/downloadFile")
+	public ResponseEntity<ByteArrayResource> downloadFile(){
+		String id  = request.getParameter("id");
+		Users user = usersDetailsService.findById(Integer.parseInt(id));
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(user.getDocType()))
+				.header(HttpHeaders.CONTENT_DISPOSITION,"attachment:filename=\""+user.getDocName()+"\"")
+				.body(new ByteArrayResource(user.getDocData()));
+	}
+
+
 	
 	@RequestMapping(value = "/getUsersDetails/{id}", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -221,7 +243,7 @@ public class UsersController {
 	}
 
 	@PostMapping("/updateUsers")
-	public String updatePayby(@ModelAttribute Users users, RedirectAttributes redirectAttributes) throws Exception {
+	public String updatePayby(@RequestParam(value = "file", required = false) MultipartFile file,@ModelAttribute Users users, RedirectAttributes redirectAttributes) throws Exception {
 
 			try {
 //				if(users.getRole().getId().equals(1)) {
@@ -234,20 +256,61 @@ public class UsersController {
 //				}
 				System.out.println(users.getId());
 				System.out.println(users.getFirstname());
-
+				
+				HttpSession session = request.getSession();
 				
 				Integer id = users.getId();
-				Users user = usersDetailsService.findById(id);
-				user.setFirstname(user.getFirstname());
-				user.setLastname(user.getLastname());
-				user.setEmail(user.getEmail());
-				user.setAddressLine1(user.getAddressLine1());
-				user.setPhoneNumber(user.getPhoneNumber());
-				user.setRole(user.getRole());
+				Users dbUser = usersDetailsService.findById(id);
+				dbUser.setFirstname(users.getFirstname());
+				dbUser.setLastname(users.getLastname());
+				dbUser.setEmail(users.getEmail());
+				dbUser.setAddressLine1(users.getAddressLine1());
+				dbUser.setPhoneNumber(users.getPhoneNumber());
+				dbUser.setRole(users.getRole());
+				dbUser.setDepartmentId(users.getDepartmentId());
 				
-				usersDetailsService.save(users);
+				if(file!=null) {
+					if(file.getContentType().equals("image/jpeg")) {
+						System.out.println("IS JPEG");
+					}
+					
+					
+					if(file.getContentType().equals("image/jpeg") || file.getContentType().equals("image/png") || file.getContentType().equals("image/jpg")) {
+						System.out.println(file.getName());			
+						System.out.println(file.getBytes());			
+						System.out.println(file.getContentType());			
+						
+						dbUser.setDocName(file.getName());
+						dbUser.setDocType(file.getContentType());
+						dbUser.setDocData(file.getBytes());
+					} else {
+						redirectAttributes.addFlashAttribute(Constants.AttributeNames.MESSAGE,
+								"Please enter the correct data type.");
+						return "redirect:/users/usersData";
+					}
+					
+					
+					
+					long fileSizeInBytes = file.getBytes().length;
+					long fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+
+					System.out.println("Size in byte is " + fileSizeInBytes);
+					System.out.println("Size in mb is " + fileSizeInMB);
+					if (fileSizeInBytes >= 2000000) {
+					    redirectAttributes.addFlashAttribute(Constants.AttributeNames.MESSAGE,
+					            "File size should not exceed 2 MB.");
+					    return "redirect:/users/usersData";
+					}
+					
+					
+				}
+				
+				
+				usersDetailsService.save(dbUser);
 				redirectAttributes.addFlashAttribute(Constants.AttributeNames.SUCCESS_MESSAGE,
 						"Users info updated successfully.");
+				String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
+			    session.setAttribute("logoImg", base64Image);
 				return "redirect:/users/usersData";
 
 			} catch (Exception e) {

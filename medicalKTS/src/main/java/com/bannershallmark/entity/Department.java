@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +24,11 @@ public class Department {
 	private String extraNote;
 	private Integer instituteId;
 	private Integer isActive;
+	
+	private String docName;
+	private String docType;
+	@Lob
+	private byte[] docData;
 	
 	public Department() {
 		super();
@@ -111,6 +117,31 @@ public class Department {
 
 	public void setIsActive(Integer isActive) {
 		this.isActive = isActive;
+	}
+	
+	
+	public String getDocName() {
+		return docName;
+	}
+
+	public void setDocName(String docName) {
+		this.docName = docName;
+	}
+
+	public String getDocType() {
+		return docType;
+	}
+
+	public void setDocType(String docType) {
+		this.docType = docType;
+	}
+
+	public byte[] getDocData() {
+		return docData;
+	}
+
+	public void setDocData(byte[] docData) {
+		this.docData = docData;
 	}
 	
 	

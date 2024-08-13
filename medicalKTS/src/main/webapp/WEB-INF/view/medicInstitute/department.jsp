@@ -55,7 +55,7 @@
 
         .delete-icon {
             position: absolute;
-            left: 16px;
+            right: 16px;
             bottom: 16px;
             cursor: pointer;
             color: #fe6e6e;
@@ -313,7 +313,8 @@
 			        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 			            <c:forEach var="department" items="${departments}">
 		                    <div class="department-card bg-white">
-		                        <img src="${pageContext.request.contextPath}/resources/assets/images/departments/department${department.id}.jpg" alt="Department Image">
+		                    	<img src="data:image/jpeg;base64,${department.departmentHead}" alt="Department Image"> 
+		                        <!-- <img src="${pageContext.request.contextPath}/resources/assets/images/departments/department${department.id}.jpg" alt="Department Image"> -->
 		                        <div class="p-4">
 		                            <h3 class="text-xl font-semibold">${department.departmentName}</h3>
 		                            <div class="flex items-center mt-2">
@@ -324,10 +325,10 @@
 		                                    <img src="https://picsum.photos/24?random=${department.id}3" alt="Member 3">
 		                                    <img src="https://picsum.photos/24?random=${department.id}4" alt="Member 4">
 		                                </div>
-		                            </div>
+		                            </div>		
 		                            <p class="text-gray-600 mt-2">${department.description}</p>
 		                            <div class="flex justify-between items-center mt-4">
-		                                <a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails(${department.id})" class="details-button px-4 py-2 rounded-lg">Details</a>
+		                                <a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails(${department.id})" class="btn btn-primary">Details</a>
 		                            </div>
 		                        </div>
 		                        <i class="bi bi-trash-fill delete-icon" onclick="deleteDept(${department.id})"></i>
@@ -351,7 +352,7 @@
 					        <!-- Form goes here -->
 					        <form:form class="form-horizontals" method="post" id="user_form"
 								onsubmit="saveForm()" name="user_form" action="${pageContext.request.contextPath}/Institute/addDepartmentData"
-								modelAttribute="department">
+								modelAttribute="department" enctype="multipart/form-data">
 								<form:input type="hidden" path="id" />
 								<form:input type="hidden" path="instituteId" />
 								<form:input type="hidden" path="isActive" />
@@ -404,6 +405,13 @@
 														id="extraNote" path="extraNote" class="form-control"
 														placeholder="Extra Note" value="" />
 												</div>
+											</div>
+										</div>
+										<div class="col-md-4 col-12">
+											<div class="form-group">
+												<label for="file" class="form-label">Department Picture</label>
+												<input type="file" name="file" id="file" class="form-control" value=""  />
+
 											</div>
 										</div>
 										 <div class="card">
@@ -487,7 +495,7 @@
 				                <div class="modal-body">
 				                	<form:form class="form-horizontals" method="post" id="user_form"
 										onsubmit="saveForm()" name="user_form" action="addDepartmentData"
-										modelAttribute="department">
+										modelAttribute="department" enctype="multipart/form-data">
 										<%@ include file="../common/error-and-success-message.jsp"%>
 				
 										<div class="card tp-inpt">
@@ -536,6 +544,13 @@
 																placeholder="Extra Note" value="" />
 														</div>
 													</div>
+													<div class="col-md-4 col-12">
+														<div class="form-group">
+															<label for="file" class="form-label">Department Picture</label>
+															<input type="file" name="file" id="file" class="form-control" value=""  />
+			
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -565,6 +580,8 @@
 
     <script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
     <script>
+    
+    
     
 	    var aoColumns = [{
 			"mData" : null,

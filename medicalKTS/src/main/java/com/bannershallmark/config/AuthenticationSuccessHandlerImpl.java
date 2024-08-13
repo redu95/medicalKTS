@@ -1,6 +1,7 @@
 package com.bannershallmark.config;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
@@ -17,7 +19,9 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import com.bannershallmark.dao.UserRoleAccessPermissionDao;
+import com.bannershallmark.entity.Users;
 import com.bannershallmark.service.MyUserDetails;
+import com.bannershallmark.service.UsersDetailsService;
 
 @Component
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
@@ -31,6 +35,10 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
 	@Value("${profileName}")
 	String profileName;
+	
+	@Autowired
+	private UsersDetailsService usersDetailsService;
+
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -38,8 +46,28 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		String r = authentication.getAuthorities().toString();
 		HttpSession session = request.getSession();
 		session.setAttribute("path", userRoleAccessPermissionDao.findAccessPermissionByRole(r));
-
+		
+		session.removeAttribute("logoImg");
+		
 		MyUserDetails user = (MyUserDetails) authentication.getPrincipal();
+				
+		if(user==null) {
+			MyUserDetails user2 = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			user = user2;
+		}
+	
+			
+		Integer id = user.getId();
+		Users loggedInuser = usersDetailsService.findById(id);
+		byte[] imageData = loggedInuser.getDocData();
+		if(imageData!=null) {
+			String base64Image = Base64.getEncoder().encodeToString(imageData);
+		    session.setAttribute("logoImg", base64Image);
+		    System.out.println("Image data is not null");
+		}
+		
+		
+		
 //		if (user.getStore() != null) {
 //			session.setAttribute("loggedInUserStore", user.getStore());
 //		} else {

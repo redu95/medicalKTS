@@ -38,7 +38,7 @@
 				<section class="section blnk-db">
 					<form:form class="form-horizontals" method="post" id="user_form"
 						onsubmit="saveForm()" name="user_form" action="updateUsers"
-						modelAttribute="users">
+						modelAttribute="users" enctype="multipart/form-data">
 						<%@ include file="../common/error-and-success-message.jsp"%>
 
 						<div class="card tp-inpt">
@@ -138,6 +138,13 @@
 												<form:option value="1">Dept 1</form:option>
 												<form:option value="2">Dept 2</form:option>
 											</form:select>
+										</div>
+									</div>
+									<div class="col-md-4 col-12">
+										<div class="form-group">
+											<label for="file" class="form-label">User Profile</label>
+											<input type="file" name="file" id="file" class="form-control" value=""  />
+
 										</div>
 									</div>
 								</div>
