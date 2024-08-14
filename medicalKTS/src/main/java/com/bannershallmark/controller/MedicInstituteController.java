@@ -152,6 +152,7 @@ public class MedicInstituteController {
 		
 		model.addAttribute("department", department);
 		model.addAttribute("users", users);
+		//
 
 		return "medicInstitute/addDepartment";
 	}
