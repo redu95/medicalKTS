@@ -102,6 +102,8 @@ public class MedicInstituteController {
 	
 	@GetMapping("/addMedicItems")
 	public String addMedicItems(Model model) throws Exception {
+		MedicItem item = new MedicItem();
+		model.addAttribute("item", item);
 		return "medicInstitute/addItems";
 	}
 	
