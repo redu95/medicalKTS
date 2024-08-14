@@ -1,6 +1,7 @@
 package com.bannershallmark.controller;
 
 import java.text.SimpleDateFormat;
+
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.telegram.telegrambots.meta.api.objects.File;
 
 import com.bannershallmark.bean.DateTime;
 import com.bannershallmark.bean.RandomString;

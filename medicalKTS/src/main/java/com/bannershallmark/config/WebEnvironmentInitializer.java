@@ -2,6 +2,7 @@ package com.bannershallmark.config;
 
 import static com.bannershallmark.util.Constants.Development.ON_SERVER;
 
+
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
@@ -12,9 +13,6 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
-import org.mapdb.DB;
-import org.mapdb.DBException;
-import org.mapdb.DBMaker;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.WebApplicationInitializer;
 
