@@ -58,7 +58,7 @@
 
 				<section class="section blnk-db">
 					<form:form class="form-horizontals" method="post" id="user_form"
-						onsubmit="saveForm()" name="user_form" action="addNewDepartmentdd"
+						onsubmit="saveForm()" name="user_form" action="addItemsData"
 						modelAttribute="item">
 						<%@ include file="../common/error-and-success-message.jsp"%>
 

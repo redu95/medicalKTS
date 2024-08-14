@@ -85,106 +85,27 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+										<c:forEach var="items" items="${items}">
 											<tr>
-												<td>Sterilizer</td>
-												<td>120</td>
-												<td>260</td>
-												<td>Pcs</td>
-												<td>50</td>
-												<td>Sterilizer</td>
-												<td>Common Use</td>
-												<td>AISIE</td>
-										 	    <td class="td-actions">
+												<td>${items.itemName}</td>
+												<td>${items.onHand}</td>
+												<td>${items.totalQuanitiy}</td>
+												<td>${items.measmurmentUnit}</td>
+												<td>${items.minimunStock}</td>
+												<td>${items.description}</td>
+												<td>${items.itemType}</td>
+												<td>${items.vendorName}</td>
+											    <td class="td-actions">
 					                                <div class="action-buttons">
-					                                
-					                                   <a class="" title="Edit" href="${pageContext.request.contextPath}/users/getUsersmkjh?id=11">
+					                                   <a class="" title="Edit" onClick="loadItemsdata(${items.id})" href="#">
 					                                   	<span class="badge" style="background-color: #8e9ed8;"><i class="bi bi-pencil"></i></span></a>
-					                                	
+					                                 
 					                                	<a class="red" href="${pageContext.request.contextPath}/users/deleteUsersgh/1" onclick="return confirm('Are you sure to delete?')" id="remove">
 					                                   		<span class="badge" style="background-color: #fe6e6e;"><i class="bi bi-trash-fill"></i></span></a>
 					                                 </div>			                                
-					                            </td>			                            
+					                            </td>			                                
 											</tr>
-											<tr>
-												<td>Sterilizer</td>
-												<td>120</td>
-												<td>260</td>
-												<td>Pcs</td>
-												<td>50</td>
-												<td>Sterilizer</td>
-												<td>Common Use</td>
-												<td>AISIE</td>
-										 	    <td class="td-actions">
-					                                <div class="action-buttons">
-					                                
-					                                   <a class="" title="Edit" href="${pageContext.request.contextPath}/users/getUsersmkjh?id=11">
-					                                   	<span class="badge" style="background-color: #8e9ed8;"><i class="bi bi-pencil"></i></span></a>
-					                                	
-					                                	<a class="red" href="${pageContext.request.contextPath}/users/deleteUsersgh/1" onclick="return confirm('Are you sure to delete?')" id="remove">
-					                                   		<span class="badge" style="background-color: #fe6e6e;"><i class="bi bi-trash-fill"></i></span></a>
-					                                 </div>			                                
-					                            </td>			                            
-											</tr>
-											<tr>
-												<td>Sterilizer</td>
-												<td>120</td>
-												<td>260</td>
-												<td>Pcs</td>
-												<td>50</td>
-												<td>Sterilizer</td>
-												<td>Common Use</td>
-												<td>AISIE</td>
-										 	    <td class="td-actions">
-					                                <div class="action-buttons">
-					                                
-					                                   <a class="" title="Edit" href="${pageContext.request.contextPath}/users/getUsersmkjh?id=11">
-					                                   	<span class="badge" style="background-color: #8e9ed8;"><i class="bi bi-pencil"></i></span></a>
-					                                	
-					                                	<a class="red" href="${pageContext.request.contextPath}/users/deleteUsersgh/1" onclick="return confirm('Are you sure to delete?')" id="remove">
-					                                   		<span class="badge" style="background-color: #fe6e6e;"><i class="bi bi-trash-fill"></i></span></a>
-					                                 </div>			                                
-					                            </td>			                            
-											</tr>
-											<tr>
-												<td>Sterilizer</td>
-												<td>120</td>
-												<td>260</td>
-												<td>Pcs</td>
-												<td>50</td>
-												<td>Sterilizer</td>
-												<td>Common Use</td>
-												<td>AISIE</td>
-										 	    <td class="td-actions">
-					                                <div class="action-buttons">
-					                                
-					                                   <a class="" title="Edit" href="${pageContext.request.contextPath}/users/getUsersmkjh?id=11">
-					                                   	<span class="badge" style="background-color: #8e9ed8;"><i class="bi bi-pencil"></i></span></a>
-					                                	
-					                                	<a class="red" href="${pageContext.request.contextPath}/users/deleteUsersgh/1" onclick="return confirm('Are you sure to delete?')" id="remove">
-					                                   		<span class="badge" style="background-color: #fe6e6e;"><i class="bi bi-trash-fill"></i></span></a>
-					                                 </div>			                                
-					                            </td>			                            
-											</tr>
-											<tr>
-												<td>Sterilizer</td>
-												<td>120</td>
-												<td>260</td>
-												<td>Pcs</td>
-												<td>50</td>
-												<td>Sterilizer</td>
-												<td>Common Use</td>
-												<td>AISIE</td>
-										 	    <td class="td-actions">
-					                                <div class="action-buttons">
-					                                
-					                                   <a class="" title="Edit" href="${pageContext.request.contextPath}/users/getUsersmkjh?id=11">
-					                                   	<span class="badge" style="background-color: #8e9ed8;"><i class="bi bi-pencil"></i></span></a>
-					                                	
-					                                	<a class="red" href="${pageContext.request.contextPath}/users/deleteUsersgh/1" onclick="return confirm('Are you sure to delete?')" id="remove">
-					                                   		<span class="badge" style="background-color: #fe6e6e;"><i class="bi bi-trash-fill"></i></span></a>
-					                                 </div>			                                
-					                            </td>			                            
-											</tr>
+										</c:forEach>
                                     </tbody>
                                 </table>
                             </div>

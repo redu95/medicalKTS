@@ -62,9 +62,11 @@ public interface MedicalService {
 	
 	List<Department> allDepartment();	
 	List<MedicService> allServices();	
+	List<MedicItem> allItems();
 	
 	PatientData checkByPhonePatient(String phoneNumber);
 	
 	List<Object[]> getSalesListOrgTotalDate(Integer shopId, Date startDate, Date endDate, String orderBy);
+
 }
 	

@@ -93,14 +93,27 @@ public class MedicInstituteController {
 	
 	@GetMapping("/medicItems")
 	public String medicItems(Model model) throws Exception {
+		List<MedicItem> items = medicalService.allItems();
+	    model.addAttribute("items", items);
+	    MedicItem item = new MedicItem();
+		model.addAttribute("item", item);
 		return "medicInstitute/items";
 	}
 	
 	@GetMapping("/addMedicItems")
 	public String addMedicItems(Model model) throws Exception {
-		MedicItem item = new MedicItem();
-		model.addAttribute("item", item);
 		return "medicInstitute/addItems";
+	}
+	
+	@PostMapping("/addItemsData")
+	public String addItemsData( @ModelAttribute MedicItem item) throws Exception {
+		
+		
+		item.setInstituteId(1);
+		item.setIsActive(1);
+		
+		medicalService.save(item);
+		return "redirect:/Institute/medicItems";
 	}
 	
 	@GetMapping("/editMedicItems")

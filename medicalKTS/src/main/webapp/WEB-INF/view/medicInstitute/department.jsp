@@ -313,8 +313,7 @@
 			        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 			            <c:forEach var="department" items="${departments}">
 		                    <div class="department-card bg-white">
-		                    	<img src="data:image/jpeg;base64,${department.departmentHead}" alt="Department Image"> 
-		                        <!-- <img src="${pageContext.request.contextPath}/resources/assets/images/departments/department${department.id}.jpg" alt="Department Image"> -->
+		                    	<img src="data:image/jpeg;base64,${department.departmentHead}" alt="Department Image">     
 		                        <div class="p-4">
 		                            <h3 class="text-xl font-semibold">${department.departmentName}</h3>
 		                            <div class="flex items-center mt-2">

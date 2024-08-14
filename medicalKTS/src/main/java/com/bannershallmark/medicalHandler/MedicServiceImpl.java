@@ -294,6 +294,13 @@ public class MedicServiceImpl implements MedicalService {
 	
 	@Override
 	@Transactional
+	public List<MedicItem> allItems() {
+		// TODO Auto-generated method stub
+		return medicDao.allItems();		
+	}
+	
+	@Override
+	@Transactional
 	public List<Object[]> getSalesListOrgTotalDate(Integer shopId, Date startDate, Date endDate, String orderBy) {
 		// TODO Auto-generated method stub
 		return medicDao.getSalesListOrgTotalDate(shopId,startDate,endDate,orderBy);

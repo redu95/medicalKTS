@@ -61,7 +61,8 @@ public interface MedicDao{
 
 	
 	List<Department> allDepartment();	
-	List<MedicService> allServices();	
+	List<MedicService> allServices();
+	List<MedicItem> allItems();
 
 	PatientData checkByPhonePatient(String phoneNumber);
 	
