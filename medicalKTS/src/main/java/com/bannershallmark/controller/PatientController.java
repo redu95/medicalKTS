@@ -1250,7 +1250,7 @@ public class PatientController {
 	              System.out.println("Got the file in hererere"); 
 	            } 
 	          } catch (Exception e) { 
-	             
+	             //
 	          } 
 	           
 	           
