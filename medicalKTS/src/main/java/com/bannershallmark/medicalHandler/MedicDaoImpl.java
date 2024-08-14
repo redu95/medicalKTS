@@ -423,6 +423,13 @@ public class MedicDaoImpl implements MedicDao  {
 	}
 	
 	@Override
+	public List<MedicItem> allItems() {
+		Session session = sessionFactory.getCurrentSession();
+		Query<MedicItem> query=session.createQuery("from MedicItem", MedicItem.class);
+		return query.getResultList();
+	}
+	
+	@Override
 	public List<Object[]> getSalesListOrgTotalDate(Integer orgId, Date startDate, Date endDate, String orderBy) {
 		Session session = sessionFactory.getCurrentSession();
 		Query<Object[]> query = session.createQuery("Select sum(totalSalePrice),sum(quantity),count(quantity) from InventorySales where storeId.storeOrgId=:orgId and salesDate>=:startDate and salesDate<=:endDate group by storeId.storeOrgId "+orderBy, Object[].class);
