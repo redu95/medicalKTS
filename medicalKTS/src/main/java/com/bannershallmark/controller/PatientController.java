@@ -1,6 +1,9 @@
 package com.bannershallmark.controller;
 
 
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 
 import java.text.DecimalFormat;
@@ -8,10 +11,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -20,6 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +37,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bannershallmark.entity.DateTimeSchedule;
 import com.bannershallmark.entity.Department;
 import com.bannershallmark.entity.ExaminationData;
+import com.bannershallmark.entity.InvoiceVo;
 import com.bannershallmark.entity.MedicSales;
 import com.bannershallmark.entity.MedicService;
 import com.bannershallmark.entity.PatientData;
@@ -43,6 +50,14 @@ import com.bannershallmark.util.Constants;
 import com.bannershallmark.vo.NewPatientVo;
 import com.bannershallmark.vo.PatientListAjax;
 import com.bannershallmark.vo.ServiceListAjax;
+
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.FileResolver;
 
 @Controller
 @RequestMapping("/Patient")
@@ -1155,4 +1170,94 @@ public class PatientController {
 				return itemListAjax;
 		        
 			}
+		
+		@GetMapping("/getReport2") 
+	    public void getReport2(HttpServletResponse response, RedirectAttributes redirectAttributes) throws Exception { 
+	      boolean accessStatus = true; 
+	      if (accessStatus) { 
+	          String reportFormat = "pdf"; 
+	          ArrayList<InvoiceVo> testArrayVO = new ArrayList<InvoiceVo>();           
+	           
+	           
+	          InvoiceVo invoice = new InvoiceVo(); 
+	          invoice.setInvoiceDate("10/11/2024"); 
+	          invoice.setService("Card service"); 
+	          invoice.setMeasurmentUnit("Per unit"); 
+	          invoice.setUnitPrice(100.00); 
+	          invoice.setDiscount(0.00); 
+	          invoice.setSubTotalPrice(100.00); 
+	           
+	           
+	          InvoiceVo invoice2 = new InvoiceVo(); 
+	          invoice2.setInvoiceDate("19/04/2024"); 
+	          invoice2.setService("x-ray"); 
+	          invoice2.setMeasurmentUnit("Per unit"); 
+	          invoice2.setUnitPrice(840.00); 
+	          invoice2.setDiscount(0.00); 
+	          invoice2.setSubTotalPrice(840.00); 
+	           
+	          testArrayVO.add(invoice); 
+	          testArrayVO.add(invoice2); 
+	           
+	          File file = ResourceUtils.getFile("classpath:test2.jrxml");  
+	           
+	           
+	             
+	          FileResolver fileResolver = new FileResolver() { 
+	 
+	               @Override 
+	               public File resolveFile(String fileName) { 
+	                  URI uri; 
+	                  try { 
+	                    uri = new URI(this.getClass().getResource(fileName).getPath()); 
+	                    return new File(uri.getPath()); 
+	                  } catch (URISyntaxException e) { 
+	                    // TODO Auto-generated catch block 
+	                    e.printStackTrace(); 
+	                    return null; 
+	                  } 
+	              } 
+	          };  
+	             
+	          JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath()); 
+	          JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(testArrayVO); 
+	           
+	           
+	          System.out.println("Got the file in hererere VOVOVOVO"); 
+	 
+	          HashMap<String, Object> parameters = new HashMap<String, Object>(); 
+	          invoice.setIssueDate("10/11/2024"); 
+	          invoice.setAddress("Addis Ababa"); 
+	          invoice.setBilledTo("Ermias Ashebr");   
+	          invoice.setTotalPrice(150.00); 
+	           
+	          parameters.put("REPORT_FILE_RESOLVER", fileResolver); 
+	          parameters.put("issueDate", "10/11/2024"); 
+	          parameters.put("address", "Addis Ababa"); 
+	          parameters.put("billedTo", "Ermias Ashebr"); 
+	          parameters.put("totalPrice", 150.00); 
+	           
+	          JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource); 
+	          System.out.println("Got the file in hererere VOVOVOVO"); 
+	           
+	          try { 
+	            if (reportFormat.equalsIgnoreCase("pdf")) { 
+	              //JasperExportManager.exportReportToPdfFile(jasperPrint, finalPath + "\\test.pdf"); 
+	              response.setContentType("application/pdf"); 
+	              response.addHeader("Content-Disposition", "attachment; filename=test.pdf;"); 
+	              JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream()); 
+	               
+	              System.out.println("Got the file in hererere"); 
+	            } 
+	          } catch (Exception e) { 
+	             
+	          } 
+	           
+	           
+	           
+	         
+	 
+	      }  
+	 
+	    }
 }
