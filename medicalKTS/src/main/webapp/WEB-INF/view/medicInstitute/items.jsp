@@ -42,24 +42,11 @@
                        <div class="row">
 							<div class="col-6 col-sm-5">
 								<div class="input-group">
-									<input type="text" name="poSearchValue" id="poSearchValue"
-										class="form-control" onkeyup="showCancelIcon()"
-										placeholder="Search here" value="" style="border-right: none;" />
-									<div class="input-group-append cancelIcon"
-										style="background-color: white; border: 1px solid #dce7f1;"
-										onclick="clearSearch()">
-										<span class="input-group-text"
-											style="background-color: white; border: none;"> <i
-											class="bi bi-x-square"
-											style="background-color: white; border: none; color: red; margin-top: 4px;"></i>
-										</span>
-									</div>
-								</div>
-							</div>
-	
-							<div class="col">
-								<a class="btn btn-primary" onclick="searchHandler()"> <i class="bi bi-search"></i>
-								</a>
+						            <input type="text" name="poSearchValue" id="poSearchValue" class="form-control"  placeholder="Search here" value="" data-initial-val="" style="border-right: none;" />
+						            <span class="input-group-text bg-white border-left-0">
+						                <i class="bi bi-search"></i>
+						            </span>
+						        </div>
 							</div>
 							<div class="col-4 ig-dflx">
 								<a href="${pageContext.request.contextPath}/Institute/addMedicItems" class="btn btn-primary">  <i class="bi bi-credit-card-2-back "></i> New Item</a>
@@ -71,7 +58,7 @@
                            <div class="card">
                             <div class="card-body  ">
                             <div class="inv-data-tble">
-                                <table class="table table-striped">
+                                <table class="table table-striped" id="itemTable">
                                     <thead>
                                         <tr style="background-color: #D9DFF2;">
                                             <th>ItemName</th>
@@ -86,7 +73,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-										<c:forEach var="items" items="${items}">
+                                    	<!-- 
+                                    	<c:forEach var="items" items="${items}">
 											<tr>
 												<td>${items.itemName}</td>
 												<td>${items.onHand}</td>
@@ -107,6 +95,8 @@
 					                            </td>			                                
 											</tr>
 										</c:forEach>
+                                    	 -->
+										
                                     </tbody>
                                 </table>
                             </div>
@@ -146,7 +136,7 @@
 									</ul>
 								</nav>
                         </div>
-                        
+                        <h3 id="searchCard"></h3>
                         <!-- Modal edit item -->
 				    	<div class="modal fade" id="newItemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="newDepartmentModalLabel" aria-hidden="true">
 					        <div class="modal-dialog modal-lg" role="document">
@@ -277,8 +267,97 @@
    	<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
    	<script>
 	   	$(document).ready(function(){
-			$('.cancelIcon').hide();
+	   		$('#searchCard').hide();
+	   		$.ajax({
+				url: '${pageContext.request.contextPath}/Institute/getItemsData',
+				success : function(response) {
+					console.log(response);
+					$('#itemTable').DataTable( {
+						data: response.item,
+						"aoColumns": aoColumns,
+						"scrollX": true,
+						ordering: true,
+						lengthMenu: [
+					        [10, 25, 50, -1],
+					        [10, 25, 50, 'All']
+					    ],
+						"processing": true,
+						info:           false,
+					    paging:         false,
+					    searching: 		false,
+						language: {
+								processing: "<div class='loader'></div>"
+							}
+					    
+					} );
+					$('#p1').text(response.page1);
+					$('#p2').text(response.page2);
+					$('#p3').text(response.page3);
+					$('#p4').text(response.page4);
+					$('#p5').text(response.page5);
+					$('#p9').attr("data-initial-value",response.countItem)
+					
+				}
+			});			
 		});
+	   	
+	   	
+	   	var aoColumns = [{
+			"mData" : null,
+			"mRender" : function(data) {
+				var status = data.itemName;
+				return '<div class=\"form-check-Data\">'+status+'</div>';
+			}
+		},{
+			"mData" : null,
+			"mRender" : function(data) {
+				var status = data.onHand;
+				return '<div class=\"form-check-Data\">'+status+'</div>';
+			}
+		},{
+			"mData" : null,
+			"mRender" : function(data) {
+				var status = data.totalQuanitiy;
+				return '<div class=\"form-check-Data\">'+status+'</div>';
+			}
+		},{
+			"mData" : null,
+			"mRender" : function(data) {
+				var status = data.measmurmentUnit;
+				return '<div class=\"form-check-Data\">'+status+'</div>';
+			}
+		},{
+			"mData" : null,
+			"mRender" : function(data) {
+				var status = data.minimunStock;
+				return '<div class=\"form-check-Data\">'+status+'</div>';
+			}
+		},{
+			"mData" : null,
+			"mRender" : function(data) {
+				var status = data.description;
+				return '<div class=\"form-check-Data\">'+status+'</div>';
+			}
+		},{
+			"mData" : null,
+			"mRender" : function(data) {
+				var status = data.itemType;
+				return '<div class=\"form-check-Data\">'+status+'</div>';
+			}
+		},{
+			"mData" : null,
+			"mRender" : function(data) {
+				var status = data.vendorName;
+				return '<div class=\"form-check-Data\">'+status+'</div>';
+			}
+		},{
+			"mData" : null,
+			"mRender" : function(data) {
+				var status = '<div class="action-buttons"><a class="" title="Edit" onClick="loadItemsdata('+data.id+')" href="#"><span class="badge" style="background-color: #8e9ed8;"><i class="bi bi-pencil"></i></span></a><a class="red" href="${pageContext.request.contextPath}/Institute/deleteItem/'+data.id+'" onclick="return confirm("Are you sure to delete?")" id="remove"><span class="badge" style="background-color: #fe6e6e;"><i class="bi bi-trash-fill"></i></span></a></div>';
+				return status;
+			}
+		}];
+	   	
 	   	
 		function loadItemsdata(itemsId) {
         	
@@ -311,6 +390,176 @@
         	
         	
         }
+		
+		
+		function handlePage(x){
+			var searchValue=$('#searchCard').text();
+			
+
+			if(x===1){
+				var pagenum = $('#p1').text();
+			}
+			if(x===2){
+				var pagenum = $('#p2').text();
+			}
+			if(x===3){
+				var pagenum = $('#p3').text();
+			}
+			if(x===4){
+				var pagenum = $('#p4').text();
+			}
+			if(x===5){
+				var pagenum = $('#p5').text();
+			}
+			if(x===6){
+				var pagenum = 1;
+				$('.page-item').each(function() {
+					if($(this).hasClass("active")){
+						pagenum=$(this).after().text();
+						if(pagenum === '1'){
+							
+						} else {
+							pagenum = Number(pagenum) - 1;
+						}
+					}
+		   	    });
+			}
+			if(x===7){
+				var pagenum = 1;
+				$('.page-item').each(function() {
+					if($(this).hasClass("active")){
+						pagenum=$(this).after().text();
+						pagenum = Number(pagenum) + 1;
+					}
+		   	    });
+			}
+			if(x===8){
+				var pagenum = 1;
+			}
+			if(x===9){
+				var pagenum = $('#p9').attr("data-initial-value");
+			}
+			
+			if(pagenum==="-"){
+				return;
+			}
+			
+			if ( $.fn.DataTable.isDataTable('#itemTable') ) {
+				$('#itemTable').DataTable().destroy();
+				$('#itemTable tbody').empty();
+				
+			}
+			
+			$.ajax({
+				url: '${pageContext.request.contextPath}/Institute/getItemsData',
+				data: {
+					page: pagenum,
+					search: searchValue,
+				},
+				success : function(response) {
+					console.log(response);
+					$('#itemTable').DataTable( {
+						data: response.item,
+						"aoColumns": aoColumns,
+						"scrollX": true,
+						ordering: false,
+						"processing": true,
+						info:           false,
+					    paging:         false,
+					    searching: 		false,
+						language: {
+								processing: "<div class='loader'></div>"
+							}
+					    
+					} );
+					$('#p1').text(response.page1);
+					$('#p2').text(response.page2);
+					$('#p3').text(response.page3);
+					$('#p4').text(response.page4);
+					$('#p5').text(response.page5);
+					$('#p9').attr("data-initial-value",response.countItem)
+
+					if(response.page===1){
+						 $("#l2").addClass("active");
+						 $("#l1,#l3,#l4,#l5").removeClass("active");
+					} else if(response.page===2){
+						 $("#l3").addClass("active");
+						 $("#l1,#l2,#l4,#l5").removeClass("active");
+					} else {
+						 $("#l1").addClass("active");
+						 $("#l2,#l3,#l4,#l5").removeClass("active");
+					}
+					
+					if(response.pageLimit===1 || response.pageLimit===2){
+						$('#p4,#p5').text('-');
+					}
+				}
+			});
+			
+		};
+		
+		function searchHandler(){
+			var searchValue=$('#poSearchValue').val();
+			console.log(searchValue);
+			if ( $.fn.DataTable.isDataTable('#itemTable') ) {
+				$('#itemTable').DataTable().destroy();
+				$('#itemTable tbody').empty();
+				
+			}
+			
+			$.ajax({
+				url: '${pageContext.request.contextPath}/Institute/getItemsData',
+				data: {
+					search: searchValue,
+				},
+				success : function(response) {
+					console.log(response);
+					$('#itemTable').DataTable( {
+						data: response.item,
+						"aoColumns": aoColumns,
+						"scrollX": true,
+						ordering: false,
+						"processing": true,
+						info:           false,
+					    paging:         false,
+					    searching: 		false,
+						language: {
+								processing: "<div class='loader'></div>"
+							}
+					    
+					} );
+					$('#p1').text(response.page1);
+					$('#p2').text(response.page2);
+					$('#p3').text(response.page3);
+					$('#p4').text(response.page4);
+					$('#p5').text(response.page5);
+					$('#p9').attr("data-initial-value",response.countItem)
+
+					if(response.page===1){
+						 $("#l2").addClass("active");
+						 $("#l1,#l3,#l4,#l5").removeClass("active");
+					} else if(response.page===2){
+						 $("#l3").addClass("active");
+						 $("#l1,#l2,#l4,#l5").removeClass("active");
+					} else {
+						 $("#l1").addClass("active");
+						 $("#l2,#l3,#l4,#l5").removeClass("active");
+					}
+					
+					if(response.pageLimit===1 || response.pageLimit===2){
+						$('#p4,#p5').text('-');
+					}
+				}
+			});
+			
+		};
+		
+		var inputElement = document.getElementById('poSearchValue');
+	    inputElement.addEventListener('keydown', function(event) {
+	        if (event.key === 'Enter' || event.keyCode === 13) {
+	        	searchHandler();
+	        }
+	    });
 
    	</script>
 

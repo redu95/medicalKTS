@@ -457,6 +457,52 @@ public class MedicDaoImpl implements MedicDao  {
 	}
 	
 	@Override
+	public List<MedicItem> allItemsByOrder(Integer page, String searchValue, String orderBy) {
+		 Session session = sessionFactory.getCurrentSession();
+		 if (!page.equals(1)) {
+				page --;
+				page = page*2;
+				//page ++;
+		 } else {
+			 	page=0;
+		 }
+		
+		 StringBuilder hql = new StringBuilder("from MedicItem where isActive=1 ");
+		 StringBuilder countHql = new StringBuilder("select count(*) from MedicItem where isActive=1");
+
+		 // Add conditions for non-empty parameters
+		 
+		 if (StringUtils.isNotBlank(searchValue)) {
+		     hql.append(" and (itemName like concat(concat('%', :searchValue), '%') or description like concat(concat('%', :searchValue), '%') )");
+		     countHql.append(" and (itemName like concat(concat('%', :searchValue), '%') or description like concat(concat('%', :searchValue), '%') )");
+		 }
+		 
+		 hql.append(orderBy);
+		 //countHql.append(orderBy);
+		 Query<MedicItem> query = session.createQuery(hql.toString(), MedicItem.class);
+		 Query<Long> countQuery = session.createQuery(countHql.toString(), Long.class);
+
+		if (StringUtils.isNotBlank(searchValue)) {
+			query.setParameter("searchValue", searchValue);
+			countQuery.setParameter("searchValue", searchValue);
+		}
+		 
+		query.setFirstResult(page);
+		query.setMaxResults(2);
+		
+		List<MedicItem> medicItem = query.getResultList();
+		System.out.println("Medic size" + medicItem.size());
+	    Long totalSize = countQuery.uniqueResult();
+	    
+	    MedicItem itemHis = new MedicItem();
+	    itemHis.setId(totalSize.intValue());
+	    medicItem.add(itemHis);
+
+		
+		return medicItem;
+	}
+	
+	@Override
 	public List<MedicService> allServices() {
 		Session session = sessionFactory.getCurrentSession();
 		Query<MedicService> query=session.createQuery("from MedicService", MedicService.class);
