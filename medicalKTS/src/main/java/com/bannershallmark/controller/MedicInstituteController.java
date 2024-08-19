@@ -110,7 +110,7 @@ public class MedicInstituteController {
 	@PostMapping("/addItemsData")
 	public String addItemsData( @ModelAttribute MedicItem item) throws Exception {
 		
-		
+		item.setOnHand(item.getTotalQuanitiy());
 		item.setInstituteId(1);
 		item.setIsActive(1);
 		
@@ -123,6 +123,12 @@ public class MedicInstituteController {
 		MedicItem item = new MedicItem();
 		model.addAttribute("item", item);
 		return "medicInstitute/editItems";
+	}
+	
+	@RequestMapping(value = "/deleteItem/{id}")
+	public String deleteItem(@PathVariable("id") Integer id) throws Exception {
+		medicalService.deleteMedicItem(id);
+		return "redirect:/Institute/medicItems";
 	}
 	
 	@GetMapping("/departmentsData")
@@ -720,6 +726,13 @@ public class MedicInstituteController {
 		public Department getDepartmentData(@PathVariable("id") Integer id) throws Exception {
 		    Department department = medicalService.findbyIdDepartment(id);
 		    return department;
+		}
+
+		@RequestMapping(value = "/getItemDetails/{id}", method = RequestMethod.GET, produces = "application/json")
+		@ResponseBody
+		public MedicItem getItemData(@PathVariable("id") Integer id) throws Exception {
+		    MedicItem item = medicalService.findbyIdMedicItem(id);
+		    return item;
 		}
 
 		

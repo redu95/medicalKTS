@@ -36,7 +36,7 @@ public interface MedicalService {
 //	void deleteMedicInstitute(Integer instituteId);
 //	void deletePatient(Integer patientId);
 	void deleteDepartment(Integer departmentId);
-//	void deleteMedicItem(Integer itemId);
+	void deleteMedicItem(Integer itemId);
 	void deleteMedicService(Integer medicServiceId);
 
 

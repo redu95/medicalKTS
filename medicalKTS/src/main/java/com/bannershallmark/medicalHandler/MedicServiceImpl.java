@@ -135,14 +135,14 @@ public class MedicServiceImpl implements MedicalService {
 		// TODO Auto-generated method stub
 		medicDao.deleteDepartment(departmentId);		
 	}
-//	
-//	@Override
-//	@Transactional
-//	public void deleteMedicItem(Integer medicItemId) {
-//		// TODO Auto-generated method stub
-//		medicDao.deleteMedicItem(medicItemId);		
-//	}
-//	
+	
+	@Override
+	@Transactional
+	public void deleteMedicItem(Integer medicItemId) {
+		// TODO Auto-generated method stub
+		medicDao.deleteMedicItem(medicItemId);		
+	}
+	
 	@Override
 	@Transactional
 	public void deleteMedicService(Integer medicServiceId) {

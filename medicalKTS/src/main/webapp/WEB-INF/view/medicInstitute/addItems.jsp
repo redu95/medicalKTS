@@ -105,8 +105,8 @@
 									<div class="col-4">
 										<div class="form-group">
 											<label for="itemType">Measurement unit</label>
-											<form:select type="text" name="itemType" id="itemType"
-												path="itemType" class="form-select" placeholder="itemType"
+											<form:select type="text" name="measmurmentUnit" id="measmurmentUnit"
+												path="measmurmentUnit" class="form-select" placeholder="Measmurment Unit"
 												value="">
 												<form:option value="#">-- Select unit --</form:option>
 												<form:option value="1">Pcs</form:option>
