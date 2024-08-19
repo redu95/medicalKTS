@@ -124,6 +124,14 @@ public class MedicDaoImpl implements MedicDao  {
 		session.saveOrUpdate(service);
 	}
 	
+	@Override
+	public void deleteMedicItem(Integer itemId) {
+		Session session = sessionFactory.getCurrentSession();
+		MedicItem item= session.get(MedicItem.class, itemId);
+		item.setIsActive(0);
+		session.saveOrUpdate(item);
+	}
+	
 	
 	
 	//Find by id institute
@@ -458,7 +466,7 @@ public class MedicDaoImpl implements MedicDao  {
 	@Override
 	public List<MedicItem> allItems() {
 		Session session = sessionFactory.getCurrentSession();
-		Query<MedicItem> query=session.createQuery("from MedicItem", MedicItem.class);
+		Query<MedicItem> query=session.createQuery("from MedicItem where isActive=1", MedicItem.class);
 		return query.getResultList();
 	}
 	
