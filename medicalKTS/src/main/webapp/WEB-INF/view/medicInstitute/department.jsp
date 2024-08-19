@@ -273,11 +273,40 @@
             align-items: center;
             justify-content: flex-end;
         }
+         .spinner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .spinner {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 
 <body >
     <div id="main" class="layout-navbar">
+    	 <div class="spinner-overlay" id="spinner-overlay">
+	        <div class="spinner"></div>
+	    </div>
     	<div id="main-content">
     		<div class="page-heading">
 	    		
@@ -302,7 +331,7 @@
 			       <div class="row mb-6">
 					    <div class="col">
 					        <div class="input-group">
-					            <input type="text" name="poSearchValue" id="poSearchValue" class="form-control" onkeyup="showCancelIcon()" placeholder="Search here" value="" style="border-right: none;" />
+					            <input type="text" name="poSearchValue" id="poSearchValue" class="form-control"  placeholder="Search here" value="" data-initial-val="" style="border-right: none;" />
 					            <span class="input-group-text bg-white border-left-0">
 					                <i class="bi bi-search"></i>
 					            </span>
@@ -606,7 +635,7 @@
 						// Log each department item to the console
 						$('.departmentBox').append('<div class="department-card bg-white"><img src="data:image/jpeg;base64,'+department[i].departmentHead+'" alt="Dept Logo" /><div class="p-4"><h3 class="text-xl font-semibold">'+department[i].departmentName+'</h3><div class="flex items-center mt-2"><span class="text-gray-600 text-sm mr-2">MEMBERS:</span><div class="member-avatars flex"><img src="https://picsum.photos/24?random=1" alt="Member 1"></div></div><p class="text-gray-600 mt-2">${department.description}</p><div class="flex justify-between items-center mt-4"><a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails('+department[i].id+')" class="btn btn-primary">Details</a></div></div><i class="bi bi-trash-fill delete-icon" onclick="deleteDept('+department[i].id+')"></i></div>')
 					}
-					
+					 $("#spinner-overlay").fadeOut("slow");
 					
 				}
 			});
@@ -616,10 +645,13 @@
 	    function showMore(){
 	    	var page = $('#pageNum').attr('data-page-val');
 	    	var page2 = Number(page)+1;
+	    	var search = $('#poSearchValue').attr('data-initial-val');
+	    	$("#spinner-overlay").fadeIn("fast");
 	    	$.ajax({
 				url: '${pageContext.request.contextPath}/Institute/getDepartmentsData',
 				data: {
 					page: page,
+					search: search,
 				},
 				success : function(department) {
 					console.log(department);
@@ -631,12 +663,52 @@
 						$('.departmentBox').append('<div class="department-card bg-white"><img src="data:image/jpeg;base64,'+department[i].departmentHead+'" alt="Dept Logo" /><div class="p-4"><h3 class="text-xl font-semibold">'+department[i].departmentName+'</h3><div class="flex items-center mt-2"><span class="text-gray-600 text-sm mr-2">MEMBERS:</span><div class="member-avatars flex"><img src="https://picsum.photos/24?random=1" alt="Member 1"></div></div><p class="text-gray-600 mt-2">${department.description}</p><div class="flex justify-between items-center mt-4"><a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails('+department[i].id+')" class="btn btn-primary">Details</a></div></div><i class="bi bi-trash-fill delete-icon" onclick="deleteDept('+department[i].id+')"></i></div>')
 					}
 					
-					 $('#pageNum').attr('data-page-val', page2);
+					if(!loopLength==0){
+						 $('#pageNum').attr('data-page-val', page2);
+					}
+					$("#spinner-overlay").fadeOut("slow");
 				}
 			});
 	    }
 	    
-    
+	    function handleSearch(){
+	    	var search = $('#poSearchValue').val();
+	    	$('#poSearchValue').attr('data-initial-val',search);
+	    	$("#spinner-overlay").fadeIn("fast");
+	    	if(search==''){
+	    		 $('#pageNum').attr('data-page-val', 2);
+			}
+	    	$.ajax({
+				url: '${pageContext.request.contextPath}/Institute/getDepartmentsData',
+				data: {
+					search: search,
+				},
+				success : function(department) {
+					console.log(department);
+					console.log(search);
+					var loopLength = department.length;
+					
+					$('.department-card').each(function() {
+			 			$(this).remove();
+			   	    });
+					
+					for (var i = 0; i < loopLength; i++) {
+						// Log each department item to the console
+						console.log(i);
+						$('.departmentBox').append('<div class="department-card bg-white"><img src="data:image/jpeg;base64,'+department[i].departmentHead+'" alt="Dept Logo" /><div class="p-4"><h3 class="text-xl font-semibold">'+department[i].departmentName+'</h3><div class="flex items-center mt-2"><span class="text-gray-600 text-sm mr-2">MEMBERS:</span><div class="member-avatars flex"><img src="https://picsum.photos/24?random=1" alt="Member 1"></div></div><p class="text-gray-600 mt-2">${department.description}</p><div class="flex justify-between items-center mt-4"><a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails('+department[i].id+')" class="btn btn-primary">Details</a></div></div><i class="bi bi-trash-fill delete-icon" onclick="deleteDept('+department[i].id+')"></i></div>')
+					}
+					$("#spinner-overlay").fadeOut("slow");
+				}
+			});
+	    }
+	    
+	    var inputElement = document.getElementById('poSearchValue');
+	    inputElement.addEventListener('keydown', function(event) {
+	        if (event.key === 'Enter' || event.keyCode === 13) {
+	        	handleSearch();
+	   		}
+	    });
+	    
     	var aoColumns = [{
 			"mData" : null,
 			"mRender" : function(data) {
