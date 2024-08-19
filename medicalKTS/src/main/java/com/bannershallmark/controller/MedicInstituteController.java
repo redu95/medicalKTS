@@ -3,6 +3,9 @@ package com.bannershallmark.controller;
 
 
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
@@ -33,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bannershallmark.entity.DateTimeSchedule;
 import com.bannershallmark.entity.Department;
@@ -45,6 +50,7 @@ import com.bannershallmark.entity.Users;
 import com.bannershallmark.medicalHandler.MedicalService;
 import com.bannershallmark.service.MyUserDetails;
 import com.bannershallmark.service.UsersDetailsService;
+import com.bannershallmark.util.Constants;
 import com.bannershallmark.vo.ServiceListAjax;
 import com.bannershallmark.vo.SmsModel;
 
@@ -127,22 +133,94 @@ public class MedicInstituteController {
 	
 	@GetMapping("/departmentsData")
 	  public String departmentsData(Model model) throws Exception {
-	    List<Department> departments = medicalService.allDepartment();
-	    model.addAttribute("departments", departments);
+//	    List<Department> departments = medicalService.allDepartment();
+//	    model.addAttribute("departments", departments);
 	    Department department = new Department();
 	    List<Users> users = usersDetailsService.findAll();
 	    
 	    
-	    for(Department d: departments) {
-	    	byte[] imageByte = d.getDocData();
-			String base64Image = Base64.getEncoder().encodeToString(imageByte);
-			d.setDepartmentHead(base64Image);
-			System.out.println();			System.out.println("Image data is not null");
-	    }
+//	    for(Department d: departments) {
+//	    	byte[] imageByte = d.getDocData();
+//	    	String base64Image = "";
+//	    	if(imageByte!=null) {
+//	    		base64Image = Base64.getEncoder().encodeToString(imageByte);
+//	    	}
+//			d.setDepartmentHead(base64Image);
+//	    }
 		
 	    model.addAttribute("department", department);
 	    model.addAttribute("users", users);
 	    return "medicInstitute/department";
+	  }
+	
+	@GetMapping("/getDepartmentsData")
+	@ResponseBody
+	public List<Department> getDepartmentsData() throws Exception {
+		String page = "";
+		String searchValue = "";
+		String orderBy = "";
+		
+		try {
+			page = request.getParameter("page");
+		} catch (Exception e) {
+			page = "1";
+		}
+		
+		try {
+			searchValue = request.getParameter("search");
+		} catch (Exception e) {
+			searchValue = "";
+		}
+		
+		try {
+			orderBy = request.getParameter("orderBy");
+		} catch (Exception e) {
+			orderBy = "0";
+		}
+		
+		
+		if (page==null) {
+			page = "1";
+		}
+		
+		if (searchValue==null) {
+			searchValue = "";
+		}
+		
+		if (orderBy==null) {
+			orderBy = "0";
+		}
+
+		
+		String orderByQuery = "";
+		Integer pageFinal = Integer.parseInt(page);
+		List<Department> departments = medicalService.allDepartmentByOrder(pageFinal,searchValue,orderByQuery);
+		
+		 int width = 500;
+         int height = 500;
+         BufferedImage whiteImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+         for (int y = 0; y < height; y++) {
+             for (int x = 0; x < width; x++) {
+                 whiteImage.setRGB(x, y, Color.GRAY.getRGB());
+             }
+         }
+         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+         ImageIO.write(whiteImage, "png", baos);
+       
+         
+         
+	    for(Department d: departments) {
+	    	byte[] imageByte = d.getDocData();
+	    	String base64Image = "";
+	    	if(imageByte!=null) {
+	    		base64Image = Base64.getEncoder().encodeToString(imageByte);
+	    	} else {
+	    		base64Image = Base64.getEncoder().encodeToString(baos.toByteArray());
+	    	}
+	    	d.setDepartmentHead(base64Image);
+	    }
+	    return departments;
 	  }
 	
 	@GetMapping("/addDepartment")
@@ -158,7 +236,7 @@ public class MedicInstituteController {
 	}
 	
 	@PostMapping("/addDepartmentData")
-	public String addDepartmentData(@RequestParam(value = "file", required = false) MultipartFile file, @ModelAttribute Department department) throws Exception {
+	public String addDepartmentData(@RequestParam(value = "file", required = false) MultipartFile file, @ModelAttribute Department department, RedirectAttributes redirectAttributes) throws Exception {
 		
 		System.out.println(department.getId());
 		System.out.println(department.getDepartmentName());
@@ -182,6 +260,7 @@ public class MedicInstituteController {
 	
 		
 		medicalService.save(department);
+		redirectAttributes.addFlashAttribute(Constants.AttributeNames.SUCCESS_MESSAGE, "Deta operation completed successfully");
 		return "redirect:/Institute/departmentsData";
 	}
 	

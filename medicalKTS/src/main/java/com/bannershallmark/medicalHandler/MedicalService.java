@@ -61,6 +61,7 @@ public interface MedicalService {
 	List<PatientMedicalHistory> getMedicalHistoryByPatient(Integer patientId);	
 	
 	List<Department> allDepartment();	
+	List<Department> allDepartmentByOrder(Integer page, String searchValue, String orderBy);	
 	List<MedicService> allServices();	
 	List<MedicItem> allItems();
 	

@@ -273,11 +273,40 @@
             align-items: center;
             justify-content: flex-end;
         }
+         .spinner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .spinner {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 
 <body >
     <div id="main" class="layout-navbar">
+    	 <div class="spinner-overlay" id="spinner-overlay">
+	        <div class="spinner"></div>
+	    </div>
     	<div id="main-content">
     		<div class="page-heading">
 	    		
@@ -298,22 +327,34 @@
                             </div>
                         </div>
                     </div>
-	    		
-			        <div class="container row mb-6 ">
-			            <div class = "col">
-			            	<input type="text" id="poSearchValue" placeholder="Search by Name" class=" w-full border border-gray-300 px-4 py-2 rounded-lg">
-			            </div>
-			            <div class = "col-4 ig-dflx">
-			            	<a href="#" class="btn btn-primary"data-dismiss="modal" id="newDepartmentBtnOriginal" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i class="bi bi-credit-card-2-back "></i>New Department</a>
-			            </div>
-			            <div class="absolute right-4 top-2">
-			                <i class="bi bi-x-square text-red-500 cursor-pointer" onclick="clearSearch()" style="display: none;"></i>
-			            </div>
-			        </div>
-			        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-			            <c:forEach var="department" items="${departments}">
+	    			<%@ include file="../common/error-and-success-message.jsp"%>
+			       <div class="row mb-6">
+					    <div class="col">
+					        <div class="input-group">
+					            <input type="text" name="poSearchValue" id="poSearchValue" class="form-control"  placeholder="Search here" value="" data-initial-val="" style="border-right: none;" />
+					            <span class="input-group-text bg-white border-left-0">
+					                <i class="bi bi-search"></i>
+					            </span>
+					        </div>
+					    </div>
+					    <div class="col-4 ig-dflx">
+					        <a href="#" class="btn btn-primary" data-dismiss="modal" id="newDepartmentBtnOriginal" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+					            <i class="bi bi-credit-card-2-back"></i> New Department
+					        </a>
+					    </div>
+					</div>
+
+			        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 departmentBox mb-4">
+				     	 <!-- 
+				         <c:forEach var="department" items="${departments}">
 		                    <div class="department-card bg-white">
-		                    	<img src="data:image/jpeg;base64,${department.departmentHead}" alt="Department Image">     
+		                    	<c:if test="${not empty department.departmentHead}">
+		                    		<img src="data:image/jpeg;base64,${department.departmentHead}" alt="Department Image">  
+		                    	</c:if>
+		                    	<c:if test="${empty department.departmentHead}">
+		                    		 <img src="${pageContext.request.contextPath}/resources/assets/images/bg/woodybg.jpg">  
+		                    	</c:if>
+		                    	   
 		                        <div class="p-4">
 		                            <h3 class="text-xl font-semibold">${department.departmentName}</h3>
 		                            <div class="flex items-center mt-2">
@@ -333,17 +374,23 @@
 		                        <i class="bi bi-trash-fill delete-icon" onclick="deleteDept(${department.id})"></i>
 		                    </div>
 		                </c:forEach>
+				       -->  
+			           
 			        </div>
-			    
-			    
-			    <section class="section blnk-db">
+					<nav aria-label="Page">
+						<ul class="pagination justify-content-center" style="align-content: center;">
+							<li id="pageNum" class="page-item" data-page-val="2"><a class="page-link" onclick="showMore()" href="#">Show more</a></li>
+						</ul>
+					</nav>
+
+				<section class="section blnk-db">
 					<!-- Modal Structure -->
 					<div class="modal fade" id="editDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="editDepartmentModalLabel" aria-hidden="true">
 					  <div class="modal-dialog modal-lg" role="document">
 					    <div class="modal-content">
 					      <div class="modal-header">
 					        <h5 class="modal-title" id="editDepartmentModalLabel">Edit Department</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModalView()">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeEditModalView()">
 					          <span aria-hidden="true">&times;</span>
 					        </button>
 					      </div>
@@ -358,7 +405,6 @@
 								<form:input type="hidden" path="stuffNumber" />
 								<form:input type="hidden" path="registeredServices" />
 								
-								<%@ include file="../common/error-and-success-message.jsp"%>
 		
 								<div class="card tp-inpt">
 									<div class="card-body">
@@ -468,7 +514,7 @@
 		
 								<div class="row">
 									<div class="col-12 d-flex justify-content-center">
-										<a href="${pageContext.request.contextPath}/Institute/departmentsData"
+										<a href="#" onclick="closeEditModalView()"
 											class="c-btn btn btn-primary me-3 mb-1" style="color: #435ebe; background-color: transparent;">Cancel</a>
 										<button type="submit" class=" c-btn btn btn-primary"
 											id="saveData">Save</button>
@@ -495,7 +541,6 @@
 				                	<form:form class="form-horizontals" method="post" id="user_form"
 										onsubmit="saveForm()" name="user_form" action="addDepartmentData"
 										modelAttribute="department" enctype="multipart/form-data">
-										<%@ include file="../common/error-and-success-message.jsp"%>
 				
 										<div class="card tp-inpt">
 											<div class="card-body">
@@ -556,7 +601,7 @@
 				
 										<div class="row">
 											<div class="col-12 d-flex justify-content-center">
-												<a href="${pageContext.request.contextPath}/Institute/departmentsData"
+												<a href="#" onclick="closeModalView()"
 													class="c-btn btn btn-primary me-3 mb-1" style="color: #435ebe; background-color: transparent;" >Cancel</a>
 												<button type="submit" class=" c-btn btn btn-primary"
 													id="saveData">Save</button>
@@ -579,10 +624,92 @@
 
     <script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
     <script>
-    
-    
-    
-	    var aoColumns = [{
+	    $(document).ready(function(){
+			$.ajax({
+				url: '${pageContext.request.contextPath}/Institute/getDepartmentsData',
+				success : function(department) {
+					console.log(department);
+					var loopLength = department.length;
+					
+					for (var i = 0; i < loopLength; i++) {
+						// Log each department item to the console
+						$('.departmentBox').append('<div class="department-card bg-white"><img src="data:image/jpeg;base64,'+department[i].departmentHead+'" alt="Dept Logo" /><div class="p-4"><h3 class="text-xl font-semibold">'+department[i].departmentName+'</h3><div class="flex items-center mt-2"><span class="text-gray-600 text-sm mr-2">MEMBERS:</span><div class="member-avatars flex"><img src="https://picsum.photos/24?random=1" alt="Member 1"></div></div><p class="text-gray-600 mt-2">${department.description}</p><div class="flex justify-between items-center mt-4"><a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails('+department[i].id+')" class="btn btn-primary">Details</a></div></div><i class="bi bi-trash-fill delete-icon" onclick="deleteDept('+department[i].id+')"></i></div>')
+					}
+					 $("#spinner-overlay").fadeOut("slow");
+					
+				}
+			});
+			
+		});
+	    
+	    function showMore(){
+	    	var page = $('#pageNum').attr('data-page-val');
+	    	var page2 = Number(page)+1;
+	    	var search = $('#poSearchValue').attr('data-initial-val');
+	    	$("#spinner-overlay").fadeIn("fast");
+	    	$.ajax({
+				url: '${pageContext.request.contextPath}/Institute/getDepartmentsData',
+				data: {
+					page: page,
+					search: search,
+				},
+				success : function(department) {
+					console.log(department);
+					console.log(page);
+					var loopLength = department.length;
+					
+					for (var i = 0; i < loopLength; i++) {
+						// Log each department item to the console
+						$('.departmentBox').append('<div class="department-card bg-white"><img src="data:image/jpeg;base64,'+department[i].departmentHead+'" alt="Dept Logo" /><div class="p-4"><h3 class="text-xl font-semibold">'+department[i].departmentName+'</h3><div class="flex items-center mt-2"><span class="text-gray-600 text-sm mr-2">MEMBERS:</span><div class="member-avatars flex"><img src="https://picsum.photos/24?random=1" alt="Member 1"></div></div><p class="text-gray-600 mt-2">${department.description}</p><div class="flex justify-between items-center mt-4"><a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails('+department[i].id+')" class="btn btn-primary">Details</a></div></div><i class="bi bi-trash-fill delete-icon" onclick="deleteDept('+department[i].id+')"></i></div>')
+					}
+					
+					if(!loopLength==0){
+						 $('#pageNum').attr('data-page-val', page2);
+					}
+					$("#spinner-overlay").fadeOut("slow");
+				}
+			});
+	    }
+	    
+	    function handleSearch(){
+	    	var search = $('#poSearchValue').val();
+	    	$('#poSearchValue').attr('data-initial-val',search);
+	    	$("#spinner-overlay").fadeIn("fast");
+	    	if(search==''){
+	    		 $('#pageNum').attr('data-page-val', 2);
+			}
+	    	$.ajax({
+				url: '${pageContext.request.contextPath}/Institute/getDepartmentsData',
+				data: {
+					search: search,
+				},
+				success : function(department) {
+					console.log(department);
+					console.log(search);
+					var loopLength = department.length;
+					
+					$('.department-card').each(function() {
+			 			$(this).remove();
+			   	    });
+					
+					for (var i = 0; i < loopLength; i++) {
+						// Log each department item to the console
+						console.log(i);
+						$('.departmentBox').append('<div class="department-card bg-white"><img src="data:image/jpeg;base64,'+department[i].departmentHead+'" alt="Dept Logo" /><div class="p-4"><h3 class="text-xl font-semibold">'+department[i].departmentName+'</h3><div class="flex items-center mt-2"><span class="text-gray-600 text-sm mr-2">MEMBERS:</span><div class="member-avatars flex"><img src="https://picsum.photos/24?random=1" alt="Member 1"></div></div><p class="text-gray-600 mt-2">${department.description}</p><div class="flex justify-between items-center mt-4"><a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails('+department[i].id+')" class="btn btn-primary">Details</a></div></div><i class="bi bi-trash-fill delete-icon" onclick="deleteDept('+department[i].id+')"></i></div>')
+					}
+					$("#spinner-overlay").fadeOut("slow");
+				}
+			});
+	    }
+	    
+	    var inputElement = document.getElementById('poSearchValue');
+	    inputElement.addEventListener('keydown', function(event) {
+	        if (event.key === 'Enter' || event.keyCode === 13) {
+	        	handleSearch();
+	   		}
+	    });
+	    
+    	var aoColumns = [{
 			"mData" : null,
 			"mRender" : function(data) {
 				var status = data.serviceName;
@@ -614,106 +741,6 @@
 			}
 		}];
     
-        function clearSearch() {
-            document.getElementById('poSearchValue').value = '';
-            // Add any additional logic to handle clearing the search input
-        }
-
-        $("#newDepartmentBtnOriginal").click(function(){
-            $("#newDepartmentModal").modal('show');
-        });
-        
-        function deleteDept(id) {
-            if (confirm('Are you sure to delete?')) {
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/Institute/deleteDepartment/' + id,
-                    success: function(response) {
-                        window.location.reload();
-                    }
-                });
-            }
-        }
-        
-        function saveForm() {
-			document.getElementById("saveData").disabled = true;
-		}
-        
-        function loadDepartmentDetails(departmentId) {
-        	
-        	console.log(departmentId)
-        	var deptName = "";
-            $.ajax({
-                url: '${pageContext.request.contextPath}/Institute/getDepartmentDetails/' + departmentId,
-                type: 'GET',
-                dataType: 'json',
-                success: function (department) {
-                    // Populate the modal form fields with the department data
-                    $('#user_form').find('#departmentName').val(department.departmentName);
-                    $('#user_form').find('#description').val(department.description);
-                    $('#user_form').find('#departmentHead').val(department.departmentHead);
-                    $('#user_form').find('#extraNote').val(department.extraNote);
-                    $('#user_form').find('#id').val(department.id);
-                    $('#user_form').find('#instituteId').val(department.id);
-                    $('#user_form').find('#isActive').val(department.id);
-                    $('#user_form').find('#registeredServices').val(department.id);
-                    $('#user_form').find('#stuffNumber').val(department.id);
-                    
-                    $('#deptData').val(department.departmentName);
-                    console.log(department)
-                    deptName = department.departmentName;
-                    
-                    console.log(department.departmentName + "DEPT NAME");
-                	$.ajax({
-        				url: '${pageContext.request.contextPath}/Institute/sendServiceData?dept='+deptName,
-        				success : function(response) {
-        					console.log(response);
-        					console.log(deptName);
-        					console.log("Dept section");
-        					$('#itemTable').DataTable( {
-        						data: response.medicServices,
-        						"aoColumns": aoColumns,
-        						"scrollX": true,
-        						ordering: false,
-        						"processing": true,
-        						info:           false,
-        					    paging:         false,
-        					    searching: 		false,
-        						language: {
-        								processing: "<div class='loader'></div>"
-        							}
-        					    
-        					} );
-        					$('#p1').text(response.page1);
-        					$('#p2').text(response.page2);
-        					$('#p3').text(response.page3);
-        					$('#p4').text(response.page4);
-        					$('#p5').text(response.page5);
-        					$('#p9').attr("data-initial-value",response.countItem)
-        				}
-        			});
-                	
-                    // Show the modal
-                    $('#editDepartmentModal').modal('show');
-                },
-                error: function (xhr, status, error) {
-                    // Handle error
-                    alert('An error occurred while fetching department details: ' + error);
-                }
-            });
-        	
-        	
-        }
-
-        
-        
-        
-        
-        
-        function closeModalView(){
-			$('#newDepartmentModal').modal('hide');
-		}
-        
-
 		function handlePage(x){
 			
 			var deptName = $('#deptData').val();
@@ -818,6 +845,115 @@
 			});
 		
 		};
+		
+        function clearSearch() {
+            document.getElementById('poSearchValue').value = '';
+            // Add any additional logic to handle clearing the search input
+        }
+
+       
+        
+        
+        
+        function saveForm() {
+			document.getElementById("saveData").disabled = true;
+		}
+        
+        function deleteDept(id) {
+            if (confirm('Are you sure to delete?')) {
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/Institute/deleteDepartment/' + id,
+                    success: function(response) {
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+        
+        
+        
+        
+        $("#newDepartmentBtnOriginal").click(function(){
+            $("#newDepartmentModal").modal('show');
+        });
+        
+        function closeModalView(){
+			$('#newDepartmentModal').modal('hide');
+		}
+        function closeEditModalView(){
+			$('#editDepartmentModal').modal('hide');
+		}
+        
+        
+        function loadDepartmentDetails(departmentId) {
+        	
+        	console.log(departmentId)
+        	var deptName = "";
+        	if ( $.fn.DataTable.isDataTable('#itemTable') ) {
+				$('#itemTable').DataTable().destroy();
+				$('#itemTable tbody').empty();
+			}
+            $.ajax({
+                url: '${pageContext.request.contextPath}/Institute/getDepartmentDetails/' + departmentId,
+                type: 'GET',
+                dataType: 'json',
+                success: function (department) {
+                    // Populate the modal form fields with the department data
+                    $('#user_form').find('#departmentName').val(department.departmentName);
+                    $('#user_form').find('#description').val(department.description);
+                    $('#user_form').find('#departmentHead').val(department.departmentHead);
+                    $('#user_form').find('#extraNote').val(department.extraNote);
+                    $('#user_form').find('#id').val(department.id);
+                    $('#user_form').find('#instituteId').val(department.id);
+                    $('#user_form').find('#isActive').val(department.id);
+                    $('#user_form').find('#registeredServices').val(department.id);
+                    $('#user_form').find('#stuffNumber').val(department.id);
+                    
+                    $('#deptData').val(department.departmentName);
+                    console.log(department)
+                    deptName = department.departmentName;
+                    
+                    console.log(department.departmentName + "DEPT NAME");
+                	$.ajax({
+        				url: '${pageContext.request.contextPath}/Institute/sendServiceData?dept='+deptName,
+        				success : function(response) {
+        					console.log(response);
+        					console.log(deptName);
+        					console.log("Dept section");
+        					$('#itemTable').DataTable( {
+        						data: response.medicServices,
+        						"aoColumns": aoColumns,
+        						"scrollX": true,
+        						ordering: false,
+        						"processing": true,
+        						info:           false,
+        					    paging:         false,
+        					    searching: 		false,
+        						language: {
+        								processing: "<div class='loader'></div>"
+        							}
+        					    
+        					} );
+        					$('#p1').text(response.page1);
+        					$('#p2').text(response.page2);
+        					$('#p3').text(response.page3);
+        					$('#p4').text(response.page4);
+        					$('#p5').text(response.page5);
+        					$('#p9').attr("data-initial-value",response.countItem)
+        				}
+        			});
+                	
+                    // Show the modal
+                    $('#editDepartmentModal').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    alert('An error occurred while fetching department details: ' + error);
+                }
+            });
+        	
+        	
+        }
 
 		function toggleDateTime() {
 			$('.datetimepick').toggle();

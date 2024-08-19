@@ -416,6 +416,39 @@ public class MedicDaoImpl implements MedicDao  {
 	}
 	
 	@Override
+	public List<Department> allDepartmentByOrder(Integer page, String searchValue, String orderBy) {
+		 Session session = sessionFactory.getCurrentSession();
+		 if (!page.equals(1)) {
+				page --;
+				page = page*4;
+				//page ++;
+		 } else {
+			 	page=0;
+		 }
+		
+		 StringBuilder hql = new StringBuilder("from Department where isActive=1 ");
+		 // Add conditions for non-empty parameters
+		 
+		 if (StringUtils.isNotBlank(searchValue)) {
+		     hql.append(" and (departmentName like concat(concat('%', :searchValue), '%') or description like concat(concat('%', :searchValue), '%') )");
+		 }
+		 
+		 hql.append(orderBy);
+		 //countHql.append(orderBy);
+		 Query<Department> query = session.createQuery(hql.toString(), Department.class);
+
+		if (StringUtils.isNotBlank(searchValue)) {
+			query.setParameter("searchValue", searchValue);
+		}
+		 
+		query.setFirstResult(page);
+		query.setMaxResults(4);
+		
+		
+		return query.getResultList();
+	}
+	
+	@Override
 	public List<MedicService> allServices() {
 		Session session = sessionFactory.getCurrentSession();
 		Query<MedicService> query=session.createQuery("from MedicService", MedicService.class);
