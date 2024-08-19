@@ -9,10 +9,14 @@
 	</style>
 </head>
 <body>
-<div class='row d-flex justify-content-end mx-5 px-5'>
-	<a href="${pageContext.request.contextPath}/Patient/invoice">
-		<button class='col-2 btn btn-outline-primary mx-3'>Print</button>
-	</a>
+<div class="container-fluid">
+    <div class="row mx-5">
+        <div class="col text-end mx-5"> <!-- Aligns content to the right -->
+            <a href="${pageContext.request.contextPath}/Patient/getReport2/${id}">
+                <button class="btn btn-outline-primary w-25">Print</button>
+            </a>
+        </div>
+    </div>
 </div>
 <div class="container mt-4">
     <div class="card shadow-sm p-4">
@@ -28,12 +32,12 @@
             <div class="col-md-6">
                 <h5 class="text-dark">Invoice</h5>
                 <p class="mb-1"><strong>Billed To:</strong></p>
-                <p class="mb-1"><strong>Client Name:</strong> Solomon Kebede</p>
-                <p class="mb-0"><strong>Address / Contact Info:</strong> Bole, Addis Ababa</p>
+                <p class="mb-1"><strong>Client Name:</strong> ${patient.patientData.name}</p>
+                <p class="mb-0"><strong>Address / Contact Info:</strong> ${patient.patientData.address}</p>
             </div>
             <div class="col-md-6 text-end">
                 <p class="mb-1"><strong>Invoice No.</strong> #000123</p>
-                <p class="mb-1"><strong>Issued Date:</strong> December 7, 2022</p>
+                <p class="mb-1"><strong>Issued Date:</strong> ${patient.patientData.registryDate}</p>
                 <p class="mb-0"><strong>Payment Due:</strong> December 22, 2022</p>
             </div>
         </div>
@@ -53,46 +57,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Jun 24, 2024</td>
-                        <td>Card</td>
-                        <td>Per Procedure</td>
-                        <td>4000.00 ETB</td>
-                        <td>0.00 ETB</td>
-                        <td>4000.00 ETB</td>
-                    </tr>
-                    <tr>
-                        <td>Jun 24, 2024</td>
-                        <td>Blood test</td>
-                        <td>Per Procedure</td>
-                        <td>4000.00 ETB</td>
-                        <td>0.00 ETB</td>
-                        <td>4000.00 ETB</td>
-                    </tr>
-                    <tr>
-                        <td>Jun 24, 2024</td>
-                        <td>Culture</td>
-                        <td>Per Procedure</td>
-                        <td>4000.00 ETB</td>
-                        <td>0.00 ETB</td>
-                        <td>4000.00 ETB</td>
-                    </tr>
-                    <tr>
-                        <td>Jun 24, 2024</td>
-                        <td>MRI</td>
-                        <td>Per Film</td>
-                        <td>4000.00 ETB</td>
-                        <td>0.00 ETB</td>
-                        <td>4000.00 ETB</td>
-                    </tr>
-                    <tr>
-                        <td>Jun 24, 2024</td>
-                        <td>STY Scan</td>
-                        <td>Per Film</td>
-                        <td>4000.00 ETB</td>
-                        <td>0.00 ETB</td>
-                        <td>4000.00 ETB</td>
-                    </tr>
+                    <c:forEach items="${examinationData}" var="examination">
+                        <tr>
+                            <td>${examination.extraNote}</td>
+                            <td>${examination.examination}</td>
+                            <td>${examination.medicService.measurmentUnit}</td>
+                            <td>${examination.medicService.price}</td>
+                            <td>0.00 ETB</td>
+                            <td>${examination.medicService.price}</td>
+                        </tr>
+                    </c:forEach>
+
                 </tbody>
             </table>
         </div>
@@ -100,7 +75,7 @@
         <!-- Total -->
         <div class="row mb-4">
             <div class="col-12 text-end">
-                <h4>Total (ETB): <span class="text-primary">24,000.00</span></h4>
+                <h4>Total (ETB): <span class="text-primary">${total}</span></h4>
             </div>
         </div>
         
@@ -110,11 +85,12 @@
                 <p class="mb-0"><strong>Company Name LLC</strong></p>
                 <p class="mb-0">Bole Addis Ababa, ETHIOPIA</p>
                 <p class="mb-0">Email@company.com</p>
-            </div>
-            <div class="col-6 text-end">
                 <p class="mb-0">Phone Number</p>
                 <p class="mb-0">+2519-4567-8903</p>
                 <p class="mb-0">+2519-4567-8903</p>
+            </div>
+            <div class="col-6 text-end">
+                <img src="${pageContext.request.contextPath}/resources/assets/images/logo/logo.png" alt="KTS logo">
             </div>
         </div>
     </div>

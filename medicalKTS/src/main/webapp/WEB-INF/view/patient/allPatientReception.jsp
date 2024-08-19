@@ -287,7 +287,7 @@
 		},{
 			"mData" : null,
 			"mRender" : function(data) {
-				var status = "<div class='action-buttons'><a class='red' href='${pageContext.request.contextPath}/Patient/editExistingPatientData/"+data.id+"' target='_blank'><i class='bi bi-eye-fill'></i></a></div>";
+				var status = "<div class='action-buttons'><a class='red' href='${pageContext.request.contextPath}/Patient/editExistingPatientData/"+data.id+"'><i class='bi bi-eye-fill'></i></a></div>";
 				return status;
 			}
 		}];

@@ -55,7 +55,15 @@
 						<div class="card tp-inpt">
 							<div class="card-body">
 								<div class="card">
-									<h4>Appointment Info</h4>
+									<div class='d-flex justify-content-between flex-row'>
+										<div class=''><h4>Appointment Info</h4></div>
+										<div class=''>
+											<a href="${pageContext.request.contextPath}/Patient/invoicePage/${medicalHistory[loop.index].id}">
+												<button class='btn btn-outline-primary'>See more ${medicalHistory[loop.index].id}</button>
+											</a>
+										</div>
+										
+									</div>
 										<div class="row mt-1">
 											<div class="col-3">
 									            <div class="c-dflx">
