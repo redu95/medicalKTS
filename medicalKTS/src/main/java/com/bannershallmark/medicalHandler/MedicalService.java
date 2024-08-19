@@ -62,6 +62,7 @@ public interface MedicalService {
 	
 	List<Department> allDepartment();	
 	List<Department> allDepartmentByOrder(Integer page, String searchValue, String orderBy);	
+	List<MedicItem> allItemsByOrder(Integer page, String searchValue, String orderBy);	
 	List<MedicService> allServices();	
 	List<MedicItem> allItems();
 	

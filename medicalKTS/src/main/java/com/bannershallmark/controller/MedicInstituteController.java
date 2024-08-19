@@ -51,6 +51,7 @@ import com.bannershallmark.medicalHandler.MedicalService;
 import com.bannershallmark.service.MyUserDetails;
 import com.bannershallmark.service.UsersDetailsService;
 import com.bannershallmark.util.Constants;
+import com.bannershallmark.vo.ItemListAjax;
 import com.bannershallmark.vo.ServiceListAjax;
 import com.bannershallmark.vo.SmsModel;
 
@@ -99,12 +100,96 @@ public class MedicInstituteController {
 	
 	@GetMapping("/medicItems")
 	public String medicItems(Model model) throws Exception {
-		List<MedicItem> items = medicalService.allItems();
-	    model.addAttribute("items", items);
+//		List<MedicItem> items = medicalService.allItems();
+//	    model.addAttribute("items", items);
 	    MedicItem item = new MedicItem();
 		model.addAttribute("item", item);
 		return "medicInstitute/items";
 	}
+	
+	@GetMapping("/getItemsData")
+	@ResponseBody
+	public ItemListAjax getItemsData() throws Exception {
+		String page = "";
+		String searchValue = "";
+		String orderBy = "";
+		
+		try {
+			page = request.getParameter("page");
+		} catch (Exception e) {
+			page = "1";
+		}
+		
+		try {
+			searchValue = request.getParameter("search");
+		} catch (Exception e) {
+			searchValue = "";
+		}
+		
+		try {
+			orderBy = request.getParameter("orderBy");
+		} catch (Exception e) {
+			orderBy = "0";
+		}
+		
+		
+		if (page==null) {
+			page = "1";
+		}
+		
+		if (searchValue==null) {
+			searchValue = "";
+		}
+		
+		if (orderBy==null) {
+			orderBy = "0";
+		}
+
+		ItemListAjax itemListAjax = new ItemListAjax();
+		String orderByQuery = "";
+		Integer pageFinal = Integer.parseInt(page);
+		List<MedicItem> items = medicalService.allItemsByOrder(pageFinal,searchValue,orderByQuery);
+		Integer totalListSize = 1;
+		if (!items.isEmpty()) {
+			MedicItem lastItem = items.get(items.size() - 1);
+		    totalListSize = lastItem.getId();
+		    totalListSize = (totalListSize/4);
+		    items.remove(items.size() - 1);
+		}
+		
+		Integer size = items.size();
+		System.out.println("Size is " + size);
+		if (pageFinal.equals(1) || pageFinal.equals(2)) {
+			itemListAjax.setPage2(1);
+			itemListAjax.setPage3(2);
+			itemListAjax.setPage1(3);
+			itemListAjax.setPage4(4);
+			itemListAjax.setPage5(5);
+		} else {
+			itemListAjax.setPage1(pageFinal);
+			itemListAjax.setPage2(pageFinal-2);
+			itemListAjax.setPage3(pageFinal-1);
+			itemListAjax.setPage4(pageFinal+1);
+			itemListAjax.setPage5(pageFinal+2);
+		}
+		
+		if (size.equals(0)) {
+			itemListAjax.setPageLimit(1);
+		} else if (size < 25 && size > 0) {
+			itemListAjax.setPageLimit(2);
+		} else {
+			itemListAjax.setPageLimit(0);
+		}
+		
+		itemListAjax.setItem(items);
+		itemListAjax.setSearchVal(searchValue);
+		itemListAjax.setPage(pageFinal);
+		
+		itemListAjax.setCountItem(totalListSize);
+		
+		
+	    return itemListAjax;
+	  }
 	
 	@GetMapping("/addMedicItems")
 	public String addMedicItems(Model model) throws Exception {

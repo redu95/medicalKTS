@@ -294,6 +294,13 @@ public class MedicServiceImpl implements MedicalService {
 	
 	@Override
 	@Transactional
+	public List<MedicItem> allItemsByOrder(Integer page, String searchValue, String orderBy) {
+		// TODO Auto-generated method stub
+		return medicDao.allItemsByOrder(page, searchValue, orderBy);		
+	}
+	
+	@Override
+	@Transactional
 	public List<MedicService> allServices() {
 		// TODO Auto-generated method stub
 		return medicDao.allServices();		
