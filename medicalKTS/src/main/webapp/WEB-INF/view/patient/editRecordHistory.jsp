@@ -190,7 +190,10 @@
 						        <div class="col-12">
 						            <div class="mb-2">
 						                <span style="font-weight: bold;">Treatment: </span>
-						                <textarea name="treatment" id="treatment" class="form-control" placeholder="Medical treatment data" style="border-right:none;">${medicalHistory.treatement}</textarea>
+						                <!-- <textarea name="treatment" id="treatment" class="form-control" placeholder="Medical treatment data" style="border-right:none;">${medicalHistory.treatement}</textarea> -->
+						           		<div style="text-align: right;">
+											<i class="bi bi-plus-circle-fill me-3" style="color: #435ebe; font-size: 40px; cursor: pointer;" id="plusIcon2"></i>
+										</div>
 						            </div>
 						             <div class="mb-2">
 						                <span style="font-weight: bold;">Prescription: </span>
@@ -233,6 +236,40 @@
 
 								</div>
 							</div>
+							
+							<!-- Modal -->
+							<div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-lg">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="itemModalLabel">Select Items</h5>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							        <div class="list-group">
+							          <!-- Example item -->
+							          <div class="list-group-item">
+							            <input type="checkbox" id="item1" name="item1" value="item1">
+							            <label for="item1">Item 1</label>
+							            <p class="small">This is a brief description of item 1.</p>
+							          </div>
+							          <!-- Add more items as needed -->
+							          <div class="list-group-item">
+							            <input type="checkbox" id="item2" name="item2" value="item2">
+							            <label for="item2">Item 2</label>
+							            <p class="small">This is a brief description of item 2.</p>
+							          </div>
+							          <!-- More items here -->
+							        </div>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							        <button type="button" class="btn btn-primary" onclick="saveSelectedItems()">Save</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							
 					</div>
 				</div>		
 					  
@@ -466,6 +503,25 @@
 			$('.dropdown-group').select2({
 		    });
 		});
+		
+		$('#plusIcon2').on('click', function(){
+		    // Show the modal when the plus icon is clicked
+		    $('#itemModal').modal('show');
+		});
+
+		// Example function to handle saving the selected items
+		function saveSelectedItems() {
+		    // You can retrieve selected items here and process them as needed
+		    let selectedItems = [];
+		    $('#itemModal input[type="checkbox"]:checked').each(function() {
+		        selectedItems.push($(this).val());
+		    });
+
+		    console.log('Selected items:', selectedItems);
+		    // You can then hide the modal
+		    $('#itemModal').modal('hide');
+		}
+
 		
 		
 		function toggleExamSelector(x){
