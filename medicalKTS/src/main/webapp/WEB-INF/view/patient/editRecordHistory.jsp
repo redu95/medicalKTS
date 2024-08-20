@@ -236,8 +236,8 @@
 
 								</div>
 							</div>
-							
-							<!-- Modal -->
+							<h3 id="searchCard"></h3>
+							<!-- Modal Treatment -->
 							<div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
 							  <div class="modal-dialog modal-lg">
 							    <div class="modal-content">
@@ -246,20 +246,28 @@
 							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							      </div>
 							      <div class="modal-body">
+							      	<div class="col-6 col-sm-5">
+										<div class="input-group">
+								            <input type="text" name="poSearchValue" id="poSearchValue" class="form-control"  placeholder="Search here" value="" data-initial-val="" style="border-right: none;" />
+								            <span class="input-group-text bg-white border-left-0">
+								                <i class="bi bi-search"></i>
+								            </span>
+								        </div>
+									</div>
 							        <div class="list-group">
-							          <!-- Example item -->
-							          <div class="list-group-item">
-							            <input type="checkbox" id="item1" name="item1" value="item1">
-							            <label for="item1">Item 1</label>
-							            <p class="small">This is a brief description of item 1.</p>
-							          </div>
-							          <!-- Add more items as needed -->
-							          <div class="list-group-item">
-							            <input type="checkbox" id="item2" name="item2" value="item2">
-							            <label for="item2">Item 2</label>
-							            <p class="small">This is a brief description of item 2.</p>
-							          </div>
-							          <!-- More items here -->
+							          <div class="list-group">
+								          <c:forEach var="item" items="${items}">
+								            <div class="list-group-item">
+								              <input type="checkbox" id="item${item.id}" name="item${item.id}" value="${item.id}">
+								              <label for="item${item.id}">${item.itemName}</label>
+								              <p class="small">
+								                <strong>On Hand:</strong> ${item.onHand}<br>
+								                <strong>Description:</strong> ${item.description}<br>
+								              </p>
+								            </div>
+								          </c:forEach>
+								        </div>
+								      </div>
 							        </div>
 							      </div>
 							      <div class="modal-footer">
@@ -283,6 +291,41 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
 	<script>
+		
+		$(document).ready(function(){
+	   		$('#searchCard').hide();
+	   		$.ajax({
+				url: '${pageContext.request.contextPath}/Institute/getItemsData',
+				success : function(response) {
+					console.log(response);
+					$('#itemTable').DataTable( {
+						data: response.item,
+						"aoColumns": aoColumns,
+						"scrollX": true,
+						ordering: true,
+						lengthMenu: [
+					        [10, 25, 50, -1],
+					        [10, 25, 50, 'All']
+					    ],
+						"processing": true,
+						info:           false,
+					    paging:         false,
+					    searching: 		false,
+						language: {
+								processing: "<div class='loader'></div>"
+							}
+					    
+					} );
+					$('#p1').text(response.page1);
+					$('#p2').text(response.page2);
+					$('#p3').text(response.page3);
+					$('#p4').text(response.page4);
+					$('#p5').text(response.page5);
+					$('#p9').attr("data-initial-value",response.countItem)
+					
+				}
+			});			
+		});
 	
 		$(document).ready(function(){
 			var isActive = ${isActive};
