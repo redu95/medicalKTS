@@ -151,6 +151,11 @@ public class PatientController {
 		List<PatientMedicalHistory> medicalHistoryList = medicalService.getMedicalHistoryByPatient(medicalHistory.getPatientData().getId());
 		Integer isActive = 0;
 		
+		List<MedicItem> items = medicalService.allItems();
+        model.addAttribute("items", items);
+		MedicItem item = new MedicItem();
+		model.addAttribute("item", item);
+		
 		PatientMedicalHistory firstMedicHistory = medicalHistoryList.get(0);
 		if(firstMedicHistory.getId().equals(medicalHistory.getId())) {
 			isActive=1;
