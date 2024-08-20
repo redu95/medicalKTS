@@ -39,19 +39,18 @@
 								</div>
 							</div>
 						</div>
-                       <div class="row">
+                       <div class="row c-dflx">
 							<div class="col-6 col-sm-5">
 								<div class="input-group">
 						            <input type="text" name="poSearchValue" id="poSearchValue" class="form-control"  placeholder="Search here" value="" data-initial-val="" style="border-right: none;" />
 						            <span class="input-group-text bg-white border-left-0">
-						                <i class="bi bi-search"></i>
+						                <i class="bi bi-search" onclick="searchHandler()"></i>
 						            </span>
 						        </div>
 							</div>
 							<div class="col-4 ig-dflx">
 								<a href="${pageContext.request.contextPath}/Institute/addMedicItems" class="btn btn-primary">  <i class="bi bi-credit-card-2-back "></i> New Item</a>
 							</div>
-	
 						</div>
 						<hr>
 
@@ -276,7 +275,7 @@
 						data: response.item,
 						"aoColumns": aoColumns,
 						"scrollX": true,
-						ordering: true,
+						ordering: false,
 						lengthMenu: [
 					        [10, 25, 50, -1],
 					        [10, 25, 50, 'All']
@@ -393,9 +392,7 @@
 		
 		
 		function handlePage(x){
-			var searchValue=$('#searchCard').text();
-			
-
+			var searchValue=$('#poSearchValue').attr('data-initial-val');
 			if(x===1){
 				var pagenum = $('#p1').text();
 			}
@@ -500,6 +497,7 @@
 		
 		function searchHandler(){
 			var searchValue=$('#poSearchValue').val();
+			$('#poSearchValue').attr('data-initial-val',searchValue);
 			console.log(searchValue);
 			if ( $.fn.DataTable.isDataTable('#itemTable') ) {
 				$('#itemTable').DataTable().destroy();
