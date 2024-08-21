@@ -189,7 +189,7 @@
 						        <hr>
 						        <div class="col-12">
 						            <div class="mb-2">
-						                <span style="font-weight: bold;">Treatment: </span>
+						                <span style="font-weight: bold;" class="treatment-section">Treatment: </span>
 						                <!-- <textarea name="treatment" id="treatment" class="form-control" placeholder="Medical treatment data" style="border-right:none;">${medicalHistory.treatement}</textarea> -->
 						           		<div style="text-align: right;">
 											<i class="bi bi-plus-circle-fill me-3" style="color: #435ebe; font-size: 40px; cursor: pointer;" id="plusIcon2"></i>
@@ -243,10 +243,10 @@
 							    <div class="modal-content">
 							      <div class="modal-header">
 							        <h5 class="modal-title" id="itemModalLabel">Select Items</h5>
-							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							        <button type="button" onclick="closeModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							      </div>
 							      <div class="modal-body">
-							      	<div class="col-6 col-sm-5">
+							      	<div class="mb-3">
 										<div class="input-group">
 								            <input type="text" name="poSearchValue" id="poSearchValue" class="form-control"  placeholder="Search here" value="" data-initial-val="" style="border-right: none;" />
 								            <span class="input-group-text bg-white border-left-0">
@@ -255,17 +255,7 @@
 								        </div>
 									</div>
 							        <div class="list-group">
-							          <div class="list-group">
-								          <c:forEach var="item" items="${items}">
-								            <div class="list-group-item">
-								              <input type="checkbox" id="item${item.id}" name="item${item.id}" value="${item.id}">
-								              <label for="item${item.id}">${item.itemName}</label>
-								              <p class="small">
-								                <strong>On Hand:</strong> ${item.onHand}<br>
-								                <strong>Description:</strong> ${item.description}<br>
-								              </p>
-								            </div>
-								          </c:forEach>
+							          <div class="list-group-item-view">
 								        </div>
 								      </div>
 							        </div>
@@ -305,10 +295,6 @@
 										</ul>
 									</nav>
 							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							        <button type="button" class="btn btn-primary" onclick="saveSelectedItems()">Save</button>
-							      </div>
 							    </div>
 							  </div>
 							</div>
@@ -327,96 +313,6 @@
 
 	<script>
 		
-		$(document).ready(function(){
-	   		$('#searchCard').hide();
-	   		$.ajax({
-				url: '${pageContext.request.contextPath}/Institute/getItemsData',
-				success : function(response) {
-					console.log(response);
-					$('#itemTable').DataTable( {
-						data: response.item,
-						"aoColumns": aoColumns,
-						"scrollX": true,
-						ordering: true,
-						lengthMenu: [
-					        [10, 25, 50, -1],
-					        [10, 25, 50, 'All']
-					    ],
-						"processing": true,
-						info:           false,
-					    paging:         false,
-					    searching: 		false,
-						language: {
-								processing: "<div class='loader'></div>"
-							}
-					    
-					} );
-					$('#p1').text(response.page1);
-					$('#p2').text(response.page2);
-					$('#p3').text(response.page3);
-					$('#p4').text(response.page4);
-					$('#p5').text(response.page5);
-					$('#p9').attr("data-initial-value",response.countItem)
-					
-				}
-			});			
-		});
-		
-		var aoColumns = [{
-			"mData" : null,
-			"mRender" : function(data) {
-				var status = data.itemName;
-				return '<div class=\"form-check-Data\">'+status+'</div>';
-			}
-		},{
-			"mData" : null,
-			"mRender" : function(data) {
-				var status = data.onHand;
-				return '<div class=\"form-check-Data\">'+status+'</div>';
-			}
-		},{
-			"mData" : null,
-			"mRender" : function(data) {
-				var status = data.totalQuanitiy;
-				return '<div class=\"form-check-Data\">'+status+'</div>';
-			}
-		},{
-			"mData" : null,
-			"mRender" : function(data) {
-				var status = data.measmurmentUnit;
-				return '<div class=\"form-check-Data\">'+status+'</div>';
-			}
-		},{
-			"mData" : null,
-			"mRender" : function(data) {
-				var status = data.minimunStock;
-				return '<div class=\"form-check-Data\">'+status+'</div>';
-			}
-		},{
-			"mData" : null,
-			"mRender" : function(data) {
-				var status = data.description;
-				return '<div class=\"form-check-Data\">'+status+'</div>';
-			}
-		},{
-			"mData" : null,
-			"mRender" : function(data) {
-				var status = data.itemType;
-				return '<div class=\"form-check-Data\">'+status+'</div>';
-			}
-		},{
-			"mData" : null,
-			"mRender" : function(data) {
-				var status = data.vendorName;
-				return '<div class=\"form-check-Data\">'+status+'</div>';
-			}
-		},{
-			"mData" : null,
-			"mRender" : function(data) {
-				var status = '<div class="action-buttons"><a class="" title="Edit" onClick="loadItemsdata('+data.id+')" href="#"><span class="badge" style="background-color: #8e9ed8;"><i class="bi bi-pencil"></i></span></a><a class="red" href="${pageContext.request.contextPath}/Institute/deleteItem/'+data.id+'" onclick="return confirm("Are you sure to delete?")" id="remove"><span class="badge" style="background-color: #fe6e6e;"><i class="bi bi-trash-fill"></i></span></a></div>';
-				return status;
-			}
-		}];
 	
 		$(document).ready(function(){
 			var isActive = ${isActive};
@@ -433,7 +329,40 @@
 			$('.dropdown-group').select2({
 		    });
 			
+			$.ajax({
+				url: '${pageContext.request.contextPath}/Institute/getItemsData',
+				success : function(itemAjaxData) {
+					console.log(itemAjaxData);
+					var response = itemAjaxData.item;
+					console.log(response);
+					var loopLength = response.length;
+					console.log(loopLength);
+					for (var i = 0; i < loopLength; i++) {
+						$('.list-group-item-view').append('<div class="list-group-item"><input type="checkbox" class="checkboxIdGrop" id="itemId'+response[i].id+'" name="item'+response[i].id+'" value="'+response[i].id+'" onclick="handleSelection(this,'+response[i].id+')"><label for="item'+response[i].id+'">'+response[i].itemName+'</label><p class="small"><strong>On Hand:</strong>'+response[i].onHand+'<br><strong>Description:</strong> '+response[i].description+'<br></p> </div>');
+					}
+					$('#p1').text(itemAjaxData.page1);
+					$('#p2').text(itemAjaxData.page2);
+					$('#p3').text(itemAjaxData.page3);
+					$('#p4').text(itemAjaxData.page4);
+					$('#p5').text(itemAjaxData.page5);
+					$('#p9').attr("data-initial-value",itemAjaxData.countItem)
+					
+				}
+			});		
 		});
+		
+		function removeItemRow(x,id){
+			console.log(id);
+			var inputId = '#itemId'+id;
+			console.log(inputId);
+			console.log($(inputId));
+			$(inputId).prop('checked', false); 
+			
+			var parentRow = $(x).parent().parent();
+			console.log($(x));
+			console.log($(parentRow));
+			$(x).parent().parent().remove();
+		}
 		
 		function handlePage(x){
 			var searchValue=$('#poSearchValue').attr('data-initial-val');
@@ -485,11 +414,17 @@
 				return;
 			}
 			
-			if ( $.fn.DataTable.isDataTable('#itemTable') ) {
-				$('#itemTable').DataTable().destroy();
-				$('#itemTable tbody').empty();
-				
-			}
+			$('.list-group-item').remove();
+			
+			
+			var invsId={}; 
+			var counterLoop = 0;
+			$('.treatmentItems').each(function() {
+	    		var id = $(this).attr('data-id-val');
+	    		invsId[counterLoop]=id;
+	    		counterLoop++;
+     		});
+       	    console.log("Incvs is " + invsId);
 			
 			$.ajax({
 				url: '${pageContext.request.contextPath}/Institute/getItemsData',
@@ -497,33 +432,39 @@
 					page: pagenum,
 					search: searchValue,
 				},
-				success : function(response) {
+				success : function(itemAjaxData) {
+					console.log(itemAjaxData);
+					var response = itemAjaxData.item;
 					console.log(response);
-					$('#itemTable').DataTable( {
-						data: response.item,
-						"aoColumns": aoColumns,
-						"scrollX": true,
-						ordering: false,
-						"processing": true,
-						info:           false,
-					    paging:         false,
-					    searching: 		false,
-						language: {
-								processing: "<div class='loader'></div>"
-							}
-					    
-					} );
-					$('#p1').text(response.page1);
-					$('#p2').text(response.page2);
-					$('#p3').text(response.page3);
-					$('#p4').text(response.page4);
-					$('#p5').text(response.page5);
-					$('#p9').attr("data-initial-value",response.countItem)
-
-					if(response.page===1){
+					var loopLength = response.length;
+					console.log(loopLength);
+					for (var i = 0; i < loopLength; i++) {
+						$('.list-group-item-view').append('<div class="list-group-item"><input type="checkbox" class="checkboxIdGrop" id="itemId'+response[i].id+'" name="item'+response[i].id+'" value="'+response[i].id+'" onclick="handleSelection(this,'+response[i].id+')"><label for="item'+response[i].id+'">'+response[i].itemName+'</label><p class="small"><strong>On Hand:</strong>'+response[i].onHand+'<br><strong>Description:</strong> '+response[i].description+'<br></p> </div>');
+						for (var key in invsId) {
+						    if (invsId[key] == response[i].id) {
+						       console.log("ID is herererer");
+						       var itemIdd = '#itemId'+ response[i].id;
+						       console.log("ID is herererer" + itemIdd);
+						       $(itemIdd).prop('checked', true); 
+						        break;
+						    } else {
+						    	 console.log("ID NOT in herererer");
+						    }
+						}
+					}
+					
+					
+					$('#p1').text(itemAjaxData.page1);
+					$('#p2').text(itemAjaxData.page2);
+					$('#p3').text(itemAjaxData.page3);
+					$('#p4').text(itemAjaxData.page4);
+					$('#p5').text(itemAjaxData.page5);
+					$('#p9').attr("data-initial-value",itemAjaxData.countItem)
+					
+					if(itemAjaxData.page===1){
 						 $("#l2").addClass("active");
 						 $("#l1,#l3,#l4,#l5").removeClass("active");
-					} else if(response.page===2){
+					} else if(itemAjaxData.page===2){
 						 $("#l3").addClass("active");
 						 $("#l1,#l2,#l4,#l5").removeClass("active");
 					} else {
@@ -531,7 +472,7 @@
 						 $("#l2,#l3,#l4,#l5").removeClass("active");
 					}
 					
-					if(response.pageLimit===1 || response.pageLimit===2){
+					if(itemAjaxData.pageLimit===1 || itemAjaxData.pageLimit===2){
 						$('#p4,#p5').text('-');
 					}
 				}
@@ -539,48 +480,59 @@
 			
 		};
 		
+		
+		
+		
 		function searchHandler(){
 			var searchValue=$('#poSearchValue').val();
 			$('#poSearchValue').attr('data-initial-val',searchValue);
 			console.log(searchValue);
-			if ( $.fn.DataTable.isDataTable('#itemTable') ) {
-				$('#itemTable').DataTable().destroy();
-				$('#itemTable tbody').empty();
-				
-			}
 			
+			$('.list-group-item').remove();
+			var invsId={}; 
+			var counterLoop = 0;
+			$('.treatmentItems').each(function() {
+	    		var id = $(this).attr('data-id-val');
+	    		invsId[counterLoop]=id;
+	    		counterLoop++;
+     		});
+       	    console.log("Incvs is " + invsId);
 			$.ajax({
 				url: '${pageContext.request.contextPath}/Institute/getItemsData',
 				data: {
 					search: searchValue,
 				},
-				success : function(response) {
+				success : function(itemAjaxData) {
+					console.log(itemAjaxData);
+					var response = itemAjaxData.item;
 					console.log(response);
-					$('#itemTable').DataTable( {
-						data: response.item,
-						"aoColumns": aoColumns,
-						"scrollX": true,
-						ordering: false,
-						"processing": true,
-						info:           false,
-					    paging:         false,
-					    searching: 		false,
-						language: {
-								processing: "<div class='loader'></div>"
-							}
-					    
-					} );
-					$('#p1').text(response.page1);
-					$('#p2').text(response.page2);
-					$('#p3').text(response.page3);
-					$('#p4').text(response.page4);
-					$('#p5').text(response.page5);
-					$('#p9').attr("data-initial-value",response.countItem)
-
-					if(response.page===1){
+					var loopLength = response.length;
+					console.log(loopLength);
+					for (var i = 0; i < loopLength; i++) {
+						$('.list-group-item-view').append('<div class="list-group-item"><input class="checkboxIdGrop" type="checkbox" id="itemId'+response[i].id+'" name="item'+response[i].id+'" value="'+response[i].id+'" onclick="handleSelection(this,'+response[i].id+')"><label for="item'+response[i].id+'">'+response[i].itemName+'</label><p class="small"><strong>On Hand:</strong>'+response[i].onHand+'<br><strong>Description:</strong> '+response[i].description+'<br></p> </div>');
+						for (var key in invsId) {
+						    if (invsId[key] == response[i].id) {
+						       console.log("ID is herererer");
+						       var itemIdd = '#itemId'+ response[i].id;
+						       console.log("ID is herererer" + itemIdd);
+						       $(itemIdd).prop('checked', true); 
+						        break;
+						    } else {
+						    	 console.log("ID NOT in herererer");
+						    }
+						}
+					}
+					$('#p1').text(itemAjaxData.page1);
+					$('#p2').text(itemAjaxData.page2);
+					$('#p3').text(itemAjaxData.page3);
+					$('#p4').text(itemAjaxData.page4);
+					$('#p5').text(itemAjaxData.page5);
+					$('#p9').attr("data-initial-value",itemAjaxData.countItem)
+					
+					if(itemAjaxData.page===1){
 						 $("#l2").addClass("active");
 						 $("#l1,#l3,#l4,#l5").removeClass("active");
-					} else if(response.page===2){
+					} else if(itemAjaxData.page===2){
 						 $("#l3").addClass("active");
 						 $("#l1,#l2,#l4,#l5").removeClass("active");
 					} else {
@@ -588,13 +540,40 @@
 						 $("#l2,#l3,#l4,#l5").removeClass("active");
 					}
 					
-					if(response.pageLimit===1 || response.pageLimit===2){
+					if(itemAjaxData.pageLimit===1 || itemAjaxData.pageLimit===2){
 						$('#p4,#p5').text('-');
 					}
 				}
 			});
 			
 		};
+		
+		
+		function handleSelection(x,id){
+			console.log(x);
+			if($(x).is(":checked")){
+	    		console.log("Checked");
+	    		console.log(id);
+				$.ajax({
+					url: '${pageContext.request.contextPath}/Patient/getItemRecordUnit',
+					data: {
+						itemId: id,
+					},
+					success : function(response) {
+						console.log(response);
+						$('.treatment-section').append('<div class="row treatmentItems mb-2" id="itemIconRow'+response.id+'" data-id-val="'+response.id+'"><div class="col-3">Item Name: '+response.itemName+'</div><div class="col-3">Item Desc: '+response.description+'</div><div class="col-1"><input type="number" maxlength="50" name="err4" id="err4"  class="form-control" placeholder="" value="1" /></div><div class="col-2"><a class="red" href="#"  id="remove" onclick="removeItemRow(this,'+response.id+')"><span class="badge" style="background-color: #fe6e6e;"><i class="bi bi-trash-fill"></i></span></a></div></div>');
+					}
+				});
+	       	};
+	       	if(!$(x).is(":checked")){
+	    		console.log("UnChecked");
+	    		$('#itemIconRow'+id).remove();
+	       	};
+			
+			
+			
+		}
+		
 		
 		var inputElement = document.getElementById('poSearchValue');
 	    inputElement.addEventListener('keydown', function(event) {
@@ -811,18 +790,7 @@
 		    $('#itemModal').modal('show');
 		});
 
-		// Example function to handle saving the selected items
-		function saveSelectedItems() {
-		    // You can retrieve selected items here and process them as needed
-		    let selectedItems = [];
-		    $('#itemModal input[type="checkbox"]:checked').each(function() {
-		        selectedItems.push($(this).val());
-		    });
-
-		    console.log('Selected items:', selectedItems);
-		    // You can then hide the modal
-		    $('#itemModal').modal('hide');
-		}
+		
 
 		
 		
@@ -844,6 +812,7 @@
 		function deleteExam(x){
 			$(x).parent().parent().parent().remove();
 		}
+		
 		
 	</script>
 

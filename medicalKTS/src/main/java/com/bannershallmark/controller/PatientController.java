@@ -419,6 +419,16 @@ public class PatientController {
 			
 	}
 	
+	@GetMapping("/getItemRecordUnit")
+	@ResponseBody
+	public MedicItem getItemRecordUnit() throws Exception {
+		String id = request.getParameter("itemId");
+		MedicItem item = medicalService.findbyIdMedicItem(Integer.parseInt(id));
+		return item;
+	}
+	
+	
+	//
 	//Reception side
 	@GetMapping("/patientDataReception")
 	public String patientDataReception(Model model) throws Exception {
