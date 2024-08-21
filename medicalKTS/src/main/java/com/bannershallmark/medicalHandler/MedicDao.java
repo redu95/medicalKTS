@@ -69,6 +69,10 @@ public interface MedicDao{
 	PatientData checkByPhonePatient(String phoneNumber);
 	
 	List<Object[]> getSalesListOrgTotalDate(Integer shopId, Date startDate, Date endDate, String orderBy);
-	
+
+	List<PatientData> getSex();
+	List<PatientData> getAges();
+
+	List<PatientMedicalHistory> getDepartmentDataForChart();
 }
 	

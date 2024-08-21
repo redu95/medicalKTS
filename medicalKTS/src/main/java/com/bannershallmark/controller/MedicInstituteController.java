@@ -8,11 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -622,6 +618,7 @@ public class MedicInstituteController {
 		medicalService.deleteMedicService(id);
 		return "redirect:/Institute/serviceData";
 	}
+
 	
 	@RequestMapping(value = "/sendServiceData")
 	@ResponseBody
@@ -786,7 +783,9 @@ public class MedicInstituteController {
 			return itemListAjax;
 	        
 		}
-	
+
+
+
 	@RequestMapping(value = "/monthlyGraphData")
 	@ResponseBody
 	public List<SmsModel> monthlyGraphData() throws ParseException {
@@ -899,5 +898,140 @@ public class MedicInstituteController {
 		    return item;
 		}
 
-		
+
+	@RequestMapping(value="/genderData")
+	@ResponseBody
+	public List<SmsModel> getGenderData() throws Exception{
+		List<PatientData> patientDataList = medicalService.getSex();
+		List<SmsModel> smsModelList = new ArrayList<>();
+
+		int maleCount = 0;
+		int femaleCount = 0;
+
+		for (PatientData patientData : patientDataList) {
+			if ("Male".equalsIgnoreCase(patientData.getSex())) {
+				maleCount++;
+			} else if ("Female".equalsIgnoreCase(patientData.getSex())) {
+				femaleCount++;
+			}
+		}
+
+		SmsModel male = new SmsModel();
+		male.setTitle("Male");
+		male.setMessage(String.valueOf(maleCount));
+		male.setStatus("#03045e");
+
+		SmsModel female = new SmsModel();
+		female.setTitle("Female");
+		female.setMessage(String.valueOf(femaleCount));
+		female.setStatus("#90e0ef");
+
+		smsModelList.add(male);
+		smsModelList.add(female);
+
+		return smsModelList;
+    }
+
+
+	@RequestMapping(value="/ageData")
+	@ResponseBody
+	public List<SmsModel> getAgeData() throws Exception {
+		List<PatientData> patientDataList = medicalService.getAges();
+		List<SmsModel> smsModelList = new ArrayList<>();
+
+		int ageGroup1 = 0; // 0-18 years
+		int ageGroup2 = 0; // 19-35 years
+		int ageGroup3 = 0; // 36-60 years
+		int ageGroup4 = 0; // 61+ years
+
+		for (PatientData patientData : patientDataList) {
+			int age = patientData.getAge(); // Assuming getAge() method exists in PatientData
+
+			if (age >= 0 && age <= 18) {
+				ageGroup1++;
+			} else if (age >= 19 && age <= 35) {
+				ageGroup2++;
+			} else if (age >= 36 && age <= 60) {
+				ageGroup3++;
+			} else if (age >= 61) {
+				ageGroup4++;
+			}
+		}
+
+		SmsModel group1 = new SmsModel();
+		group1.setTitle("0-18 years");
+		group1.setMessage(String.valueOf(ageGroup1));
+		group1.setStatus("#00b4d8");
+
+		SmsModel group2 = new SmsModel();
+		group2.setTitle("19-35 years");
+		group2.setMessage(String.valueOf(ageGroup2));
+		group2.setStatus("#0077b6");
+
+		SmsModel group3 = new SmsModel();
+		group3.setTitle("36-60 years");
+		group3.setMessage(String.valueOf(ageGroup3));
+		group3.setStatus("#023e8a");
+
+		SmsModel group4 = new SmsModel();
+		group4.setTitle("61+ years");
+		group4.setMessage(String.valueOf(ageGroup4));
+		group4.setStatus("#03045e");
+
+		smsModelList.add(group1);
+		smsModelList.add(group2);
+		smsModelList.add(group3);
+		smsModelList.add(group4);
+
+		return smsModelList;
+	}
+
+	@RequestMapping(value = "/departmentData")
+	@ResponseBody
+	public List<SmsModel> getDepartmentData() throws Exception {
+		List<PatientMedicalHistory> medicalHistories = medicalService.getDepartmentDataForChart();
+		Map<String, Set<String>> departmentPatientMap = new HashMap<>();
+
+		// Group patient IDs by department, ignoring null department names
+		for (PatientMedicalHistory history : medicalHistories) {
+			String department = history.getAssignedToDepartment();
+			if (department != null && !department.trim().isEmpty()) {
+				// Standardize department names (e.g., trim spaces, fix typos)
+				department = department.trim(); // Add further standardization if needed
+				departmentPatientMap
+						.computeIfAbsent(department, k -> new HashSet<>())
+						.add(String.valueOf(history.getId()));
+			}
+		}
+
+
+
+		System.out.println(departmentPatientMap); // For debugging
+
+		// Convert map to SmsModel list
+		List<SmsModel> smsModelList = new ArrayList<>();
+		for (Map.Entry<String, Set<String>> entry : departmentPatientMap.entrySet()) {
+			SmsModel smsModel = new SmsModel();
+			smsModel.setTitle(entry.getKey());
+			smsModel.setMessage(String.valueOf(entry.getValue().size()));
+			smsModel.setStatus(getDepartmentColor(entry.getKey())); // Optional: Assign a color based on department
+			smsModelList.add(smsModel);
+		}
+
+		return smsModelList;
+	}
+
+	private String getDepartmentColor(String departmentName) {
+		// Assign colors to departments based on their names
+		switch (departmentName.toLowerCase()) {
+			case "tendon": return "#E7823A";
+			case "children dept": return "#546BC1";
+			case "orthopedcis": return "#8480E6";
+			case "maternity dept": return "#80D3E6";
+			case "internal issues dept": return "#54B0B0";
+			default: return "#000000"; // Default color if not matched
+		}
+	}
 }
+
+

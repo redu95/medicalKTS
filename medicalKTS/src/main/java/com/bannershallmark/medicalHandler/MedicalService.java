@@ -40,6 +40,7 @@ public interface MedicalService {
 	void deleteMedicService(Integer medicServiceId);
 
 
+
 	MedicalInstitute findbyIdInstitute(Integer instituteId); 
 	PatientData findbyIdPatient(Integer patientId); 
 	PatientMedicalHistory findbyIdMedicHistory(Integer medicalHistoryId); 
@@ -65,7 +66,10 @@ public interface MedicalService {
 	List<MedicItem> allItemsByOrder(Integer page, String searchValue, String orderBy);	
 	List<MedicService> allServices();	
 	List<MedicItem> allItems();
-	
+	List<PatientData> getSex();
+	List<PatientData> getAges();
+
+	List<PatientMedicalHistory> getDepartmentDataForChart();
 	PatientData checkByPhonePatient(String phoneNumber);
 	
 	List<Object[]> getSalesListOrgTotalDate(Integer shopId, Date startDate, Date endDate, String orderBy);
