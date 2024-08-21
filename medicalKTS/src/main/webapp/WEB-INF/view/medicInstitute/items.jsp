@@ -22,7 +22,7 @@
                             <div class="col-12 col-md-6 order-md-2 order-first">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}">Dashboard ${msg}</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">items
                                         </li>
                                     </ol>
@@ -31,7 +31,8 @@
                         </div>
                     </div>
                     <section class="section blnk-db ">
-                    	<div class="eror-msg" style="display: none;">
+                    	<%@ include file="../common/error-and-success-message.jsp"%>
+                   		<div class="eror-msg" style="display: none;">
 							<div class="card">
 								<div class="card-body success-msg" id="msgBoxBg">
 									<p class="" id="msgBox"></p>

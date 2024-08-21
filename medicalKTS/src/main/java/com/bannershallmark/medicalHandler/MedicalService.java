@@ -67,6 +67,7 @@ public interface MedicalService {
 	List<MedicItem> allItems();
 	
 	PatientData checkByPhonePatient(String phoneNumber);
+	MedicItem checkItemByItemName(String itemName);
 	
 	List<Object[]> getSalesListOrgTotalDate(Integer shopId, Date startDate, Date endDate, String orderBy);
 

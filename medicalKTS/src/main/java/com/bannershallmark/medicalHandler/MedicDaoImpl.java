@@ -417,6 +417,21 @@ public class MedicDaoImpl implements MedicDao  {
 	}
 	
 	@Override
+	public MedicItem checkItemByItemName(String itemName) {
+		Session session = sessionFactory.getCurrentSession();
+		MedicItem item =null;
+		try {
+			Query<MedicItem> query = session.createQuery("from MedicItem where itemName=:itemName", MedicItem.class);
+			query.setParameter("itemName", itemName);
+			item = query.getSingleResult();
+			return item;
+		}catch (Exception e) {
+			System.out.println(" Exception in getUserByPhone :: " + e.getMessage());
+			return item;
+		}
+	}
+	
+	@Override
 	public List<Department> allDepartment() {
 		Session session = sessionFactory.getCurrentSession();
 		Query<Department> query=session.createQuery("from Department where isActive=1", Department.class);
