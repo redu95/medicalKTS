@@ -26,7 +26,7 @@ public class MedicServiceImpl implements MedicalService {
 
 	@Autowired
 	private MedicDao medicDao;
-	
+
 	@Override
 	@Transactional
 	public void save(MedicalInstitute institute) {
@@ -326,4 +326,28 @@ public class MedicServiceImpl implements MedicalService {
 		// TODO Auto-generated method stub
 		return medicDao.getSalesListOrgTotalDate(shopId,startDate,endDate,orderBy);
 	}
+
+	@Override
+	@Transactional
+	public List<PatientData> getSex() {
+		// TODO Auto-generated method stub
+		return medicDao.getSex();
+	}
+
+	@Override
+	@Transactional
+	public List<PatientData> getAges() {
+		// TODO Auto-generated method stub
+		return medicDao.getAges();
+	}
+
+	@Override
+	@Transactional
+	public List<PatientMedicalHistory> getDepartmentDataForChart() {
+		// TODO Auto-generated method stub
+		return medicDao.getDepartmentDataForChart();
+	}
+
+
+
 }
