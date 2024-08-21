@@ -99,7 +99,7 @@ public class MedicInstituteController {
 	}
 	
 	@GetMapping("/medicItems")
-	public String medicItems(Model model) throws Exception {
+	public String medicItems(Model model, RedirectAttributes redirectAttributes) throws Exception {
 //		List<MedicItem> items = medicalService.allItems();
 //	    model.addAttribute("items", items);
 	    MedicItem item = new MedicItem();
@@ -199,7 +199,15 @@ public class MedicInstituteController {
 	}
 	
 	@PostMapping("/addItemsData")
-	public String addItemsData( @ModelAttribute MedicItem item) throws Exception {
+	public String addItemsData( @ModelAttribute MedicItem item, RedirectAttributes redirectAttributes) throws Exception {
+		System.out.println("Item name " + item.getItemName());
+		MedicItem existingItem = medicalService.checkItemByItemName(item.getItemName());
+		System.out.println("Exist item " + existingItem);
+		if(existingItem!=null) {
+			System.out.println("hererere item ");
+			redirectAttributes.addFlashAttribute(Constants.AttributeNames.MESSAGE, "Item already exists");
+			return "redirect:/Institute/medicItems";
+		}
 		
 		item.setOnHand(item.getTotalQuanitiy());
 		item.setInstituteId(1);

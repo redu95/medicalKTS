@@ -280,6 +280,13 @@ public class MedicServiceImpl implements MedicalService {
 	
 	@Override
 	@Transactional
+	public MedicItem checkItemByItemName(String itemName) {
+		// TODO Auto-generated method stub
+		return medicDao.checkItemByItemName(itemName);		
+	}
+	
+	@Override
+	@Transactional
 	public List<Department> allDepartment() {
 		// TODO Auto-generated method stub
 		return medicDao.allDepartment();		

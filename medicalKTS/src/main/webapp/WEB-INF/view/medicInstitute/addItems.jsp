@@ -109,9 +109,9 @@
 												path="measmurmentUnit" class="form-select" placeholder="Measmurment Unit"
 												value="">
 												<form:option value="#">-- Select unit --</form:option>
-												<form:option value="1">Pcs</form:option>
-												<form:option value="2">Liter</form:option>
-												<form:option value="3">KG</form:option>
+												<form:option value="Pcs">Pcs</form:option>
+												<form:option value="Liter">Liter</form:option>
+												<form:option value="KG">KG</form:option>
 											</form:select>
 										</div>
 									</div>
@@ -124,8 +124,8 @@
 												path="itemType" class="form-select" placeholder="itemType"
 												value="">
 												<form:option value="#">-- Select type --</form:option>
-												<form:option value="1">Consumable</form:option>
-												<form:option value="2">Durable</form:option>
+												<form:option value="Consumable">Consumable</form:option>
+												<form:option value="Durable">Durable</form:option>
 											</form:select>
 										</div>
 									</div>
@@ -136,9 +136,9 @@
 												path="vendorName" class="form-select" placeholder="vendorName"
 												value="">
 												<form:option value="#">-- Select vendor --</form:option>
-												<form:option value="1">AISE</form:option>
-												<form:option value="2">EPA</form:option>
-												<form:option value="3">other</form:option>
+												<form:option value="AISE">AISE</form:option>
+												<form:option value="EPA">EPA</form:option>
+												<form:option value="other">other</form:option>
 											</form:select>
 										</div>
 									</div>
