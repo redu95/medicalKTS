@@ -458,7 +458,7 @@
 					$('#p2').text(itemAjaxData.page2);
 					$('#p3').text(itemAjaxData.page3);
 					$('#p4').text(itemAjaxData.page4);
-					$('#p5').text(itemAjaxData.page5);
+					$('#p5').text(itemAjaxData.page5);	
 					$('#p9').attr("data-initial-value",itemAjaxData.countItem)
 					
 					if(itemAjaxData.page===1){
@@ -561,7 +561,7 @@
 					},
 					success : function(response) {
 						console.log(response);
-						$('.treatment-section').append('<div class="row treatmentItems mb-2" id="itemIconRow'+response.id+'" data-id-val="'+response.id+'"><div class="col-3">Item Name: '+response.itemName+'</div><div class="col-3">Item Desc: '+response.description+'</div><div class="col-1"><input type="number" maxlength="50" name="err4" id="err4"  class="form-control" placeholder="" value="1" /></div><div class="col-2"><a class="red" href="#"  id="remove" onclick="removeItemRow(this,'+response.id+')"><span class="badge" style="background-color: #fe6e6e;"><i class="bi bi-trash-fill"></i></span></a></div></div>');
+						$('.treatment-section').append('<div class="row treatmentItems mb-3" id="itemIconRow'+response.id+'" data-id-val="'+response.id+'"><div class="col-4">Item Name: '+response.itemName+'</div><div class="col-4">Item Desc: '+response.description+' </div><div class="col-2"> Item Amount: <input type="number" maxlength="50" name="err4" id="err4" class="form-control" placeholder="" value="1" /></div><div class ="col-2"><a class="red" href="#" id="remove" onclick="removeItemRow(this,'+response.id+')"><i class="bi bi-trash-fill ms-5" style="color: #ed3b7d; font-size:20px; cursor: pointer;" onclick="deleteExam(this)"></i></a></div></div>');
 					}
 				});
 	       	};
