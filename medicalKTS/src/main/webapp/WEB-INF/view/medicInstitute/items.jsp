@@ -11,7 +11,7 @@
 <body>
 	 <div id="main" class='layout-navbar'>
            <div id="main-content">
-
+ 
                 <div class="page-heading">
                     <div class="page-title mb-5">
                         <div class="row">
@@ -149,9 +149,8 @@
 					                </div>
 					                <div class="modal-body">
 					                	<form:form class="form-horizontals" method="post" id="user_form"
-											onsubmit="saveForm()" name="user_form" action="addItemsData"
+											onsubmit="saveForm()" name="user_form" action="editItemsData"
 											modelAttribute="item">
-											<%@ include file="../common/error-and-success-message.jsp"%>
 					
 											<div class="card tp-inpt">
 												<div class="card-body">
@@ -196,13 +195,13 @@
 													<div class="row">
 														<div class="col-6">
 															<div class="form-group">
-																<label for="itemType">Measurement unit</label>
+																<label for="measmurmentUnit">Measurement unit</label>
 																<form:select type="text" name="measmurmentUnit" id="measmurmentUnit"
 																	path="measmurmentUnit" class="form-select" placeholder="Measure Unit"
 																	value="">
-																	<form:option value="1">Pcs</form:option>
-																	<form:option value="2">Liter</form:option>
-																	<form:option value="3">KG</form:option>
+																	<form:option value="Pcs">Pcs</form:option>
+																	<form:option value="Liter">Liter</form:option>
+																	<form:option value="KG">KG</form:option>
 																</form:select>
 															</div>
 														</div>
@@ -212,9 +211,9 @@
 																<form:select type="text" name="vendorName" id="vendorName"
 																	path="vendorName" class="form-select" placeholder="vendorName"
 																	value="">
-																	<form:option value="1">AISE</form:option>
-																	<form:option value="2">EPA</form:option>
-																	<form:option value="3">other</form:option>
+																	<form:option value="AISE">AISE</form:option>
+																	<form:option value="EPA">EPA</form:option>
+																	<form:option value="other">other</form:option>
 																</form:select>
 															</div>
 														</div>
@@ -226,8 +225,8 @@
 																<form:select type="text" name="itemType" id="itemType"
 																	path="itemType" class="form-select" placeholder="itemType"
 																	value="">
-																	<form:option value="1">Consumable</form:option>
-																	<form:option value="2">Durable</form:option>
+																	<form:option value="Consumable">Consumable</form:option>
+																	<form:option value="Durable">Durable</form:option>
 																</form:select>
 															</div>
 														</div>
@@ -368,6 +367,7 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (item) {
+                	console.log(item);
                     // Populate the modal form fields with the department data
                     $('#user_form').find('#id').val(item.id);
                     $('#user_form').find('#itemName').val(item.itemName);
@@ -559,6 +559,10 @@
 	        	searchHandler();
 	        }
 	    });
+	    
+	    function closeModalView(){
+	    	$('#newItemModal').modal('hide');
+	    }
 
    	</script>
 
