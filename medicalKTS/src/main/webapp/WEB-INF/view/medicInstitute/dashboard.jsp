@@ -633,8 +633,25 @@
 	<script>
 	window.onload = function () {
 
-		var visitorsData = {
-				"New vs Returning Visitors": [{
+
+		$.ajax({
+			url: '${pageContext.request.contextPath}/Institute/ageData',
+			success: function(response) {
+				ageData = response;
+				ageData = ageData.map(item => ({
+					y: parseInt(item.message, 10), // Convert message to integer
+					name: item.title,
+					color: item.status
+				}));
+
+				ageChart.ageChartData[0].dataPoints = ageData;
+				newVSReturningVisitorsOptions.data = ageChart.ageChartData;
+				$("#chartContainer").CanvasJSChart(newVSReturningVisitorsOptions);
+			}
+		});
+
+		var ageChart = {
+				ageChartData: [{
 					click: visitorsChartDrilldownHandler,
 					cursor: "pointer",
 					explodeOnClick: false,
@@ -646,113 +663,14 @@
 					startAngle: 90,
 					type: "doughnut",
 					dataPoints: [
-						{ y: 100, name: "0-5", color: "#E7823A" },
-						{ y: 120, name: "6-15", color: "#546BC1" },
-						{ y: 300, name: "15-30", color: "#8BD8DB" },
-						{ y: 300, name: "30-50", color: "#8480E6" },
-						{ y: 300, name: "50+", color: "#54B0B0" }
+						{ y: 100, name: "Error", color: "red" },
+						{ y: 12, name: "6-15", color: "#546BC1" },
+						{ y: 30, name: "15-30", color: "#8BD8DB" },
+						{ y: 30, name: "30-50", color: "#8480E6" },
+						{ y: 30, name: "50+", color: "#54B0B0" }
 					]
 				}],
-				"0-5": [{
-					color: "#E7823A",
-					name: "0-5",
-					type: "column",
-					xValueFormatString: "MMM YYYY",
-					dataPoints: [
-						{ x: new Date("1 Jan 2015"), y: 33000 },
-						{ x: new Date("1 Feb 2015"), y: 35960 },
-						{ x: new Date("1 Mar 2015"), y: 42160 },
-						{ x: new Date("1 Apr 2015"), y: 42240 },
-						{ x: new Date("1 May 2015"), y: 43200 },
-						{ x: new Date("1 Jun 2015"), y: 40600 },
-						{ x: new Date("1 Jul 2015"), y: 42560 },
-						{ x: new Date("1 Aug 2015"), y: 44280 },
-						{ x: new Date("1 Sep 2015"), y: 44800 },
-						{ x: new Date("1 Oct 2015"), y: 48720 },
-						{ x: new Date("1 Nov 2015"), y: 50840 },
-						{ x: new Date("1 Dec 2015"), y: 51600 }
-					]
-				}],
-				"6-15": [{
-					color: "#546BC1",
-					name: "Returning Visitors",
-					type: "column",
-					xValueFormatString: "MMM YYYY",
-					dataPoints: [
-						{ x: new Date("1 Jan 2015"), y: 22000 },
-						{ x: new Date("1 Feb 2015"), y: 26040 },
-						{ x: new Date("1 Mar 2015"), y: 25840 },
-						{ x: new Date("1 Apr 2015"), y: 23760 },
-						{ x: new Date("1 May 2015"), y: 28800 },
-						{ x: new Date("1 Jun 2015"), y: 29400 },
-						{ x: new Date("1 Jul 2015"), y: 33440 },
-						{ x: new Date("1 Aug 2015"), y: 37720 },
-						{ x: new Date("1 Sep 2015"), y: 35200 },
-						{ x: new Date("1 Oct 2015"), y: 35280 },
-						{ x: new Date("1 Nov 2015"), y: 31160 },
-						{ x: new Date("1 Dec 2015"), y: 34400 }
-					]
-				}],
-				"15-30": [{
-					color: "#546BC1",
-					name: "Returning Visitors",
-					type: "column",
-					xValueFormatString: "MMM YYYY",
-					dataPoints: [
-						{ x: new Date("1 Jan 2015"), y: 22000 },
-						{ x: new Date("1 Feb 2015"), y: 26040 },
-						{ x: new Date("1 Mar 2015"), y: 25840 },
-						{ x: new Date("1 Apr 2015"), y: 23760 },
-						{ x: new Date("1 May 2015"), y: 28800 },
-						{ x: new Date("1 Jun 2015"), y: 29400 },
-						{ x: new Date("1 Jul 2015"), y: 33440 },
-						{ x: new Date("1 Aug 2015"), y: 37720 },
-						{ x: new Date("1 Sep 2015"), y: 35200 },
-						{ x: new Date("1 Oct 2015"), y: 35280 },
-						{ x: new Date("1 Nov 2015"), y: 31160 },
-						{ x: new Date("1 Dec 2015"), y: 34400 }
-					]
-				}],
-				"30-50": [{
-					color: "#546BC1",
-					name: "Returning Visitors",
-					type: "column",
-					xValueFormatString: "MMM YYYY",
-					dataPoints: [
-						{ x: new Date("1 Jan 2015"), y: 22000 },
-						{ x: new Date("1 Feb 2015"), y: 26040 },
-						{ x: new Date("1 Mar 2015"), y: 25840 },
-						{ x: new Date("1 Apr 2015"), y: 23760 },
-						{ x: new Date("1 May 2015"), y: 28800 },
-						{ x: new Date("1 Jun 2015"), y: 29400 },
-						{ x: new Date("1 Jul 2015"), y: 33440 },
-						{ x: new Date("1 Aug 2015"), y: 37720 },
-						{ x: new Date("1 Sep 2015"), y: 35200 },
-						{ x: new Date("1 Oct 2015"), y: 35280 },
-						{ x: new Date("1 Nov 2015"), y: 31160 },
-						{ x: new Date("1 Dec 2015"), y: 34400 }
-					]
-				}],
-				"50+": [{
-					color: "#546BC1",
-					name: "Returning Visitors",
-					type: "column",
-					xValueFormatString: "MMM YYYY",
-					dataPoints: [
-						{ x: new Date("1 Jan 2015"), y: 22000 },
-						{ x: new Date("1 Feb 2015"), y: 26040 },
-						{ x: new Date("1 Mar 2015"), y: 25840 },
-						{ x: new Date("1 Apr 2015"), y: 23760 },
-						{ x: new Date("1 May 2015"), y: 28800 },
-						{ x: new Date("1 Jun 2015"), y: 29400 },
-						{ x: new Date("1 Jul 2015"), y: 33440 },
-						{ x: new Date("1 Aug 2015"), y: 37720 },
-						{ x: new Date("1 Sep 2015"), y: 35200 },
-						{ x: new Date("1 Oct 2015"), y: 35280 },
-						{ x: new Date("1 Nov 2015"), y: 31160 },
-						{ x: new Date("1 Dec 2015"), y: 34400 }
-					]
-				}]
+
 			};
 
 			var newVSReturningVisitorsOptions = {
@@ -792,8 +710,8 @@
 				data: []
 			};
 
-			newVSReturningVisitorsOptions.data = visitorsData["New vs Returning Visitors"];
-			$("#chartContainer").CanvasJSChart(newVSReturningVisitorsOptions);
+			// newVSReturningVisitorsOptions.data = visitorsData["New vs Returning Visitors"];
+			// $("#chartContainer").CanvasJSChart(newVSReturningVisitorsOptions);
 
 			function visitorsChartDrilldownHandler(e) {
 				e.chart.options = visitorsDrilldownedChartOptions;
@@ -803,17 +721,32 @@
 				$("#backButton").toggleClass("invisible");
 			}
 
-			$("#backButton").click(function() { 
-				$(this).toggleClass("invisible");
-				newVSReturningVisitorsOptions.data = visitorsData["New vs Returning Visitors"];
-				$("#chartContainer").CanvasJSChart(newVSReturningVisitorsOptions);
-			});
-		
-	
-	
+			// $("#backButton").click(function() {
+			// 	$(this).toggleClass("invisible");
+			// 	newVSReturningVisitorsOptions.data = visitorsData["New vs Returning Visitors"];
+			// 	$("#chartContainer").CanvasJSChart(newVSReturningVisitorsOptions);
+			// });
+
+		let genderObject = []
+		$.ajax({
+			url: '${pageContext.request.contextPath}/Institute/genderData',
+			success : function(response) {
+				genderObject = response;
+				genderObject = genderObject.map(item => ({
+					y: parseInt(item.message, 10), // Convert message to integer
+					name: item.title,
+					color: item.status
+				}));
+				visitorsData2.genderInfo[0].dataPoints = genderObject;
+
+				newVSReturningVisitorsOptions2.data = visitorsData2.genderInfo;
+				$("#chartContainer2").CanvasJSChart(newVSReturningVisitorsOptions2);
+
+			}
+		});
 	
 	var visitorsData2 = {
-			"New vs Returning Visitors": [{
+			genderInfo: [{
 				click: visitorsChartDrilldownHandler2,
 				cursor: "pointer",
 				explodeOnClick: false,
@@ -825,50 +758,11 @@
 				startAngle: 90,
 				type: "doughnut",
 				dataPoints: [
-					{ y: 100, name: "Male", color: "#E7823A" },
-					{ y: 120, name: "Female", color: "#546BC1" },
+					{y: 1, name: 'Error', color: 'red'},
+					{y: 1, name: 'Error', color: '#90e0ef'}
 				]
 			}],
-			"Male": [{
-				color: "#E7823A",
-				name: "0-5",
-				type: "column",
-				xValueFormatString: "MMM YYYY",
-				dataPoints: [
-					{ x: new Date("1 Jan 2015"), y: 33000 },
-					{ x: new Date("1 Feb 2015"), y: 35960 },
-					{ x: new Date("1 Mar 2015"), y: 42160 },
-					{ x: new Date("1 Apr 2015"), y: 42240 },
-					{ x: new Date("1 May 2015"), y: 43200 },
-					{ x: new Date("1 Jun 2015"), y: 40600 },
-					{ x: new Date("1 Jul 2015"), y: 42560 },
-					{ x: new Date("1 Aug 2015"), y: 44280 },
-					{ x: new Date("1 Sep 2015"), y: 44800 },
-					{ x: new Date("1 Oct 2015"), y: 48720 },
-					{ x: new Date("1 Nov 2015"), y: 50840 },
-					{ x: new Date("1 Dec 2015"), y: 51600 }
-				]
-			}],
-			"Female": [{
-				color: "#546BC1",
-				name: "Returning Visitors",
-				type: "column",
-				xValueFormatString: "MMM YYYY",
-				dataPoints: [
-					{ x: new Date("1 Jan 2015"), y: 22000 },
-					{ x: new Date("1 Feb 2015"), y: 26040 },
-					{ x: new Date("1 Mar 2015"), y: 25840 },
-					{ x: new Date("1 Apr 2015"), y: 23760 },
-					{ x: new Date("1 May 2015"), y: 28800 },
-					{ x: new Date("1 Jun 2015"), y: 29400 },
-					{ x: new Date("1 Jul 2015"), y: 33440 },
-					{ x: new Date("1 Aug 2015"), y: 37720 },
-					{ x: new Date("1 Sep 2015"), y: 35200 },
-					{ x: new Date("1 Oct 2015"), y: 35280 },
-					{ x: new Date("1 Nov 2015"), y: 31160 },
-					{ x: new Date("1 Dec 2015"), y: 34400 }
-				]
-			}]
+
 		};
 
 		var newVSReturningVisitorsOptions2 = {
@@ -908,9 +802,6 @@
 			data: []
 		};
 
-		newVSReturningVisitorsOptions2.data = visitorsData2["New vs Returning Visitors"];
-		$("#chartContainer2").CanvasJSChart(newVSReturningVisitorsOptions2);
-
 		function visitorsChartDrilldownHandler2(e) {
 			e.chart.options = visitorsDrilldownedChartOptions2;
 			e.chart.options.data = visitorsData2[e.dataPoint.name];
@@ -924,8 +815,30 @@
 			newVSReturningVisitorsOptions2.data = visitorsData2["New vs Returning Visitors"];
 			$("#chartContainer2").CanvasJSChart(newVSReturningVisitorsOptions2);
 		});
-		
-		var visitorsData3 = {
+
+
+		let departmentDataFromEndpoint = []
+		$.ajax({
+			url: '${pageContext.request.contextPath}/Institute/departmentData',
+			success: function(response) {
+				console.log('response', response);
+
+				departmentDataFromEndpoint = response.map(item => ({
+					y: parseInt(item.message, 10), // Convert message to integer
+					name: item.title,
+					color: item.status
+				}));
+
+				console.log('1', departmentChart.data);
+				departmentChartData["New vs Returning Visitors"][0].dataPoints = departmentDataFromEndpoint
+				departmentChart.data = departmentChartData["New vs Returning Visitors"];
+				console.log('2', departmentChart.data);
+				$("#chartContainer3").CanvasJSChart(departmentChart);
+
+			}
+		});
+
+		var departmentChartData = {
 				"New vs Returning Visitors": [{
 					click: visitorsChartDrilldownHandler3,
 					cursor: "pointer",
@@ -944,114 +857,14 @@
 						{ y: 250, name: "Maternity", color: "#80D3E6" },
 						{ y: 60, name: "Internal", color: "#54B0B0" }
 					]
-				}],
-				"Tendon": [{
-					color: "#E7823A",
-					name: "0-5",
-					type: "column",
-					xValueFormatString: "MMM YYYY",
-					dataPoints: [
-						{ x: new Date("1 Jan 2015"), y: 33000 },
-						{ x: new Date("1 Feb 2015"), y: 35960 },
-						{ x: new Date("1 Mar 2015"), y: 42160 },
-						{ x: new Date("1 Apr 2015"), y: 42240 },
-						{ x: new Date("1 May 2015"), y: 43200 },
-						{ x: new Date("1 Jun 2015"), y: 40600 },
-						{ x: new Date("1 Jul 2015"), y: 42560 },
-						{ x: new Date("1 Aug 2015"), y: 44280 },
-						{ x: new Date("1 Sep 2015"), y: 44800 },
-						{ x: new Date("1 Oct 2015"), y: 48720 },
-						{ x: new Date("1 Nov 2015"), y: 50840 },
-						{ x: new Date("1 Dec 2015"), y: 51600 }
-					]
-				}],
-				"Children": [{
-					color: "#546BC1",
-					name: "Returning Visitors",
-					type: "column",
-					xValueFormatString: "MMM YYYY",
-					dataPoints: [
-						{ x: new Date("1 Jan 2015"), y: 22000 },
-						{ x: new Date("1 Feb 2015"), y: 26040 },
-						{ x: new Date("1 Mar 2015"), y: 25840 },
-						{ x: new Date("1 Apr 2015"), y: 23760 },
-						{ x: new Date("1 May 2015"), y: 28800 },
-						{ x: new Date("1 Jun 2015"), y: 29400 },
-						{ x: new Date("1 Jul 2015"), y: 33440 },
-						{ x: new Date("1 Aug 2015"), y: 37720 },
-						{ x: new Date("1 Sep 2015"), y: 35200 },
-						{ x: new Date("1 Oct 2015"), y: 35280 },
-						{ x: new Date("1 Nov 2015"), y: 31160 },
-						{ x: new Date("1 Dec 2015"), y: 34400 }
-					]
-				}],
-				"Orthopedics": [{
-					color: "#546BC1",
-					name: "Returning Visitors",
-					type: "column",
-					xValueFormatString: "MMM YYYY",
-					dataPoints: [
-						{ x: new Date("1 Jan 2015"), y: 22000 },
-						{ x: new Date("1 Feb 2015"), y: 26040 },
-						{ x: new Date("1 Mar 2015"), y: 25840 },
-						{ x: new Date("1 Apr 2015"), y: 23760 },
-						{ x: new Date("1 May 2015"), y: 28800 },
-						{ x: new Date("1 Jun 2015"), y: 29400 },
-						{ x: new Date("1 Jul 2015"), y: 33440 },
-						{ x: new Date("1 Aug 2015"), y: 37720 },
-						{ x: new Date("1 Sep 2015"), y: 35200 },
-						{ x: new Date("1 Oct 2015"), y: 35280 },
-						{ x: new Date("1 Nov 2015"), y: 31160 },
-						{ x: new Date("1 Dec 2015"), y: 34400 }
-					]
-				}],
-				"Maternity": [{
-					color: "#546BC1",
-					name: "Returning Visitors",
-					type: "column",
-					xValueFormatString: "MMM YYYY",
-					dataPoints: [
-						{ x: new Date("1 Jan 2015"), y: 22000 },
-						{ x: new Date("1 Feb 2015"), y: 26040 },
-						{ x: new Date("1 Mar 2015"), y: 25840 },
-						{ x: new Date("1 Apr 2015"), y: 23760 },
-						{ x: new Date("1 May 2015"), y: 28800 },
-						{ x: new Date("1 Jun 2015"), y: 29400 },
-						{ x: new Date("1 Jul 2015"), y: 33440 },
-						{ x: new Date("1 Aug 2015"), y: 37720 },
-						{ x: new Date("1 Sep 2015"), y: 35200 },
-						{ x: new Date("1 Oct 2015"), y: 35280 },
-						{ x: new Date("1 Nov 2015"), y: 31160 },
-						{ x: new Date("1 Dec 2015"), y: 34400 }
-					]
-				}],
-				"Internal": [{
-					color: "#546BC1",
-					name: "Returning Visitors",
-					type: "column",
-					xValueFormatString: "MMM YYYY",
-					dataPoints: [
-						{ x: new Date("1 Jan 2015"), y: 22000 },
-						{ x: new Date("1 Feb 2015"), y: 26040 },
-						{ x: new Date("1 Mar 2015"), y: 25840 },
-						{ x: new Date("1 Apr 2015"), y: 23760 },
-						{ x: new Date("1 May 2015"), y: 28800 },
-						{ x: new Date("1 Jun 2015"), y: 29400 },
-						{ x: new Date("1 Jul 2015"), y: 33440 },
-						{ x: new Date("1 Aug 2015"), y: 37720 },
-						{ x: new Date("1 Sep 2015"), y: 35200 },
-						{ x: new Date("1 Oct 2015"), y: 35280 },
-						{ x: new Date("1 Nov 2015"), y: 31160 },
-						{ x: new Date("1 Dec 2015"), y: 34400 }
-					]
 				}]
 			};
 
-			var newVSReturningVisitorsOptions3 = {
+		var departmentChart = {
 				animationEnabled: true,
 				theme: "light2",
 				title: {
-					text: "Patients by Department",
+					text: "Patients in Departments",
 					fontFamily: "calibri",
 				    fontSize: 20
 				},
@@ -1065,7 +878,7 @@
 				data: []
 			};
 
-			var visitorsDrilldownedChartOptions3 = {
+		var visitorsDrilldownedChartOptions3 = {
 				animationEnabled: true,
 				theme: "light2",
 				axisX: {
@@ -1084,21 +897,20 @@
 				data: []
 			};
 
-			newVSReturningVisitorsOptions3.data = visitorsData3["New vs Returning Visitors"];
-			$("#chartContainer3").CanvasJSChart(newVSReturningVisitorsOptions3);
 
-			function visitorsChartDrilldownHandler3(e) {
+
+		function visitorsChartDrilldownHandler3(e) {
 				e.chart.options = visitorsDrilldownedChartOptions3;
-				e.chart.options.data = visitorsData3[e.dataPoint.name];
+				e.chart.options.data = departmentChartData[e.dataPoint.name];
 				e.chart.options.title = { text: e.dataPoint.name }
 				e.chart.render();
 				$("#backButton2").toggleClass("invisible");
 			}
 
-			$("#backButton3").click(function() { 
+		$("#backButton3").click(function() {
 				$(this).toggleClass("invisible");
-				newVSReturningVisitorsOptions3.data = visitorsData3["New vs Returning Visitors"];
-				$("#chartContainer3").CanvasJSChart(newVSReturningVisitorsOptions3);
+				departmentChart.data = departmentChartData["New vs Returning Visitors"];
+				$("#chartContainer3").CanvasJSChart(departmentChart);
 			});
 
 	}

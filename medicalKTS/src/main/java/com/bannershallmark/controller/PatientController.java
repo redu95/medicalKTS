@@ -151,6 +151,11 @@ public class PatientController {
 		List<PatientMedicalHistory> medicalHistoryList = medicalService.getMedicalHistoryByPatient(medicalHistory.getPatientData().getId());
 		Integer isActive = 0;
 		
+		List<MedicItem> items = medicalService.allItems();
+        model.addAttribute("items", items);
+		MedicItem item = new MedicItem();
+		model.addAttribute("item", item);
+		
 		PatientMedicalHistory firstMedicHistory = medicalHistoryList.get(0);
 		if(firstMedicHistory.getId().equals(medicalHistory.getId())) {
 			isActive=1;
@@ -414,6 +419,16 @@ public class PatientController {
 			
 	}
 	
+	@GetMapping("/getItemRecordUnit")
+	@ResponseBody
+	public MedicItem getItemRecordUnit() throws Exception {
+		String id = request.getParameter("itemId");
+		MedicItem item = medicalService.findbyIdMedicItem(Integer.parseInt(id));
+		return item;
+	}
+	
+	
+	//
 	//Reception side
 	@GetMapping("/patientDataReception")
 	public String patientDataReception(Model model) throws Exception {

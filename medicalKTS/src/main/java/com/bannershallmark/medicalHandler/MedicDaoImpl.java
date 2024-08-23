@@ -417,6 +417,21 @@ public class MedicDaoImpl implements MedicDao  {
 	}
 	
 	@Override
+	public MedicItem checkItemByItemName(String itemName) {
+		Session session = sessionFactory.getCurrentSession();
+		MedicItem item =null;
+		try {
+			Query<MedicItem> query = session.createQuery("from MedicItem where itemName=:itemName", MedicItem.class);
+			query.setParameter("itemName", itemName);
+			item = query.getSingleResult();
+			return item;
+		}catch (Exception e) {
+			System.out.println(" Exception in getUserByPhone :: " + e.getMessage());
+			return item;
+		}
+	}
+	
+	@Override
 	public List<Department> allDepartment() {
 		Session session = sessionFactory.getCurrentSession();
 		Query<Department> query=session.createQuery("from Department where isActive=1", Department.class);
@@ -513,6 +528,30 @@ public class MedicDaoImpl implements MedicDao  {
 	public List<MedicItem> allItems() {
 		Session session = sessionFactory.getCurrentSession();
 		Query<MedicItem> query=session.createQuery("from MedicItem where isActive=1", MedicItem.class);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<PatientData> getSex() {
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "FROM PatientData WHERE sex IN ('Male', 'Female')";
+		Query<PatientData> query = session.createQuery(hql, PatientData.class);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<PatientData> getAges() {
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "FROM PatientData WHERE age IS NOT NULL"; // Assuming age is a field in PatientData
+		Query<PatientData> query = session.createQuery(hql, PatientData.class);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<PatientMedicalHistory> getDepartmentDataForChart() {
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "FROM PatientMedicalHistory";
+		Query<PatientMedicalHistory> query = session.createQuery(hql, PatientMedicalHistory.class);
 		return query.getResultList();
 	}
 	
