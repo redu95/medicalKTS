@@ -197,6 +197,7 @@ public class MedicInstituteController {
 	@PostMapping("/addItemsData")
 	public String addItemsData( @ModelAttribute MedicItem item, RedirectAttributes redirectAttributes) throws Exception {
 		System.out.println("Item name " + item.getItemName());
+		System.out.println("Item id " + item.getId());
 		MedicItem existingItem = medicalService.checkItemByItemName(item.getItemName());
 		System.out.println("Exist item " + existingItem);
 		if(existingItem!=null) {
@@ -208,7 +209,7 @@ public class MedicInstituteController {
 		item.setOnHand(item.getTotalQuanitiy());
 		item.setInstituteId(1);
 		item.setIsActive(1);
-		
+		redirectAttributes.addFlashAttribute(Constants.AttributeNames.SUCCESS_MESSAGE, "Item added successfully");
 		medicalService.save(item);
 		return "redirect:/Institute/medicItems";
 	}
@@ -218,6 +219,24 @@ public class MedicInstituteController {
 		MedicItem item = new MedicItem();
 		model.addAttribute("item", item);
 		return "medicInstitute/editItems";
+	}
+	
+	@PostMapping("/editItemsData")
+	public String editItemsData( @ModelAttribute MedicItem item, RedirectAttributes redirectAttributes) throws Exception {
+		System.out.println("Item name " + item.getItemName());
+		System.out.println("Item id " + item.getId());
+		MedicItem dbitem = medicalService.findbyIdMedicItem(item.getId());
+		System.out.println("Exist item " + dbitem.getId() + dbitem.getItemName());
+		dbitem.setItemName(item.getItemName());
+		dbitem.setDescription(item.getDescription());
+		dbitem.setOnHand(item.getTotalQuanitiy());
+		dbitem.setMeasmurmentUnit(item.getMeasmurmentUnit());
+		dbitem.setMinimunStock(item.getMinimunStock());
+		dbitem.setItemType(item.getItemType());
+		dbitem.setVendorName(item.getVendorName());
+		redirectAttributes.addFlashAttribute(Constants.AttributeNames.SUCCESS_MESSAGE, "Data modified successfully");
+		medicalService.save(dbitem);
+		return "redirect:/Institute/medicItems";
 	}
 	
 	@RequestMapping(value = "/deleteItem/{id}")

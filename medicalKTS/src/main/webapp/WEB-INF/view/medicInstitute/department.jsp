@@ -11,268 +11,7 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        
-        .department-card {
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-            position: relative;
-        }
-        
-        .department-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .department-card img {
-            width: 100%;
-            height: 50%;
-            object-fit: cover;
-        }
-
-        .member-avatars img {
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            margin-left: -8px;
-            border: 2px solid white;
-        }
-        
-        .details-button {
-            background-color: white;
-            border: 1px solid #3b82f6;
-            color: #3b82f6;
-            padding: 8px 16px;
-            border-radius: 8px;
-            margin-left: 125px;
-        }
-
-        .details-button:hover {
-            background-color: #3b82f6;
-            color: white;
-        }
-
-        .delete-icon {
-            position: absolute;
-            right: 16px;
-            bottom: 16px;
-            cursor: pointer;
-            color: #fe6e6e;
-        }
-
-        .delete-icon:hover {
-            color: #f87171;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-        }
-
-        .row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .col-12 {
-            width: 100%;
-        }
-
-        .col-md-6 {
-            width: 50%;
-        }
-
-        .order-md-1 {
-            order: 1;
-        }
-
-        .order-md-2 {
-            order: 2;
-        }
-
-        .breadcrumb {
-            display: flex;
-            list-style: none;
-        }
-
-        .breadcrumb-item {
-            margin-right: 8px;
-        }
-
-        .breadcrumb-item a {
-            text-decoration: none;
-            color: #3b82f6;
-        }
-
-        .breadcrumb-item.active {
-            color: #6b7280;
-        }
-
-        .grid {
-            display: grid;
-            gap: 24px;
-        }
-
-        .grid-cols-1 {
-            grid-template-columns: repeat(1, minmax(0, 1fr));
-        }
-
-        .sm\:grid-cols-2 {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .lg\:grid-cols-3 {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-
-        .xl\:grid-cols-4 {
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-        }
-
-        .text-3xl {
-            font-size: 1.875rem;
-            line-height: 2.25rem;
-        }
-
-        .font-bold {
-            font-weight: 700;
-        }
-
-        .bg-white {
-            background-color: white;
-        }
-
-        .text-gray-600 {
-            color: #4b5563;
-        }
-
-        .text-sm {
-            font-size: 0.875rem;
-            line-height: 1.25rem;
-        }
-
-        .text-xl {
-            font-size: 1.25rem;
-            line-height: 1.75rem;
-        }
-
-        .font-semibold {
-            font-weight: 600;
-        }
-
-        .flex {
-            display: flex;
-        }
-
-        .items-center {
-            align-items: center;
-        }
-
-        .mt-2 {
-            margin-top: 0.5rem;
-        }
-
-        .mt-4 {
-            margin-top: 1rem;
-        }
-
-        .p-4 {
-            padding: 1rem;
-        }
-
-        .px-4 {
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-
-        .py-2 {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-        }
-
-        .rounded-lg {
-            border-radius: 0.5rem;
-        }
-
-        .border {
-            border-width: 1px;
-        }
-
-        .border-gray-300 {
-            border-color: #d1d5db;
-        }
-
-        .w-full {
-            width: 100%;
-        }
-
-        .mb-6 {
-            margin-bottom: 1.5rem;
-        }
-
-        .absolute {
-            position: absolute;
-        }
-
-        .right-4 {
-            right: 1rem;
-        }
-
-        .top-2 {
-            top: 0.5rem;
-        }
-
-        .cursor-pointer {
-            cursor: pointer;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 0.375rem 0.75rem;
-            margin-bottom: 0;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: middle;
-            cursor: pointer;
-            border: 1px solid transparent;
-            border-radius: 0.25rem;
-            color: #fff;
-            background-color: #007bff;
-            border-color: #007bff;
-            text-decoration: none;
-        }
-
-        .btn-primary {
-            color: #fff;
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-
-        .btn-primary:hover {
-            color: #fff;
-            background-color: #0056b3;
-            border-color: #004085;
-        }
-        
-         .col-8 {
-            width: 66.%;
-        }
-
-        .col-4 {
-            width: 33.%;
-        }
-
-        .ig-dflx {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-        }
+      
          .spinner-overlay {
             position: fixed;
             top: 0;
@@ -344,7 +83,7 @@
 					    </div>
 					</div>
 
-			        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 departmentBox mb-4">
+			        <div class="departmentBox row mt-5">
 				     	 <!-- 
 				         <c:forEach var="department" items="${departments}">
 		                    <div class="department-card bg-white">
@@ -633,7 +372,7 @@
 					
 					for (var i = 0; i < loopLength; i++) {
 						// Log each department item to the console
-						$('.departmentBox').append('<div class="department-card bg-white"><img src="data:image/jpeg;base64,'+department[i].departmentHead+'" alt="Dept Logo" /><div class="p-4"><h3 class="text-xl font-semibold">'+department[i].departmentName+'</h3><div class="flex items-center mt-2"><span class="text-gray-600 text-sm mr-2">MEMBERS:</span><div class="member-avatars flex"><img src="https://picsum.photos/24?random=1" alt="Member 1"></div></div><p class="text-gray-600 mt-2">${department.description}</p><div class="flex justify-between items-center mt-4"><a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails('+department[i].id+')" class="btn btn-primary">Details</a></div></div><i class="bi bi-trash-fill delete-icon" onclick="deleteDept('+department[i].id+')"></i></div>')
+						$('.departmentBox').append('<div class="col-4"><div class="card shadow"><div class="row"><div class="col-5"><img src="data:image/jpeg;base64,'+department[i].departmentHead+'" class="card-img" alt="Department Image"></div><div class="col-7"><div class="card-body"><h5 class="card-title">'+department[i].departmentName+'</h5><p class="card-text">'+department[i].description+'</p><div class="c-dflx"><p class="card-text" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails('+department[i].id+')"><small class="text-muted" style="color: blue; cursor: pointer;">Go to details</small></p><a href="#"><i class="bi bi-trash-fill" style="color: #ed3b7d; font-size:20px; cursor: pointer;" onclick="deleteDept('+department[i].id+')"></i></a></div></div></div></div></div></div>')
 					}
 					 $("#spinner-overlay").fadeOut("slow");
 					
@@ -660,7 +399,7 @@
 					
 					for (var i = 0; i < loopLength; i++) {
 						// Log each department item to the console
-						$('.departmentBox').append('<div class="department-card bg-white"><img src="data:image/jpeg;base64,'+department[i].departmentHead+'" alt="Dept Logo" /><div class="p-4"><h3 class="text-xl font-semibold">'+department[i].departmentName+'</h3><div class="flex items-center mt-2"><span class="text-gray-600 text-sm mr-2">MEMBERS:</span><div class="member-avatars flex"><img src="https://picsum.photos/24?random=1" alt="Member 1"></div></div><p class="text-gray-600 mt-2">${department.description}</p><div class="flex justify-between items-center mt-4"><a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails('+department[i].id+')" class="btn btn-primary">Details</a></div></div><i class="bi bi-trash-fill delete-icon" onclick="deleteDept('+department[i].id+')"></i></div>')
+						$('.departmentBox').append('<div class="col-4"><div class="card shadow"><div class="row"><div class="col-5"><img src="data:image/jpeg;base64,'+department[i].departmentHead+'" class="card-img" alt="Department Image"></div><div class="col-7"><div class="card-body"><h5 class="card-title">'+department[i].departmentName+'</h5><p class="card-text">'+department[i].description+'</p><div class="c-dflx"><p class="card-text" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails('+department[i].id+')"><small class="text-muted" style="color: blue; cursor: pointer;">Go to details</small></p><a href="#"><i class="bi bi-trash-fill" style="color: #ed3b7d; font-size:20px; cursor: pointer;" onclick="deleteDept('+department[i].id+')"></i></a></div></div></div></div></div></div>')
 					}
 					
 					if(!loopLength==0){
@@ -695,7 +434,7 @@
 					for (var i = 0; i < loopLength; i++) {
 						// Log each department item to the console
 						console.log(i);
-						$('.departmentBox').append('<div class="department-card bg-white"><img src="data:image/jpeg;base64,'+department[i].departmentHead+'" alt="Dept Logo" /><div class="p-4"><h3 class="text-xl font-semibold">'+department[i].departmentName+'</h3><div class="flex items-center mt-2"><span class="text-gray-600 text-sm mr-2">MEMBERS:</span><div class="member-avatars flex"><img src="https://picsum.photos/24?random=1" alt="Member 1"></div></div><p class="text-gray-600 mt-2">${department.description}</p><div class="flex justify-between items-center mt-4"><a href="#" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails('+department[i].id+')" class="btn btn-primary">Details</a></div></div><i class="bi bi-trash-fill delete-icon" onclick="deleteDept('+department[i].id+')"></i></div>')
+						$('.departmentBox').append('<div class="col-4"><div class="card shadow"><div class="row"><div class="col-5"><img src="data:image/jpeg;base64,'+department[i].departmentHead+'" class="card-img" alt="Department Image"></div><div class="col-7"><div class="card-body"><h5 class="card-title">'+department[i].departmentName+'</h5><p class="card-text">'+department[i].description+'</p><div class="c-dflx"><p class="card-text" data-toggle="modal" data-dismiss="modal" data-target="user_form" onclick="loadDepartmentDetails('+department[i].id+')"><small class="text-muted" style="color: blue; cursor: pointer;">Go to details</small></p><a href="#"><i class="bi bi-trash-fill" style="color: #ed3b7d; font-size:20px; cursor: pointer;" onclick="deleteDept('+department[i].id+')"></i></a></div></div></div></div></div></div>')
 					}
 					$("#spinner-overlay").fadeOut("slow");
 				}
