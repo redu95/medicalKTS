@@ -152,6 +152,9 @@
 						<li class="submenu-item"><a
 							href="${pageContext.request.contextPath}/users/usersData"><i
 								class="bi bi-person"></i> Users</a></li>
+						<li class="submenu-item"><a
+								href="${pageContext.request.contextPath}/Institute/preferences">
+							<i class="bi bi-wrench"></i> Preferences</a></li>
 					</ul>
 				</li>
 			</ul>

@@ -1029,16 +1029,23 @@ public class MedicInstituteController {
 		return smsModelList;
 	}
 
+	//if new color is needed for new department please set here
 	private String getDepartmentColor(String departmentName) {
 		// Assign colors to departments based on their names
 		switch (departmentName.toLowerCase()) {
 			case "tendon": return "#E7823A";
 			case "children dept": return "#546BC1";
-			case "orthopedcis": return "#8480E6";
+			case "orthopedics": return "#8480E6";
 			case "maternity dept": return "#80D3E6";
 			case "internal issues dept": return "#54B0B0";
-			default: return "#000000"; // Default color if not matched
+			default: return String.format("#%06X", new Random().nextInt(0xFFFFFF + 1));
 		}
+	}
+
+
+	@GetMapping("/preferences")
+	public String preferences(Model model) throws Exception {
+		return "medicInstitute/preferences";
 	}
 }
 
