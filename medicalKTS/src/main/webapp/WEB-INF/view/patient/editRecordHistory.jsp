@@ -189,7 +189,11 @@
 						        <hr>
 						        <div class="col-12">
 						            <div class="mb-2">
-						                <span style="font-weight: bold;" class="treatment-section">Treatment: </span>
+						                <span style="font-weight: bold; font-size: 18px;">Treatment: </span>
+						                <div class="row mt-3 treatment-section">
+						                </div>
+						               
+										 
 						                <!-- <textarea name="treatment" id="treatment" class="form-control" placeholder="Medical treatment data" style="border-right:none;">${medicalHistory.treatement}</textarea> -->
 						           		<div style="text-align: right;">
 											<i class="bi bi-plus-circle-fill me-3" style="color: #435ebe; font-size: 40px; cursor: pointer;" id="plusIcon2"></i>
@@ -243,7 +247,7 @@
 							    <div class="modal-content">
 							      <div class="modal-header">
 							        <h5 class="modal-title" id="itemModalLabel">Select Items</h5>
-							        <button type="button" onclick="closeModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							      </div>
 							      <div class="modal-body">
 							      	<div class="mb-3">
@@ -354,14 +358,10 @@
 		function removeItemRow(x,id){
 			console.log(id);
 			var inputId = '#itemId'+id;
-			console.log(inputId);
-			console.log($(inputId));
 			$(inputId).prop('checked', false); 
 			
-			var parentRow = $(x).parent().parent();
-			console.log($(x));
-			console.log($(parentRow));
-			$(x).parent().parent().remove();
+			
+			$(x).parent().parent().parent().parent().remove();
 		}
 		
 		function handlePage(x){
@@ -442,13 +442,9 @@
 						$('.list-group-item-view').append('<div class="list-group-item"><input type="checkbox" class="checkboxIdGrop" id="itemId'+response[i].id+'" name="item'+response[i].id+'" value="'+response[i].id+'" onclick="handleSelection(this,'+response[i].id+')"><label for="item'+response[i].id+'">'+response[i].itemName+'</label><p class="small"><strong>On Hand:</strong>'+response[i].onHand+'<br><strong>Description:</strong> '+response[i].description+'<br></p> </div>');
 						for (var key in invsId) {
 						    if (invsId[key] == response[i].id) {
-						       console.log("ID is herererer");
 						       var itemIdd = '#itemId'+ response[i].id;
-						       console.log("ID is herererer" + itemIdd);
 						       $(itemIdd).prop('checked', true); 
 						        break;
-						    } else {
-						    	 console.log("ID NOT in herererer");
 						    }
 						}
 					}
@@ -512,13 +508,9 @@
 						$('.list-group-item-view').append('<div class="list-group-item"><input class="checkboxIdGrop" type="checkbox" id="itemId'+response[i].id+'" name="item'+response[i].id+'" value="'+response[i].id+'" onclick="handleSelection(this,'+response[i].id+')"><label for="item'+response[i].id+'">'+response[i].itemName+'</label><p class="small"><strong>On Hand:</strong>'+response[i].onHand+'<br><strong>Description:</strong> '+response[i].description+'<br></p> </div>');
 						for (var key in invsId) {
 						    if (invsId[key] == response[i].id) {
-						       console.log("ID is herererer");
 						       var itemIdd = '#itemId'+ response[i].id;
-						       console.log("ID is herererer" + itemIdd);
 						       $(itemIdd).prop('checked', true); 
 						        break;
-						    } else {
-						    	 console.log("ID NOT in herererer");
 						    }
 						}
 					}
@@ -561,7 +553,7 @@
 					},
 					success : function(response) {
 						console.log(response);
-						$('.treatment-section').append('<div class="row treatmentItems mb-3" id="itemIconRow'+response.id+'" data-id-val="'+response.id+'"><div class="col-4">Item Name: '+response.itemName+'</div><div class="col-4">Item Desc: '+response.description+' </div><div class="col-2"> Item Amount: <input type="number" maxlength="50" name="err4" id="err4" class="form-control" placeholder="" value="1" /></div><div class ="col-2"><a class="red" href="#" id="remove" onclick="removeItemRow(this,'+response.id+')"><i class="bi bi-trash-fill ms-5" style="color: #ed3b7d; font-size:20px; cursor: pointer;" onclick="deleteExam(this)"></i></a></div></div>');
+						$('.treatment-section').append('<div class="col-3 treatmentItems mb-3 align-items-center" id="itemIconRow'+response.id+'" data-id-val="'+response.id+'"><div class="card border" style="width: 18rem;"><div class="card-body"><h5 class="card-title">'+response.itemName+'</h5> <p class="card-text">'+response.description+'</p><div class="input-group flex-nowrap mt-1 mb-1 c-dflx"><span class="input-group-text" id="addon-wrapping">Qty</span> <input type="number" class="form-control me-3" placeholder="Quantity" aria-label="Username" aria-describedby="addon-wrapping" value="1"><a href="#" onclick="removeItemRow(this,'+response.id+')"><i class="bi bi-trash-fill" style="color: #ed3b7d; font-size:20px; cursor: pointer;"></i></a></div> </div></div></div>');
 					}
 				});
 	       	};
