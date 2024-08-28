@@ -12,6 +12,7 @@
 	<mapping decorator="/decorators/dashboardtheme2" path="/Patient/editExistingPatientData/*" />
 	<mapping decorator="/decorators/dashboardtheme2" path="/Patient/patientMedicalHistory/*" />
 	<mapping decorator="/decorators/dashboardtheme2" path="/Patient/editExistingPatientSchedule/*" />
+	<mapping decorator="/decorators/dashboardtheme2" path="/Patient/invoicePage/*" />
 	
 	
 	<!-- Doctor  -->

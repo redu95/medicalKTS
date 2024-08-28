@@ -932,10 +932,10 @@ public class PatientController {
             parameters.put("issueDate", "10/11/2024");
             parameters.put("address", "Addis Ababa");
             parameters.put("billedTo", "Ermias Ashebr");
-            parameters.put("totalPrice", 150.00);
-            parameters.put("invoiceNumber", "150.00");
-            parameters.put("companyContact", "150.00");
-            parameters.put("companyEmail", "150.00");
+            parameters.put("totalPrice", 1500.00);
+            parameters.put("invoiceNumber", "#121203");
+            parameters.put("companyContact", "0911111111");
+            parameters.put("companyEmail", "johndoe@example.com");
 
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
