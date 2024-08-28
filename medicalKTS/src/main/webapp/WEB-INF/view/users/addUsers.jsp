@@ -36,16 +36,6 @@
 				</div>
 
 				<section class="section blnk-db">
-				
-					<div class="row">
-						<div class="col-12 d-flex justify-content-center">
-							<a href="${pageContext.request.contextPath}/users/usersData"
-								class="c-btn btn btn-primary me-3 mb-1" style="color: #435ebe; background-color: transparent;" >Cancel</a>
-									<button type="submit" class=" c-btn btn btn-primary" id="saveData">Save</button>
-						</div>
-					</div>
-
-					
 					<form:form class="form-horizontals" method="post" id="user_form"
 						onsubmit="saveForm()" name="user_form" action="addNewUsers"
 						modelAttribute="users" enctype="multipart/form-data"
