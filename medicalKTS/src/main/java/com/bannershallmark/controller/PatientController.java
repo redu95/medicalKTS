@@ -252,7 +252,7 @@ public class PatientController {
 		String presentStatus = request.getParameter("presentStatus");
 		String treatment = request.getParameter("treatment");
 		String prescription = request.getParameter("prescription");
-		
+		 
 		
 		Integer medicalHistoryId = Integer.parseInt(medicalHistoryIdStr);
 		if(scheduledHour==null) {
