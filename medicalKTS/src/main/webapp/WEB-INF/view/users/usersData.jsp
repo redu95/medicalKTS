@@ -128,8 +128,8 @@
 				                <div class="modal-body">
 				                	<form:form class="form-horizontals" method="post" id="user_form"
 										onsubmit="saveForm()" name="user_form" action="addNewUsers"
-										modelAttribute="user" enctype="multipart/form-data" >
-										
+										modelAttribute="user" enctype="multipart/form-data"
+										>
 										<%@ include file="../common/error-and-success-message.jsp"%>
 				
 										<div class="card tp-inpt">
@@ -213,8 +213,8 @@
 													<div class="col-md-4 col-12">
 														<div class="form-group">
 															<label for="role">Department</label>
-															<form:select type="text" required="true" name="departmentId"
-																id="departmentId" path="departmentId" class="form-select" value="">
+															<form:select type="text" required="true" name="role"
+																id="role" path="role.id" class="form-select" value="">
 																<form:option value="">--Select Department--</form:option>
 																<c:forEach items="${departments}" var="departments">
 																	<form:option value="${departments.departmentName}">${departments.departmentName}</form:option>
