@@ -176,7 +176,7 @@
 			$('.schedule-submenu').addClass("active");
 		} else if (url.includes('medicItems') || url.includes('addMedicItems')) {
 			$('.item-submenu').addClass("active");
-		} else if (url.includes('institutionData') || url.includes('roleData') || url.includes('usersData') || url.includes('addUsers') || url.includes('getUsers')) {
+		} else if (url.includes('institutionData') || url.includes('preferences') || url.includes('roleData') || url.includes('usersData') || url.includes('addUsers') || url.includes('getUsers')) {
 			$('.settings-submenu').addClass("active");
 		} else if (url.includes('salesSummary') || url.includes('monthlyReport')) {
 			$('.sales-submenu').addClass("active");
