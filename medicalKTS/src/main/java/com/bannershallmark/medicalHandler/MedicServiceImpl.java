@@ -20,6 +20,7 @@ import com.bannershallmark.entity.PatientData;
 import com.bannershallmark.entity.PatientMedicalHistory;
 import com.bannershallmark.entity.QueueData;
 import com.bannershallmark.entity.SalesReciet;
+import com.bannershallmark.entity.TreatmentData;
 
 @Service
 public class MedicServiceImpl implements MedicalService {
@@ -114,7 +115,12 @@ public class MedicServiceImpl implements MedicalService {
 		medicDao.save(dateTimeSchedule);		
 	}
 	
-	
+	@Override
+	@Transactional
+	public void save(TreatmentData treatmentData) {
+		// TODO Auto-generated method stub
+		medicDao.save(treatmentData);		
+	}
 //	@Override
 //	@Transactional
 //	public void deleteMedicInstitute(Integer instituteId) {
@@ -238,6 +244,13 @@ public class MedicServiceImpl implements MedicalService {
 	
 	@Override
 	@Transactional
+	public TreatmentData findbyIdTreatmentData(Integer treatmentId) {
+		// TODO Auto-generated method stub
+		return medicDao.findbyIdTreatmentData(treatmentId);		
+	}
+	
+	@Override
+	@Transactional
 	public List<PatientMedicalHistory> getAppointmentList(Integer page, Date startDate, Date endDate, String value, String status, String assignedTo, String orderBy, String isLabratory, String isReception) {
 		// TODO Auto-generated method stub
 		return medicDao.getAppointmentList(page, startDate, endDate, value, status, assignedTo, orderBy, isLabratory, isReception);		
@@ -269,6 +282,13 @@ public class MedicServiceImpl implements MedicalService {
 	public List<PatientMedicalHistory> getMedicalHistoryByPatient(Integer patientId) {
 		// TODO Auto-generated method stub
 		return medicDao.getMedicalHistoryByPatient(patientId);		
+	}
+	
+	@Override
+	@Transactional
+	public List<TreatmentData> getTreatmentByMedicalHistoryId(Integer medicalHistoryId) {
+		// TODO Auto-generated method stub
+		return medicDao.getTreatmentByMedicalHistoryId(medicalHistoryId);		
 	}
 	
 	@Override

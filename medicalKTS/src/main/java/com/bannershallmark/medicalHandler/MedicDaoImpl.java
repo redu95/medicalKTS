@@ -26,6 +26,7 @@ import com.bannershallmark.entity.PatientData;
 import com.bannershallmark.entity.PatientMedicalHistory;
 import com.bannershallmark.entity.QueueData;
 import com.bannershallmark.entity.SalesReciet;
+import com.bannershallmark.entity.TreatmentData;
 import com.bannershallmark.entity.Users;
 
 @Repository
@@ -104,6 +105,12 @@ public class MedicDaoImpl implements MedicDao  {
 	public void save(DateTimeSchedule dateTimeSchedule) {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(dateTimeSchedule);
+	}
+	
+	@Override
+	public void save(TreatmentData treatmentData) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(treatmentData);
 	}
 	
 	
@@ -217,6 +224,13 @@ public class MedicDaoImpl implements MedicDao  {
 		Session session = sessionFactory.getCurrentSession();
 		DateTimeSchedule dateTimeSchedule= session.get(DateTimeSchedule.class, scheduleId);
 		return dateTimeSchedule;
+	}
+	
+	@Override
+	public TreatmentData findbyIdTreatmentData(Integer treatmentId) {
+		Session session = sessionFactory.getCurrentSession();
+		TreatmentData treatmentData= session.get(TreatmentData.class, treatmentId);
+		return treatmentData;
 	}
 	
 	@Override
@@ -397,6 +411,15 @@ public class MedicDaoImpl implements MedicDao  {
 		 Session session = sessionFactory.getCurrentSession();
 	 	 Query<PatientMedicalHistory> query=session.createQuery("from PatientMedicalHistory where patientData.id=:patientId order by eventStartDate desc", PatientMedicalHistory.class);
 	 	 query.setParameter("patientId", patientId);
+		 return query.getResultList();
+		
+	}
+	
+	@Override
+	public List<TreatmentData> getTreatmentByMedicalHistoryId(Integer medicHistoryId) {
+		 Session session = sessionFactory.getCurrentSession();
+	 	 Query<TreatmentData> query=session.createQuery("from TreatmentData where patientMedicalHistory.id=:medicHistoryId", TreatmentData.class);
+	 	 query.setParameter("medicHistoryId", medicHistoryId);
 		 return query.getResultList();
 		
 	}
