@@ -136,7 +136,6 @@
 												            <option value="11">11</option>
 												            <option value="12">12</option>
 												        </select>
-												        &nbsp; &nbsp; &nbsp;
 <%--												        <select class="form-select selectVals rowgroup1 startMinute1" id="startMinute1" onchange="readScheduleDate(1,this.value,this)">--%>
 <%--												            <option value="00">00</option>--%>
 <%--												            <option value="15">15</option>--%>
@@ -169,7 +168,7 @@
 													<div class="input-group">
 														<input class="form-select rowgroup1 startHour1" disabled="disabled" value="1" />
 														 &nbsp; &nbsp; &nbsp; 
-														<input class="form-select rowgroup1 startMinute1" disabled="disabled" value="15"/>
+														<input class="form-select rowgroup1 startMinute1" disabled="disabled" value="${userPreference}"/>
 
 													</div>
 												    <div class="form-check mt-3" style="visibility: hidden;">
@@ -287,7 +286,7 @@
 					'<input type="checkbox" name="checkAll" class="form-check-input selectVals">Free slot</div></div></div>'
 			);
 
-			$(lastChildEnd).before('<div class="form-group datetimepick"> <div class="input-group"><input class="form-select rowgroup' + sequenceNumber + ' startHour' + sequenceNumber + '" disabled="disabled" value="2" />&nbsp; &nbsp; &nbsp;<input class="form-select rowgroup' + sequenceNumber + ' startMinute' + sequenceNumber + '" disabled="disabled" value="15" /></div> <div class="form-check mt-3" style="visibility: hidden;"><div class="checkbox"><input type="checkbox" name="checkAll" class="form-check-input">Free slot</div></div></div>');
+			$(lastChildEnd).before('<div class="form-group datetimepick"> <div class="input-group"><input class="form-select rowgroup' + sequenceNumber + ' startHour' + sequenceNumber + '" disabled="disabled" value="2" />&nbsp; &nbsp; &nbsp;<input class="form-select rowgroup' + sequenceNumber + ' startMinute' + sequenceNumber + '" disabled="disabled" value="${userPreference}" /></div> <div class="form-check mt-3" style="visibility: hidden;"><div class="checkbox"><input type="checkbox" name="checkAll" class="form-check-input">Free slot</div></div></div>');
 
 			// Set the minute options based on the desired interval
 			var interval = ${userPreference}; // You can change this value to 15, 30, or 45 based on your logic
