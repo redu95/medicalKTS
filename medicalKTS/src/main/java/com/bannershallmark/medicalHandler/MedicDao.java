@@ -16,6 +16,7 @@ import com.bannershallmark.entity.PatientData;
 import com.bannershallmark.entity.PatientMedicalHistory;
 import com.bannershallmark.entity.QueueData;
 import com.bannershallmark.entity.SalesReciet;
+import com.bannershallmark.entity.TreatmentData;
 
 public interface MedicDao{
 	
@@ -31,6 +32,7 @@ public interface MedicDao{
 	void save(MedicSales sales);
 	void save(SalesReciet reciet);
 	void save(DateTimeSchedule dateTimeSchedule);
+	void save(TreatmentData treatmentData);
 	
 //	void deleteMedicInstitute(Integer instituteId);
 //	void deletePatient(Integer patientId);
@@ -51,6 +53,7 @@ public interface MedicDao{
 	MedicSales findbyIdMedicSales(Integer medicSalesId);
 	SalesReciet findbyIdSalesReciet(Integer recietId);
 	DateTimeSchedule findbyIdDateTimeSchedule(Integer scheduleId);
+	TreatmentData findbyIdTreatmentData(Integer treatmentId);
 	
 	//Pagination section
 	List<PatientMedicalHistory> getAppointmentList(Integer page, Date startDate, Date endDate, String value, String status, String assignedTo, String orderBy, String isLabratory, String isReception);	
@@ -58,6 +61,7 @@ public interface MedicDao{
 	List<DateTimeSchedule> getDateTimeSchedule(Date startDate, Date endDate, Integer doctorId, Integer isFreeSlot);	
 	List<ExaminationData> getAllExaminationByHistory(Integer medicalHistoryId);	
 	List<PatientMedicalHistory> getMedicalHistoryByPatient(Integer patientId);	
+	List<TreatmentData> getTreatmentByMedicalHistoryId(Integer medicalHistoryId);	
 
 	
 	List<Department> allDepartment();	
