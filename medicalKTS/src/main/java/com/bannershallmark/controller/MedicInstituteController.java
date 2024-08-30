@@ -13,6 +13,8 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import com.bannershallmark.entity.*;
+import com.bannershallmark.service.UserPreferencesService;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +37,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.bannershallmark.entity.DateTimeSchedule;
-import com.bannershallmark.entity.Department;
-import com.bannershallmark.entity.MedicItem;
-import com.bannershallmark.entity.MedicService;
-import com.bannershallmark.entity.MedicalInstitute;
-import com.bannershallmark.entity.PatientData;
-import com.bannershallmark.entity.PatientMedicalHistory;
-import com.bannershallmark.entity.Users;
 import com.bannershallmark.medicalHandler.MedicalService;
 import com.bannershallmark.service.MyUserDetails;
 import com.bannershallmark.service.UsersDetailsService;
@@ -63,6 +57,9 @@ public class MedicInstituteController {
 	
 	@Autowired
 	private UsersDetailsService usersDetailsService;
+
+	@Autowired
+	private UserPreferencesService userPreferencesService;
 	
 	//Administration side
 	@GetMapping("/dashboard")
@@ -447,6 +444,12 @@ public class MedicInstituteController {
 	public String scheduleDate(Model model) throws Exception {
 		List<Department> departments = medicalService.allDepartment();
 		model.addAttribute("departments", departments);
+
+
+		UserPreferences userPreferences = userPreferencesService.findById(1);
+		System.out.println(userPreferences.getPreferenceValue());
+		model.addAttribute("userPreference", userPreferences.getPreferenceValue());
+
 		return "medicInstitute/scheduleDate";
 	}
 	
@@ -1064,8 +1067,46 @@ public class MedicInstituteController {
 
 	@GetMapping("/preferences")
 	public String preferences(Model model) throws Exception {
+
+		List<UserPreferences> userPreferences = userPreferencesService.getAllUserPreferences();
+
+		System.out.println("============"+userPreferences);
+
+		model.addAttribute("userPreferences", userPreferences);
+
 		return "medicInstitute/preferences";
 	}
+
+	@PostMapping("/savePreferences")
+	public String savePreferences(@RequestParam("appointmentDuration") Integer appointmentDuration,
+								  @RequestParam("departmentCards") Integer departmentCards,
+								  @RequestParam("rowsPerTable") Integer rowsPerTable,
+								  RedirectAttributes redirectAttributes) {
+
+		// Fetch all preferences
+		List<UserPreferences> preferences = userPreferencesService.getAllUserPreferences();
+
+		// Assuming preferences list is ordered as mentioned earlier
+		if (preferences.size() > 0) {
+			preferences.get(0).setPreferenceValue(appointmentDuration.toString());
+		}
+		if (preferences.size() > 1) {
+			preferences.get(1).setPreferenceValue(departmentCards.toString());
+		}
+		if (preferences.size() > 2) {
+			preferences.get(2).setPreferenceValue(rowsPerTable.toString());
+		}
+
+		// Save updated preferences
+		for (UserPreferences preference : preferences) {
+			userPreferencesService.saveUserPreferences(preference);
+		}
+
+		// Add a success message and redirect
+		redirectAttributes.addFlashAttribute("message", "Preferences saved successfully!");
+		return "redirect:/Institute/preferences";
+	}
+
 }
 
 
