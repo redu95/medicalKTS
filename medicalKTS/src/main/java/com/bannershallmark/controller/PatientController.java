@@ -9,6 +9,7 @@ import com.bannershallmark.util.Constants;
 import com.bannershallmark.vo.NewPatientVo;
 import com.bannershallmark.vo.PatientListAjax;
 import com.bannershallmark.vo.ServiceListAjax;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.FileResolver;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -418,8 +420,56 @@ public class PatientController {
 		return "success";
 			
 	}
-	
-	@GetMapping("/getItemRecordUnit")
+
+
+    @PostMapping("/editMedicalRecordHistoryLab")
+    @ResponseBody
+    public String editMedicalRecordHistoryLab(
+            @RequestParam("documents") String[] documents,
+            @RequestParam("files") List<MultipartFile> files,
+            @RequestParam("results") String[] results
+    ) throws Exception {
+        System.out.println("Received request to edit medical record history lab.");
+        System.out.println("Number of documents received: " + documents.length);
+        System.out.println("Number of files received: " + files.size());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        for (int i = 0; i < files.size(); i++) {
+//            System.out.println("Processing document " + (i + 1) + " out of " + files.size());
+
+            String documentData = documents[i];// JSON string with ID and file name
+            System.out.println("documentData "+documentData);
+            MultipartFile file = files.get(i); // Corresponding file
+
+
+            Map<String, String> documentMap = objectMapper.readValue(documentData, Map.class);
+			String id = documentMap.get("id");
+            String fileName = documentMap.get("fileName");
+
+            System.out.println("Document data: " + documentData);
+            System.out.println("File name: " + fileName);
+            System.out.println("Parsed ID: " + id);
+
+            ExaminationDocuments docs = new ExaminationDocuments();
+            docs.setFileName(fileName);
+            docs.setFileData(file.getBytes());
+            docs.setExaminationId(Integer.parseInt(id));
+            docs.setFileContentType(file.getContentType());
+            docs.setIsActive(1);
+            System.out.println(docs.getFileName() + "save file name");
+            medicalService.save(docs);
+
+        }
+
+        System.out.println("Completed processing all documents and files.");
+        return "success";
+    }
+
+
+
+
+    @GetMapping("/getItemRecordUnit")
 	@ResponseBody
 	public MedicItem getItemRecordUnit() throws Exception {
 		String id = request.getParameter("itemId");

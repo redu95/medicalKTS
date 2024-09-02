@@ -4,22 +4,10 @@ package com.bannershallmark.medicalHandler;
 import java.util.Date;
 import java.util.List;
 
+import com.bannershallmark.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.bannershallmark.entity.DateTimeSchedule;
-import com.bannershallmark.entity.Department;
-import com.bannershallmark.entity.ExaminationData;
-import com.bannershallmark.entity.MedicItem;
-import com.bannershallmark.entity.MedicItemService;
-import com.bannershallmark.entity.MedicSales;
-import com.bannershallmark.entity.MedicService;
-import com.bannershallmark.entity.MedicalInstitute;
-import com.bannershallmark.entity.PatientData;
-import com.bannershallmark.entity.PatientMedicalHistory;
-import com.bannershallmark.entity.QueueData;
-import com.bannershallmark.entity.SalesReciet;
 
 @Service
 public class MedicServiceImpl implements MedicalService {
@@ -113,7 +101,15 @@ public class MedicServiceImpl implements MedicalService {
 		// TODO Auto-generated method stub
 		medicDao.save(dateTimeSchedule);		
 	}
-	
+
+	@Override
+	@Transactional
+	public void save(ExaminationDocuments examinationDocuments) {
+		// TODO Auto-generated method stub
+		medicDao.save(examinationDocuments);
+	}
+
+
 	
 //	@Override
 //	@Transactional
@@ -148,6 +144,13 @@ public class MedicServiceImpl implements MedicalService {
 	public void deleteMedicService(Integer medicServiceId) {
 		// TODO Auto-generated method stub
 		medicDao.deleteMedicService(medicServiceId);		
+	}
+
+	@Override
+	@Transactional
+	public void deleteExaminationDocs(Integer docId) {
+		// TODO Auto-generated method stub
+		medicDao.deleteExaminationDocs(docId);
 	}
 	
 	
@@ -235,6 +238,13 @@ public class MedicServiceImpl implements MedicalService {
 		// TODO Auto-generated method stub
 		return medicDao.findbyIdDateTimeSchedule(scheduleId);		
 	}
+
+	@Override
+	@Transactional
+	public ExaminationDocuments findbyIdExamDocs(Integer docId) {
+		// TODO Auto-generated method stub
+		return medicDao.findbyIdExamDocs(docId);
+	}
 	
 	@Override
 	@Transactional
@@ -269,6 +279,13 @@ public class MedicServiceImpl implements MedicalService {
 	public List<PatientMedicalHistory> getMedicalHistoryByPatient(Integer patientId) {
 		// TODO Auto-generated method stub
 		return medicDao.getMedicalHistoryByPatient(patientId);		
+	}
+
+	@Override
+	@Transactional
+	public List<ExaminationDocuments> getDocsByExaminationId(Integer examinationId) {
+		// TODO Auto-generated method stub
+		return medicDao.getDocsByExaminationId(examinationId);
 	}
 	
 	@Override
