@@ -14,6 +14,21 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import com.bannershallmark.entity.DateTimeSchedule;
+import com.bannershallmark.entity.Department;
+import com.bannershallmark.entity.ExaminationData;
+import com.bannershallmark.entity.MedicItem;
+import com.bannershallmark.entity.MedicItemService;
+import com.bannershallmark.entity.MedicSales;
+import com.bannershallmark.entity.MedicService;
+import com.bannershallmark.entity.MedicalInstitute;
+import com.bannershallmark.entity.PatientData;
+import com.bannershallmark.entity.PatientMedicalHistory;
+import com.bannershallmark.entity.QueueData;
+import com.bannershallmark.entity.SalesReciet;
+import com.bannershallmark.entity.TreatmentData;
+import com.bannershallmark.entity.Users;
+
 
 @Repository
 public class MedicDaoImpl implements MedicDao  {
@@ -103,6 +118,7 @@ public class MedicDaoImpl implements MedicDao  {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(examinationDocuments);
 	}
+
 	
 	
 	//Delete Section
@@ -238,6 +254,7 @@ public class MedicDaoImpl implements MedicDao  {
 		ExaminationDocuments exmaDoc= session.get(ExaminationDocuments.class, docId);
 		return exmaDoc;
 	}
+
 	
 	@Override
 	public List<PatientMedicalHistory> getAppointmentList(Integer page, Date startDate, Date endDate, String value, String presentStatus, String assignedTo, String orderBy, String isLabratory, String isReception) {

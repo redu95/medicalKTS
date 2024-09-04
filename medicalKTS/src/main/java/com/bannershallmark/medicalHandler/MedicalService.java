@@ -5,7 +5,21 @@ import java.util.Date;
 
 import java.util.List;
 
-import com.bannershallmark.entity.*;
+
+import com.bannershallmark.entity.DateTimeSchedule;
+import com.bannershallmark.entity.Department;
+import com.bannershallmark.entity.ExaminationData;
+import com.bannershallmark.entity.MedicItem;
+import com.bannershallmark.entity.MedicItemService;
+import com.bannershallmark.entity.MedicSales;
+import com.bannershallmark.entity.MedicService;
+import com.bannershallmark.entity.MedicalInstitute;
+import com.bannershallmark.entity.PatientData;
+import com.bannershallmark.entity.PatientMedicalHistory;
+import com.bannershallmark.entity.QueueData;
+import com.bannershallmark.entity.SalesReciet;
+import com.bannershallmark.entity.TreatmentData;
+
 
 public interface MedicalService {
 	
@@ -23,6 +37,7 @@ public interface MedicalService {
 	void save(DateTimeSchedule dateTimeSchedule);
 	void save(TreatmentData treatmentData);
 	void save(ExaminationDocuments docs);
+
 	
 //	void deleteMedicInstitute(Integer instituteId);
 //	void deletePatient(Integer patientId);
@@ -46,6 +61,7 @@ public interface MedicalService {
 	DateTimeSchedule findbyIdDateTimeSchedule(Integer scheduleId);
 	TreatmentData findbyIdTreatmentData(Integer treatmentId);
 	ExaminationDocuments findbyIdExamDocs(Integer docId);
+
 	
 	//Pagination section
 	List<PatientMedicalHistory> getAppointmentList(Integer page, Date startDate, Date endDate, String value, String status, String assignedTo, String orderBy, String isLabratory, String isReception);	

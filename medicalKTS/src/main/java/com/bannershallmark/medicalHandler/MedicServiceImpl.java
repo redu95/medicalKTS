@@ -9,6 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bannershallmark.entity.DateTimeSchedule;
+import com.bannershallmark.entity.Department;
+import com.bannershallmark.entity.ExaminationData;
+import com.bannershallmark.entity.MedicItem;
+import com.bannershallmark.entity.MedicItemService;
+import com.bannershallmark.entity.MedicSales;
+import com.bannershallmark.entity.MedicService;
+import com.bannershallmark.entity.MedicalInstitute;
+import com.bannershallmark.entity.PatientData;
+import com.bannershallmark.entity.PatientMedicalHistory;
+import com.bannershallmark.entity.QueueData;
+import com.bannershallmark.entity.SalesReciet;
+import com.bannershallmark.entity.TreatmentData;
+
 @Service
 public class MedicServiceImpl implements MedicalService {
 
@@ -115,6 +129,7 @@ public class MedicServiceImpl implements MedicalService {
 		// TODO Auto-generated method stub
 		medicDao.save(examinationDocuments);
 	}
+
 
 
 //	@Override
@@ -249,6 +264,13 @@ public class MedicServiceImpl implements MedicalService {
 	public ExaminationDocuments findbyIdExamDocs(Integer docId) {
 		// TODO Auto-generated method stub
 		return medicDao.findbyIdExamDocs(docId);
+	}
+	
+	@Override
+	@Transactional
+	public TreatmentData findbyIdTreatmentData(Integer treatmentId) {
+		// TODO Auto-generated method stub
+		return medicDao.findbyIdTreatmentData(treatmentId);		
 	}
 	
 	@Override

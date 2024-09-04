@@ -4,7 +4,21 @@ package com.bannershallmark.medicalHandler;
 import java.util.Date;
 import java.util.List;
 
-import com.bannershallmark.entity.*;
+
+import com.bannershallmark.entity.DateTimeSchedule;
+import com.bannershallmark.entity.Department;
+import com.bannershallmark.entity.ExaminationData;
+import com.bannershallmark.entity.MedicItem;
+import com.bannershallmark.entity.MedicItemService;
+import com.bannershallmark.entity.MedicSales;
+import com.bannershallmark.entity.MedicService;
+import com.bannershallmark.entity.MedicalInstitute;
+import com.bannershallmark.entity.PatientData;
+import com.bannershallmark.entity.PatientMedicalHistory;
+import com.bannershallmark.entity.QueueData;
+import com.bannershallmark.entity.SalesReciet;
+import com.bannershallmark.entity.TreatmentData;
+
 
 public interface MedicDao{
 	
@@ -22,6 +36,7 @@ public interface MedicDao{
 	void save(DateTimeSchedule dateTimeSchedule);
 	void save(TreatmentData treatmentData);
 	void save(ExaminationDocuments docs);
+
 
 
 //	void deleteMedicInstitute(Integer instituteId);
@@ -44,7 +59,9 @@ public interface MedicDao{
 	SalesReciet findbyIdSalesReciet(Integer recietId);
 	DateTimeSchedule findbyIdDateTimeSchedule(Integer scheduleId);
 	TreatmentData findbyIdTreatmentData(Integer treatmentId);
+
 	ExaminationDocuments findbyIdExamDocs(Integer docId);
+
 
 	
 	//Pagination section
@@ -55,6 +72,7 @@ public interface MedicDao{
 	List<PatientMedicalHistory> getMedicalHistoryByPatient(Integer patientId);	
 	List<TreatmentData> getTreatmentByMedicalHistoryId(Integer medicalHistoryId);
 	List<ExaminationDocuments> getDocsByExaminationId(Integer examinationId);
+
 
 	
 	List<Department> allDepartment();	
