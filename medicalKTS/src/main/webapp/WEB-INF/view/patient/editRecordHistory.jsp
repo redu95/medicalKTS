@@ -192,9 +192,25 @@
 						                <span style="font-weight: bold; font-size: 18px;">Treatment: </span>
 						                <div class="row mt-3 treatment-section">
 						                </div>
-						               
-										 
-						                <!-- <textarea name="treatment" id="treatment" class="form-control" placeholder="Medical treatment data" style="border-right:none;">${medicalHistory.treatement}</textarea> -->
+						                <c:forEach items="${treatmentData}" var="treatmentData">
+											<div class="col-3 treatmentItems mb-3 align-items-center" id="itemIconRow'+response.id+'" data-id-val="'+response.id+'">
+											  <div class="card border" style="width: 18rem;">
+											    <div class="card-body">
+											      <h5 class="card-title">'+treatmentData.medicItem.itemName+'</h5>
+											      <p class="card-text">'+treatmentData.medicItem.description+'</p>
+											      <div class="input-group flex-nowrap mt-1 mb-1 c-dflx">
+											        <span class="input-group-text" id="addon-wrapping">Qty</span>
+											        <input type="number" class="form-control me-3" placeholder="Quantity" data-id2="${tratmentData.id}"  aria-label="Username" aria-describedby="addon-wrapping" value="${treatmentData.quantity}">
+											        <a href="#" onclick="removeItemRow(this,'+response.id+')">
+											          <i class="bi bi-trash-fill" style="color: #ed3b7d; font-size:20px; cursor: pointer;"></i>
+											        </a>
+											      </div>
+											    </div>
+											  </div>
+											</div>
+											
+										</c:forEach>
+										
 						           		<div style="text-align: right;">
 											<i class="bi bi-plus-circle-fill me-3" style="color: #435ebe; font-size: 40px; cursor: pointer;" id="plusIcon2"></i>
 										</div>
@@ -552,7 +568,7 @@
 					},
 					success : function(response) {
 						console.log(response);
-						$('.treatment-section').append('<div class="col-3 treatmentItems mb-3 align-items-center" id="itemIconRow'+response.id+'" data-id-val="'+response.id+'"><div class="card border" style="width: 18rem;"><div class="card-body"><h5 class="card-title">'+response.itemName+'</h5> <p class="card-text">'+response.description+'</p><div class="input-group flex-nowrap mt-1 mb-1 c-dflx"><span class="input-group-text" id="addon-wrapping">Qty</span> <input type="number" class="form-control me-3" placeholder="Quantity" aria-label="Username" aria-describedby="addon-wrapping" value="1"><a href="#" onclick="removeItemRow(this,'+response.id+')"><i class="bi bi-trash-fill" style="color: #ed3b7d; font-size:20px; cursor: pointer;"></i></a></div> </div></div></div>');
+						$('.treatment-section').append('<div class="col-3 treatmentItems mb-3 align-items-center" id="itemIconRow'+response.id+'" data-id-val="'+response.id+'"><div class="card border" style="width: 18rem;"><div class="card-body"><h5 class="card-title regItem">'+response.itemName+'</h5> <p class="card-text regItem">'+response.description+'</p><div class="input-group flex-nowrap mt-1 mb-1 c-dflx"><span class="input-group-text" id="addon-wrapping">Qty</span> <input type="number" max="'+response.totalQuanitiy+'" min="0" oninput="adjustMinMax(this)" class="form-control me-3 regItem" placeholder="Quantity" aria-label="Username" aria-describedby="addon-wrapping" value="1"><a href="#" onclick="removeItemRow(this,'+response.id+')"><i class="bi bi-trash-fill" style="color: #ed3b7d; font-size:20px; cursor: pointer;"></i></a></div> </div></div></div>');
 					}
 				});
 	       	};
@@ -565,6 +581,17 @@
 			
 		}
 		
+		function adjustMinMax(row){
+			    var max = parseInt($(row).attr('max'));
+		        var min = parseInt($(row).attr('min'));
+		        var value = parseInt($(row).val());
+
+		        if (value > max) {
+		            $(row).val(max);
+		        } else if (value < min) {
+		            $(row).val(min);
+		        }
+		}
 		
 		var inputElement = document.getElementById('poSearchValue');
 	    inputElement.addEventListener('keydown', function(event) {
@@ -643,10 +670,11 @@
 	    	var invvcounter=0;
 	    	var customActive = 0;
 	    	
+	    	
 			$('.regService').each(function() {
 	    		var value = $(this).val();
-	    	    console.log(value);
-	    	    console.log(invvcnt);
+	    	    //console.log(value);
+	    	   // console.log(invvcnt);
 	    	    if(invvcnt==0){
 	    	    	invv.dept = value;
 	    	    }
@@ -665,7 +693,7 @@
 	    	    	} else {
 	    	    		invv.customService = '';
 	    	    		invv.result = value;
-	    	    	    console.log(invv);
+	    	    	    //console.log(invv);
 	    	    		invs[invvcounter]=invv;
 		    	    	invvcounter++;
 		    	    	invv={};
@@ -675,7 +703,7 @@
 	    	    }
 	    	    if(invvcnt==4){
 	    	    	invv.result = value;
-		    	    console.log(invv);
+		    	    //console.log(invv);
 	    	    	invs[invvcounter]=invv;
 	    	    	invvcounter++;
 	    	    	invv={};
@@ -690,7 +718,7 @@
 	    	    }
 	    	   
 	   	    });
-			console.log(invs);
+			//console.log(invs);
 			
 			var invs2={}; 
 	    	var invv2={};
@@ -701,8 +729,8 @@
 	    		var result = $(this).val();
 	    		var idValue = $(this).attr('data-id');
 	    		
-	    	    console.log(result);
-	    	    console.log(idValue);
+	    	    //console.log(result);
+	    	    //console.log(idValue);
 	    	    
 	    	    invv2.id = idValue;
 	    	    invv2.result = result;
@@ -711,14 +739,42 @@
 	    	    invvcounter2++;
 	   	    });
 			
-	    	 console.log(invs2);
+	    	 //console.log(invs2);
+	    	 
+    	 	var invs3={}; 
+	    	var invv3={};
+	    	var invvcnt3=0;
+	    	var invvcounter3=0;
+	    	
+	    	//treatmentItems 
+	    	$('.treatmentItems').each(function() {
+	    		var id = $(this).attr('data-id-val');
+	    		console.log(id + " IDD");
+	    		
+	    		var firstChild = $(this).children().eq(0);
+	    		var secondChild = firstChild.children().eq(0);
+	    		var thirdChild = secondChild.children().eq(2);
+	    		var finalChild = thirdChild.children().eq(1);
+	    		var quantity = finalChild.val();
+	    		
+	    		
+	    		invv3.itemId = id;
+	    		invv3.itemQuantity = quantity;
+	    		invs3[invvcounter3]=invv3;
+    	    	invvcounter3++;
+    	    	invv3={};
+	    	   
+	   	    });
+	    	
+			console.log(invs3); 	
+			
 	    	 
 			var json = JSON.stringify(invs);
 			var jsonResult = JSON.stringify(invs2);
+			var jsonTreatment = JSON.stringify(invs3);
 			var cheifComplaint = $('#chiefComplaint').val();
 			var pastMedicalHistory = $('#medicalHistory').val();
 			var presentStatus = $('#presentStatus').val();
-			var treatment = $('#treatment').val();
 			var prescription = $('#prescription').val();
 			var medicalHistoryId = ${id};
 			var scheduledHour = "";
@@ -737,12 +793,12 @@
 				data: {
 					json:json,
 					jsonResult:jsonResult,
+					jsonTreatment:jsonTreatment,
 					scheduledHour:scheduledHour,
 					medicalHistoryId:medicalHistoryId,
 					cheifComplaint:cheifComplaint,
 					pastMedicalHistory:pastMedicalHistory,
 					presentStatus:presentStatus,
-					treatment:treatment,
 					prescription:prescription
 				},
 				success : function(response) {

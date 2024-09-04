@@ -21,6 +21,7 @@ public interface MedicalService {
 	void save(MedicSales sales);
 	void save(SalesReciet reciet);
 	void save(DateTimeSchedule dateTimeSchedule);
+	void save(TreatmentData treatmentData);
 	void save(ExaminationDocuments docs);
 	
 //	void deleteMedicInstitute(Integer instituteId);
@@ -29,7 +30,6 @@ public interface MedicalService {
 	void deleteMedicItem(Integer itemId);
 	void deleteMedicService(Integer medicServiceId);
 	void deleteExaminationDocs(Integer docId);
-
 
 
 	MedicalInstitute findbyIdInstitute(Integer instituteId); 
@@ -44,6 +44,7 @@ public interface MedicalService {
 	MedicSales findbyIdMedicSales(Integer medicSalesId);
 	SalesReciet findbyIdSalesReciet(Integer recietId);
 	DateTimeSchedule findbyIdDateTimeSchedule(Integer scheduleId);
+	TreatmentData findbyIdTreatmentData(Integer treatmentId);
 	ExaminationDocuments findbyIdExamDocs(Integer docId);
 	
 	//Pagination section
@@ -51,7 +52,8 @@ public interface MedicalService {
 	List<MedicService> getServiceList(Integer page, String value, String dept, String byType, String orderBy);	
 	List<DateTimeSchedule> getDateTimeSchedule(Date startDate, Date endDate, Integer doctorId, Integer isFreeSlot);	
 	List<ExaminationData> getAllExaminationByHistory(Integer medicalHistoryId);	
-	List<PatientMedicalHistory> getMedicalHistoryByPatient(Integer patientId);
+	List<PatientMedicalHistory> getMedicalHistoryByPatient(Integer patientId);	
+	List<TreatmentData> getTreatmentByMedicalHistoryId(Integer medicalHistoryId);
 	List<ExaminationDocuments> getDocsByExaminationId(Integer examinationId);
 
 	List<Department> allDepartment();	
@@ -61,6 +63,7 @@ public interface MedicalService {
 	List<MedicItem> allItems();
 	List<PatientData> getSex();
 	List<PatientData> getAges();
+
 
 	List<PatientMedicalHistory> getDepartmentDataForChart();
 	PatientData checkByPhonePatient(String phoneNumber);

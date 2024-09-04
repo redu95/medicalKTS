@@ -245,6 +245,7 @@ public class PatientController {
 	public String editMedicalRecordHistory() throws Exception {
 		JSONObject jooo = new JSONObject(request.getParameter("json"));
 		JSONObject joooResult = new JSONObject(request.getParameter("jsonResult"));
+		JSONObject jsonTreatment = new JSONObject(request.getParameter("jsonTreatment"));
 		String medicalHistoryIdStr = request.getParameter("medicalHistoryId");
 		
 		String scheduledHour = request.getParameter("scheduledHour");
@@ -254,7 +255,7 @@ public class PatientController {
 		String presentStatus = request.getParameter("presentStatus");
 		String treatment = request.getParameter("treatment");
 		String prescription = request.getParameter("prescription");
-		
+		 
 		
 		Integer medicalHistoryId = Integer.parseInt(medicalHistoryIdStr);
 		if(scheduledHour==null) {
@@ -354,6 +355,7 @@ public class PatientController {
 		
 		Integer lng=jooo.length();
 		Integer lng2=joooResult.length();
+		Integer lng3=jsonTreatment.length();
 		
 		Calendar cal1 = Calendar.getInstance();
 		cal1.set(Calendar.HOUR_OF_DAY, 0);
@@ -399,6 +401,7 @@ public class PatientController {
 			}
 		}	
 		
+		
 		for (int i = 0; i < lng2; i++) {
 			String Key=String.valueOf(i);
 			JSONObject joooo=joooResult.getJSONObject(Key);
@@ -415,6 +418,36 @@ public class PatientController {
 			medicalService.save(examination);
 			
 		}
+		
+		
+		for (int i = 0; i < lng3; i++) {
+			String Key=String.valueOf(i);
+			JSONObject joooo=jsonTreatment.getJSONObject(Key);
+			
+			Integer quantity=joooo.getInt("itemQuantity");
+			Integer id=joooo.getInt("itemId");
+			
+			System.out.println("Item Id is " + id);
+			System.out.println("Exam Id is " + quantity);
+			
+			Date date = new Date();
+			MedicItem item = medicalService.findbyIdMedicItem(id);
+			Integer dbOnHand = item.getOnHand();
+			Integer finalQuantity = dbOnHand - quantity;
+			item.setOnHand(finalQuantity);
+			medicalService.save(item);
+			
+			TreatmentData treatmentData = new TreatmentData();
+			treatmentData.setEventDate(date);
+			treatmentData.setQuantity(quantity);
+			treatmentData.setPatientMedicalHistory(medicalHistory);
+			treatmentData.setMedicItem(item);
+			medicalService.save(treatmentData);
+			
+		}
+		
+		
+		
 		
 		
 		return "success";

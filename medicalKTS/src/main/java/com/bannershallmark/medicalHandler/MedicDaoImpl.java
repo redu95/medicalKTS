@@ -92,6 +92,12 @@ public class MedicDaoImpl implements MedicDao  {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(dateTimeSchedule);
 	}
+	
+	@Override
+	public void save(TreatmentData treatmentData) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(treatmentData);
+	}
 
 	public void save(ExaminationDocuments examinationDocuments) {
 		Session session = sessionFactory.getCurrentSession();
@@ -131,6 +137,8 @@ public class MedicDaoImpl implements MedicDao  {
 		document.setIsActive(0);
 		session.saveOrUpdate(document);
 	}
+	
+	
 	
 	//Find by id institute
 	@Override
@@ -215,6 +223,13 @@ public class MedicDaoImpl implements MedicDao  {
 		Session session = sessionFactory.getCurrentSession();
 		DateTimeSchedule dateTimeSchedule= session.get(DateTimeSchedule.class, scheduleId);
 		return dateTimeSchedule;
+	}
+	
+	@Override
+	public TreatmentData findbyIdTreatmentData(Integer treatmentId) {
+		Session session = sessionFactory.getCurrentSession();
+		TreatmentData treatmentData= session.get(TreatmentData.class, treatmentId);
+		return treatmentData;
 	}
 
 	@Override
@@ -394,7 +409,15 @@ public class MedicDaoImpl implements MedicDao  {
 	 	 Query<ExaminationData> query=session.createQuery("from ExaminationData where patientMedicalHistory.id=:medicalHistoryId", ExaminationData.class);
 	 	 query.setParameter("medicalHistoryId", medicalHistoryId);
 		 return query.getResultList();
-		
+	}
+
+	@Override
+	public List<ExaminationDocuments> getDocsByExaminationId(Integer examinationId) {
+		Session session = sessionFactory.getCurrentSession();
+		Query<ExaminationDocuments> query=session.createQuery("from ExaminationDocuments where examinationId=:examinationId", ExaminationDocuments.class);
+		query.setParameter("examinationId", examinationId);
+		return query.getResultList();
+
 	}
 	
 	@Override
@@ -405,14 +428,14 @@ public class MedicDaoImpl implements MedicDao  {
 		 return query.getResultList();
 		
 	}
-
+	
 	@Override
-	public List<ExaminationDocuments> getDocsByExaminationId(Integer examinationId) {
-		Session session = sessionFactory.getCurrentSession();
-		Query<ExaminationDocuments> query=session.createQuery("from ExaminationDocuments where examinationId=:examinationId", ExaminationDocuments.class);
-		query.setParameter("examinationId", examinationId);
-		return query.getResultList();
-
+	public List<TreatmentData> getTreatmentByMedicalHistoryId(Integer medicHistoryId) {
+		 Session session = sessionFactory.getCurrentSession();
+	 	 Query<TreatmentData> query=session.createQuery("from TreatmentData where patientMedicalHistory.id=:medicHistoryId", TreatmentData.class);
+	 	 query.setParameter("medicHistoryId", medicHistoryId);
+		 return query.getResultList();
+		
 	}
 	
 	@Override

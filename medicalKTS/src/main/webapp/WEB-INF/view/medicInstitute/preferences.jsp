@@ -19,9 +19,10 @@
             <div class="text-primary col-sm-6 text-end">Appointment duration</div>
             <div class="col-sm-6 d-flex" >
                 <select class="input original-value" name="appointmentDuration" style="width: 30%; height: 30px">
+                    <option value="10" ${userPreferences[0].preferenceValue == 10 ? 'selected' : ''}>10</option>
                     <option value="15" ${userPreferences[0].preferenceValue == 15 ? 'selected' : ''}>15</option>
+                    <option value="20" ${userPreferences[0].preferenceValue == 20 ? 'selected' : ''}>20</option>
                     <option value="30" ${userPreferences[0].preferenceValue == 30 ? 'selected' : ''}>30</option>
-                    <option value="45" ${userPreferences[0].preferenceValue == 45 ? 'selected' : ''}>45</option>
                 </select>
             </div>
 

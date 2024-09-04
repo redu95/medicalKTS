@@ -20,16 +20,16 @@ public interface MedicDao{
 	void save(MedicSales sales);
 	void save(SalesReciet reciet);
 	void save(DateTimeSchedule dateTimeSchedule);
+	void save(TreatmentData treatmentData);
 	void save(ExaminationDocuments docs);
 
-	
+
 //	void deleteMedicInstitute(Integer instituteId);
 //	void deletePatient(Integer patientId);
 	void deleteDepartment(Integer departmentId);
 	void deleteMedicItem(Integer itemId);
 	void deleteMedicService(Integer medicServiceId);
 	void deleteExaminationDocs(Integer docId);
-
 
 	MedicalInstitute findbyIdInstitute(Integer instituteId); 
 	PatientData findbyIdPatient(Integer patientId); 
@@ -43,15 +43,19 @@ public interface MedicDao{
 	MedicSales findbyIdMedicSales(Integer medicSalesId);
 	SalesReciet findbyIdSalesReciet(Integer recietId);
 	DateTimeSchedule findbyIdDateTimeSchedule(Integer scheduleId);
+	TreatmentData findbyIdTreatmentData(Integer treatmentId);
 	ExaminationDocuments findbyIdExamDocs(Integer docId);
+
 	
 	//Pagination section
 	List<PatientMedicalHistory> getAppointmentList(Integer page, Date startDate, Date endDate, String value, String status, String assignedTo, String orderBy, String isLabratory, String isReception);	
 	List<MedicService> getServiceList(Integer page, String value, String dept, String byType, String orderBy);	
 	List<DateTimeSchedule> getDateTimeSchedule(Date startDate, Date endDate, Integer doctorId, Integer isFreeSlot);	
 	List<ExaminationData> getAllExaminationByHistory(Integer medicalHistoryId);	
-	List<PatientMedicalHistory> getMedicalHistoryByPatient(Integer patientId);
+	List<PatientMedicalHistory> getMedicalHistoryByPatient(Integer patientId);	
+	List<TreatmentData> getTreatmentByMedicalHistoryId(Integer medicalHistoryId);
 	List<ExaminationDocuments> getDocsByExaminationId(Integer examinationId);
+
 	
 	List<Department> allDepartment();	
 	List<Department> allDepartmentByOrder(Integer page, String searchValue, String orderBy);
