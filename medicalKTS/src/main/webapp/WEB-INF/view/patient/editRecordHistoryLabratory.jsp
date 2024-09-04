@@ -50,7 +50,7 @@
 		   font-weight: 100;
 		   font-style: italic;
 		}
-    </style>
+</style>
 </head>
 
 
@@ -149,40 +149,50 @@
 								<div class="col-12">
 									<h5>Examination section</h5>
 									<c:forEach items="${examinationData}" var="examinationData">
-									<div class="row mb-3" class="examBox">
-										<div class="col-4">
-											<fieldset class="form-group">
-												<label for="examination1" class="form-label" style="font-weight: bold;">Department: </label>
-												<select class="form-select dropdown-group" name="examination1" disabled="disabled">
-													<option value="1">${examinationData.medicService.departmentName}</option>
-												</select>
-											</fieldset>
-											<fieldset class="form-group">
-												<label for="examination2" class="form-label" style="font-weight: bold;">Examination: </label>
-												<select class="form-select dropdown-group" name="examination2" disabled="disabled">
-													<option value="0">${examinationData.examination}</option>
-												</select>
-											</fieldset>
-											<div class="form-group ms-1">
-												<div class="form-check">
-													<div class="checkbox">
-														<input type="checkbox" name="examCheckbox1" class="form-check-input" data-initial-value="0" disabled="disabled" onclick="toggleExamSelector(this)" >Custom Examination
+										<div class="row mb-3 examBox">
+											<div class="col-4">
+												<!-- Department Select Box -->
+												<fieldset class="form-group">
+													<label for="examination1" class="form-label" style="font-weight: bold;">Department:</label>
+													<select class="form-select dropdown-group regService" name="examination1" disabled="disabled">
+														<option value="1">${examinationData.medicService.departmentName}</option>
+													</select>
+												</fieldset>
+												<!-- Examination Select Box -->
+												<fieldset class="form-group">
+													<label for="examination2" class="form-label" style="font-weight: bold;">Examination:</label>
+													<select class="form-select dropdown-group regService" name="examination2" disabled="disabled">
+														<option value="0">${examinationData.examination}</option>
+													</select>
+												</fieldset>
+												<!-- Custom Examination Checkbox -->
+												<div class="form-group ms-1">
+													<div class="form-check">
+														<div class="checkbox">
+															<input type="checkbox" name="examCheckbox1" class="form-check-input regService" data-initial-value="0" disabled="disabled" onclick="toggleExamSelector(this)">
+															Custom Examination
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-										<div class="col-8">
-											<span style="font-weight: bold;">Result: </span>
-											<div class="c-dflx me-3">
-												<textarea name="result1" class="form-control resultService" placeholder="Result from examination" data-id="${examinationData.id}" style="border-right:none;">${examinationData.result}</textarea>
+											<div class="col-8">
+												<!-- Result Textarea -->
+												<span style="font-weight: bold;">Result:</span>
+												<div class="c-dflx me-3">
+													<textarea name="result1" class="form-control resultService regService" placeholder="Result from examination" data-id="${examinationData.id}" style="border-right:none;">${examinationData.result}</textarea>
+												</div>
+												<!-- File Input -->
+												<div class="form-group mt-3 w-50">
+													<label for="fileInput${examinationData.id}" class="form-label" style="font-weight: bold;">Upload Document (Optional):</label>
+													<input type="file" class="form-control fileInput regService" id="fileInput${examinationData.id}" multiple name="fileInput${examinationData.id}" data-id="${examinationData.id}">
+												</div>
 											</div>
 										</div>
-									</div>
 									</c:forEach>
-									
-							        
-						        </div>
-						        <hr>
+
+								</div>
+
+								<hr>
 						        <div class="col-12">
 						            <div class="mb-2">
 						                <span style="font-weight: bold;">Treatment: </span>
@@ -215,14 +225,13 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
 	<script>
-	
 		$(document).ready(function(){
 			$('.datetimepick').hide();
 			$('.dateTimeOnly').hide();
 			$('.dropdown-group').select2({
 		    });
 		});
-		
+
 		function showVal(x) {
 			var dateVal = $('#startDate').val();
 			var isFreeSlot = "0";
@@ -250,9 +259,9 @@
 					$('.flexDaysDisplay').append(dateStr);
 				}
 			});
-			
+
 		}
-		
+
 		function checkHere(x){
 			$('.weekDays').each(function() {
 				if ($(this).hasClass('weekDayActive')) {
@@ -260,8 +269,8 @@
 				    $(this).attr('data-initial-value','0');
 				}
 			});
-	   	    
-			
+
+
 			$(x).toggleClass('weekDayActive');
 			var checkVal = $(x).attr('data-initial-value');
 			if(checkVal=="0"){
@@ -271,7 +280,7 @@
 			}
 			$(x).attr('data-initial-value',checkVal);
 		}
-		
+
 		$('.weekDays').on('click',function(){
 			alert('Here');
 			$(this).toggleClass('weekDayActive');
@@ -283,149 +292,153 @@
 			}
 			$(this).attr('data-initial-value',checkVal);
 		})
-		
+
+
+
 		function saveForm() {
-			event.preventDefault();
-			document.getElementById("saveData").disabled = true;
-			var invs={}; 
-	    	var invv={};
-	    	var invvcnt=0;
-	    	var invvcounter=0;
-	    	var customActive = 0;
-	    	
-			$('.regService').each(function() {
-	    		var value = $(this).val();
-	    	    console.log(value);
-	    	    console.log(invvcnt);
-	    	    if(invvcnt==0){
-	    	    	invv.dept = value;
-	    	    }
-	    	    if(invvcnt==1){
-	    	    	invv.service = value;
-	    	    }
-	    	    if(invvcnt==2){
-	    	    	var checkVal = $(this).attr('data-initial-value');
-	    	    	if(checkVal=='1'){
-	    	    		customActive=1
-	    	    	} 
-	    	    }
-	    	    if(invvcnt==3){
-	    	    	if(customActive==1){
-	    	    		invv.customService = value;
-	    	    	} else {
-	    	    		invv.customService = '';
-	    	    		invv.result = value;
-	    	    	    console.log(invv);
-	    	    		invs[invvcounter]=invv;
-		    	    	invvcounter++;
-		    	    	invv={};
-		    	    	invvcnt=9;
-		    	    	customActive=0
-	    	    	}
-	    	    }
-	    	    if(invvcnt==4){
-	    	    	invv.result = value;
-		    	    console.log(invv);
-	    	    	invs[invvcounter]=invv;
-	    	    	invvcounter++;
-	    	    	invv={};
-	    	    	invvcnt=9;
-	    	    	customActive=0
-	    	    }
-	    	   
-	    	    if(invvcnt==9){
-	    	    	invvcnt=0;
-	    	    } else {
-	    	    	invvcnt++;
-	    	    }
-	    	   
-	   	    });
-			console.log(invs);
-			
-			var invs2={}; 
-	    	var invv2={};
-	    	var invvcnt2=0;
-	    	var invvcounter2=0;
-	    	
-	    	$('.resultService').each(function() {
-	    		var result = $(this).val();
-	    		var idValue = $(this).attr('data-id');
-	    		
-	    	    console.log(result);
-	    	    console.log(idValue);
-	    	    
-	    	    invv2.id = idValue;
-	    	    invv2.result = result;
-	    	    invs2[invvcounter2]=invv2;
-	    	    invv2={};
-	    	    invvcounter2++;
-	   	    });
-			
-	    	 console.log(invs2);
-	    	 
-			var json = JSON.stringify(invs);
-			var jsonResult = JSON.stringify(invs2);
-			var cheifComplaint = $('#chiefComplaint').val();
-			var pastMedicalHistory = $('#medicalHistory').val();
-			var presentStatus = $('#presentStatus').val();
-			var treatment = $('#treatment').val();
-			var prescription = $('#prescription').val();
-			var medicalHistoryId = ${id};
-			var scheduledHour = "";
-			
-			
-			$('.weekDays').each(function() {
-				if($(this).attr('data-initial-value')=='1'){
-					scheduledHour += $(this).attr('data-id')
-				}
-	   	    });
-			
-			$('.eror-msg').hide();
-			$.ajax({
-				type: "POST",
-				url: '${pageContext.request.contextPath}/Patient/editMedicalRecordHistory',
-				data: {
-					json:json,
-					jsonResult:jsonResult,
-					scheduledHour:scheduledHour,
-					medicalHistoryId:medicalHistoryId,
-					cheifComplaint:cheifComplaint,
-					pastMedicalHistory:pastMedicalHistory,
-					presentStatus:presentStatus,
-					treatment:treatment,
-					prescription:prescription
-				},
-				success : function(response) {
-					if(response=='success'){
-						window.scrollTo({ top: 0, behavior: 'smooth' });
-					   	$('#msgBoxBg').removeClass("error-msg");
-					   	$('#msgBoxBg').addClass("success-msg");
-						$('#msgBox').text('Data entered successfully');
-						$('.eror-msg').show();
+			try {
+
+				event.preventDefault();
+
+				// Loop through each file input with class 'fileInput'
+				var formData = new FormData();
+				$('.fileInput').each(function() {
+					var fileInput = $(this)[0]; // Get the actual DOM element
+                    var ids = $(this).attr('data-id').split(',');
+                    console.log('ids', ids)// Extract ID from the element's ID
+
+
+                    if (fileInput && fileInput.files.length > 0) {
+                        // Loop through each file selected in the input
+                        for (var i = 0; i < fileInput.files.length; i++) {
+                            var file = fileInput.files[i];
+
+                            // Loop through each ID associated with this file input
+                            ids.forEach(function(id) {
+                                console.log('Appending file: ', file.name, ' with ID: ', id);
+
+                                // Create an object with ID and file name
+                                var fileData = {
+                                    id: id,
+                                    fileName: file.name
+                                };
+
+                                // Append the ID and file name as a JSON string
+                                formData.append('documents', JSON.stringify(fileData));
+
+                                // Append the actual file
+                                formData.append('files', file);
+                            });
+                        }
+                    } else {
+                        console.log('No file selected for IDs: ', ids.join(', '));
+                    }
+				});
+
+
+
+				// console.log("Form data is");
+				// console.log(formData);
+				// for (let pair of formData.entries()) {
+				// 	console.log(pair[0]+ ': ' + pair[1]);
+				// }
+				// console.log("Form data ///////");
+				document.getElementById("saveData").disabled = true;
+				var invs = {};
+				var invv = {};
+				var invvcnt = 0;
+				var invvcounter = 0;
+				var customActive = 0;
+
+
+				var invs2 = {};
+				var invv2 = {};
+				var invvcnt2 = 0;
+				var invvcounter2 = 0;
+
+                $('.resultService').each(function() {
+                    var result = $(this).val(); // Get the value of the textarea
+                    var idValue = $(this).attr('data-id'); // Get the ID from the data-id attribute
+
+                    // Create an object with ID and result value
+                    var resultData = {
+                        id: idValue,
+                        result: result
+                    };
+
+                    // Append the result data as a JSON string
+                    formData.append('results', JSON.stringify(resultData));
+                });
+
+
+                var json = JSON.stringify(invs);
+				var jsonResult = JSON.stringify(invs2);
+				var medicalHistoryId = ${id};
+				var scheduledHour = "";
+
+				$('.weekDays').each(function() {
+					if ($(this).attr('data-initial-value') == '1') {
+						scheduledHour += $(this).attr('data-id');
+					}
+				});
+
+                // Collect other parameters
+                formData.append('scheduledHour', $('#scheduledHour').val());
+                formData.append('cheifComplaint', $('#cheifComplaint').val());
+                formData.append('pastMedicalHistory', $('#pastMedicalHistory').val());
+                formData.append('presentStatus', $('#presentStatus').val());
+                formData.append('treatment', $('#treatment').val());
+                formData.append('prescription', $('#prescription').val());
+
+				formData.append('json', json);
+				formData.append('jsonResult', jsonResult);
+				formData.append('medicalHistoryId', medicalHistoryId);
+
+				// for (let pair of formData.entries()) {
+				// 	console.log(pair[0]+ ': ' + pair[1]);
+				// }
+
+
+
+				$('.eror-msg').hide();
+				$.ajax({
+					type: "POST",
+					url: '${pageContext.request.contextPath}/Patient/editMedicalRecordHistoryLab',
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function(response) {
+						if (response == 'success') {
+							window.scrollTo({ top: 0, behavior: 'smooth' });
+							$('#msgBoxBg').removeClass("error-msg");
+							$('#msgBoxBg').addClass("success-msg");
+							$('#msgBox').text('Data entered successfully');
+							console.log('success')
+						} else {
+							window.scrollTo({ top: 0, behavior: 'smooth' });
+							$('#msgBoxBg').removeClass("success-msg");
+							$('#msgBoxBg').addClass("error-msg");
+							$('#msgBox').text(response);
+							$('.eror-msg').show();
+						}
 						document.getElementById("saveData").disabled = false;
-					} else {
-						window.scrollTo({ top: 0, behavior: 'smooth' });
-					   	$('#msgBoxBg').removeClass("success-msg");
-					   	$('#msgBoxBg').addClass("error-msg");
-						$('#msgBox').text(response);
-						$('.eror-msg').show();
+					},
+					error: function(response) {
+						console.log('++++ error', response);
 						document.getElementById("saveData").disabled = false;
 					}
-				}
-			});
+				});
+			} catch (e) {
+				console.log('e', e);
+			}
 		}
-		
+
+
 		function toggleDateTime() {
 			$('.datetimepick').toggle();
 		}
-	
-		$('#plusIcon').on('click', function(){
-			$('#plusIcon').parent().before('<div class="row mb-3"><div class="col-4"><fieldset class="form-group"><label for="examination1" class="form-label" style="font-weight: bold;">Department: </label><select class="form-select dropdown-group regService" name="examination1"><c:forEach items="${allDepartments}" var="allDepartments"><option value="${allDepartments.departmentName}">${allDepartments.departmentName}</form:option></c:forEach></select></fieldset><fieldset class="form-group"><label for="examination2" class="form-label" style="font-weight: bold;">Examination: </label><select class="form-select dropdown-group regService" name="examination2"><c:forEach items="${allServices}" var="allServices"><option value="${allServices.id}">${allServices.serviceName}</form:option></c:forEach></select></fieldset><div class="form-group ms-1"><div class="form-check"><div class="checkbox"><input type="checkbox" name="examCheckbox1" class="form-check-input regService" data-initial-value="0" onclick="toggleExamSelector(this)" >Custom Examination</div></div></div></div><div class="col-8"><span style="font-weight: bold;">Result: </span><div class="c-dflx me-3"><textarea name="result1" class="form-control regService" placeholder="Result from examination" style="border-right:none;"></textarea><i class="bi bi-trash-fill ms-5" style="color: #ed3b7d; font-size:20px; cursor: pointer;" onclick="deleteExam(this)"></i></div></div></div>');
-			$('.dropdown-group').select2({
-		    });
-		});
-		
-		
+
+
 		function toggleExamSelector(x){
 			var initialDataVal = $(x).attr("data-initial-value");
 			var fieldSelector = $(x).parent().parent().parent().prev();
@@ -440,11 +453,11 @@
 				$(x).parent().parent().children().last().remove();
 			}
 		}
-		
+
 		function deleteExam(x){
 			$(x).parent().parent().parent().remove();
 		}
-		
+
 	</script>
 
 </body>

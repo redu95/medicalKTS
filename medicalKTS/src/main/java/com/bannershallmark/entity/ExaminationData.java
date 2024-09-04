@@ -29,14 +29,14 @@ public class ExaminationData {
 	private String extraNote;
 	private Integer patientId;
 	private Integer paymentStatus;
-	
+
 	public ExaminationData() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public ExaminationData(PatientMedicalHistory patientMedicalHistory, MedicService medicService, Date eventDate, String examination,
-			String result, String extraNote, Integer patientId, Integer paymentStatus) {
+						   String result, String extraNote, Integer patientId, Integer paymentStatus) {
 		super();
 		this.patientMedicalHistory = patientMedicalHistory;
 		this.medicService = medicService;

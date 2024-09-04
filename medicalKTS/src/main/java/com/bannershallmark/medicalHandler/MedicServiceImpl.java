@@ -4,6 +4,7 @@ package com.bannershallmark.medicalHandler;
 import java.util.Date;
 import java.util.List;
 
+import com.bannershallmark.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,7 +101,7 @@ public class MedicServiceImpl implements MedicalService {
 		// TODO Auto-generated method stub
 		medicDao.save(sales);		
 	}
-	
+
 	@Override
 	@Transactional
 	public void save(SalesReciet reciet) {
@@ -121,6 +122,16 @@ public class MedicServiceImpl implements MedicalService {
 		// TODO Auto-generated method stub
 		medicDao.save(treatmentData);		
 	}
+
+	@Override
+	@Transactional
+	public void save(ExaminationDocuments examinationDocuments) {
+		// TODO Auto-generated method stub
+		medicDao.save(examinationDocuments);
+	}
+
+
+
 //	@Override
 //	@Transactional
 //	public void deleteMedicInstitute(Integer instituteId) {
@@ -155,7 +166,13 @@ public class MedicServiceImpl implements MedicalService {
 		// TODO Auto-generated method stub
 		medicDao.deleteMedicService(medicServiceId);		
 	}
-	
+
+	@Override
+	@Transactional
+	public void deleteExaminationDocs(Integer docId) {
+		// TODO Auto-generated method stub
+		medicDao.deleteExaminationDocs(docId);
+	}
 	
 	@Override
 	@Transactional
@@ -241,6 +258,20 @@ public class MedicServiceImpl implements MedicalService {
 		// TODO Auto-generated method stub
 		return medicDao.findbyIdDateTimeSchedule(scheduleId);		
 	}
+
+	@Override
+	@Transactional
+	public ExaminationDocuments findbyIdExamDocs(Integer docId) {
+		// TODO Auto-generated method stub
+		return medicDao.findbyIdExamDocs(docId);
+	}
+	
+	@Override
+	@Transactional
+	public TreatmentData findbyIdTreatmentData(Integer treatmentId) {
+		// TODO Auto-generated method stub
+		return medicDao.findbyIdTreatmentData(treatmentId);		
+	}
 	
 	@Override
 	@Transactional
@@ -276,7 +307,7 @@ public class MedicServiceImpl implements MedicalService {
 		// TODO Auto-generated method stub
 		return medicDao.getAllExaminationByHistory(medicalHistoryid);		
 	}
-	
+
 	@Override
 	@Transactional
 	public List<PatientMedicalHistory> getMedicalHistoryByPatient(Integer patientId) {
@@ -290,7 +321,14 @@ public class MedicServiceImpl implements MedicalService {
 		// TODO Auto-generated method stub
 		return medicDao.getTreatmentByMedicalHistoryId(medicalHistoryId);		
 	}
-	
+
+	@Override
+	@Transactional
+	public List<ExaminationDocuments> getDocsByExaminationId(Integer examinationId) {
+		// TODO Auto-generated method stub
+		return medicDao.getDocsByExaminationId(examinationId);
+	}
+
 	@Override
 	@Transactional
 	public PatientData checkByPhonePatient(String phone) {

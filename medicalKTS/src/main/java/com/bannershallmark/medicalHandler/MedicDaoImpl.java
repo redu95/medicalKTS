@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.bannershallmark.entity.*;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.bannershallmark.entity.DateTimeSchedule;
 import com.bannershallmark.entity.Department;
 import com.bannershallmark.entity.ExaminationData;
@@ -28,6 +28,7 @@ import com.bannershallmark.entity.QueueData;
 import com.bannershallmark.entity.SalesReciet;
 import com.bannershallmark.entity.TreatmentData;
 import com.bannershallmark.entity.Users;
+
 
 @Repository
 public class MedicDaoImpl implements MedicDao  {
@@ -112,6 +113,12 @@ public class MedicDaoImpl implements MedicDao  {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(treatmentData);
 	}
+
+	public void save(ExaminationDocuments examinationDocuments) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(examinationDocuments);
+	}
+
 	
 	
 	//Delete Section
@@ -137,6 +144,14 @@ public class MedicDaoImpl implements MedicDao  {
 		MedicItem item= session.get(MedicItem.class, itemId);
 		item.setIsActive(0);
 		session.saveOrUpdate(item);
+	}
+
+	@Override
+	public void deleteExaminationDocs(Integer docId) {
+		Session session = sessionFactory.getCurrentSession();
+		ExaminationDocuments document= session.get(ExaminationDocuments.class, docId);
+		document.setIsActive(0);
+		session.saveOrUpdate(document);
 	}
 	
 	
@@ -232,6 +247,14 @@ public class MedicDaoImpl implements MedicDao  {
 		TreatmentData treatmentData= session.get(TreatmentData.class, treatmentId);
 		return treatmentData;
 	}
+
+	@Override
+	public ExaminationDocuments findbyIdExamDocs(Integer docId) {
+		Session session = sessionFactory.getCurrentSession();
+		ExaminationDocuments exmaDoc= session.get(ExaminationDocuments.class, docId);
+		return exmaDoc;
+	}
+
 	
 	@Override
 	public List<PatientMedicalHistory> getAppointmentList(Integer page, Date startDate, Date endDate, String value, String presentStatus, String assignedTo, String orderBy, String isLabratory, String isReception) {
@@ -403,7 +426,15 @@ public class MedicDaoImpl implements MedicDao  {
 	 	 Query<ExaminationData> query=session.createQuery("from ExaminationData where patientMedicalHistory.id=:medicalHistoryId", ExaminationData.class);
 	 	 query.setParameter("medicalHistoryId", medicalHistoryId);
 		 return query.getResultList();
-		
+	}
+
+	@Override
+	public List<ExaminationDocuments> getDocsByExaminationId(Integer examinationId) {
+		Session session = sessionFactory.getCurrentSession();
+		Query<ExaminationDocuments> query=session.createQuery("from ExaminationDocuments where examinationId=:examinationId", ExaminationDocuments.class);
+		query.setParameter("examinationId", examinationId);
+		return query.getResultList();
+
 	}
 	
 	@Override

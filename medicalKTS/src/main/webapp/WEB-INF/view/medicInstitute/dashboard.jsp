@@ -240,225 +240,67 @@
 						            </div>
 						        </div>
 					    	</div>
-					    	<!-- 
-					    	<div class="row">
-					    	
-					    	 <div class="col-12 col-sm-6" style="line-height: 1;">
-						            <div class="info-box" style="text-align: left;">
-						                <div class="d-flex justify-content-between">
-						                	<div class="title2" style="font-size: 20px; font-weight: bold;">Services</div>
-						                	<div class="title2" style="font-size: 15px; color: blue; text-decoration: underline; font-weight: bold;">See more</div>
-						                </div>
-						                <div class="row">
-						                <hr>
-										<div class="col-12">
-												<div class="top-selling c-dflx">
-													<div class="item c-dflx">
-														<div class="item-name topSaleName me-5">1.</div>
-														<div class="ms-2 me-2">
-															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
-														</div>
-														<div>
-															<div class="item-name topSaleName">Blood Test</div>
-															<div class="item-price">Children</div>
-														</div>
-														
-													</div>
-													
-													<div class="item">
-														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
-													</div>
+<%--						Here is the list of low stock items--%>
+						<div class="row mb-4">
+							<div class="col-sm-12 col-md-6">
+								<div class="card-content bg-white rounded-md">
+									<h3 class="alert-heading p-3">Low Stock Items</h3>
+									<ol class="list-group list-group-numbered rounded-0">
+										<li class="list-group-item d-flex justify-content-between align-items-start">
+											<div class="ms-2 me-auto">
+												<div class="fw-bold">Subheading</div>
+												Cras justo odio
+											</div>
+											<span class="badge bg-danger rounded-pill">1</span>
+										</li>
+										<li class="list-group-item d-flex justify-content-between align-items-start">
+											<div class="ms-2 me-auto">
+												<div class="fw-bold">Subheading</div>
+												Cras justo odio
+											</div>
+											<span class="badge bg-danger rounded-pill">6</span>
+										</li>
+										<li class="list-group-item d-flex justify-content-between align-items-start">
+											<div class="ms-2 me-auto">
+												<div class="fw-bold">Subheading</div>
+												Cras justo odio
+											</div>
+											<span class="badge bg-danger rounded-pill">9</span>
+										</li>
+									</ol>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6">
+								<div class="card-content bg-white rounded-md">
+									<h3 class="alert-heading p-3">Frequently Used Items</h3>
+									<ol class="list-group list-group-numbered rounded-0">
+										<li class="list-group-item d-flex justify-content-between align-items-start">
+											<div class="ms-2 me-auto">
+												<div class="fw-bold">Subheading</div>
+												Cras justo odio
+											</div>
+											<span class="badge bg-success rounded-pill">16</span>
+										</li>
+										<li class="list-group-item d-flex justify-content-between align-items-start">
+											<div class="ms-2 me-auto">
+												<div class="fw-bold">Subheading</div>
+												Cras justo odio
+											</div>
+											<span class="badge bg-success rounded-pill">15</span>
+										</li>
+										<li class="list-group-item d-flex justify-content-between align-items-start">
+											<div class="ms-2 me-auto">
+												<div class="fw-bold">Subheading</div>
+												Cras justo odio
+											</div>
+											<span class="badge bg-success rounded-pill">14</span>
+										</li>
+									</ol>
+								</div>
+							</div>
 
-													<div class="item">
-														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
-													</div>
+						</div>
 
-												</div>
-												<hr>
-												<div class="top-selling c-dflx">
-													<div class="item c-dflx">
-														<div class="item-name topSaleName me-5">2.</div>
-														<div class="ms-2 me-2">
-															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
-														</div>
-														<div>
-															<div class="item-name topSaleName">Blood Test</div>
-															<div class="item-price">Children</div>
-														</div>
-														
-													</div>
-													
-													<div class="item">
-														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
-													</div>
-
-													<div class="item">
-														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
-													</div>
-
-												</div>
-												<hr>
-												<div class="top-selling c-dflx">
-													<div class="item c-dflx">
-														<div class="item-name topSaleName me-5">3.</div>
-														<div class="ms-2 me-2">
-															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
-														</div>
-														<div>
-															<div class="item-name topSaleName">Blood Test</div>
-															<div class="item-price">Children</div>
-														</div>
-														
-													</div>
-													
-													<div class="item">
-														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
-													</div>
-
-													<div class="item">
-														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
-													</div>
-
-												</div>
-												<hr>
-												<div class="top-selling c-dflx" style="border-bottom: 0px;">
-													<div class="item c-dflx">
-														<div class="item-name topSaleName me-5">4.</div>
-														<div class="ms-2 me-2">
-															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
-														</div>
-														<div>
-															<div class="item-name topSaleName">Blood Test</div>
-															<div class="item-price">Children</div>
-														</div>
-														
-													</div>
-													
-													<div class="item">
-														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
-													</div>
-
-													<div class="item">
-														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
-													</div>
-
-												</div>
-										</div>
-										
-									
-
-									</div>
-						            </div>
-						        </div>
-						        <div class="col-12 col-sm-6" style="line-height: 1;">
-						            <div class="info-box" style="text-align: left;">
-						                <div class="d-flex justify-content-between">
-						                	<div class="title2" style="font-size: 20px; font-weight: bold;">Items</div>
-						                	<div class="title2" style="font-size: 13px; color: blue; text-decoration: underline; font-weight: bold;">SEE MORE</div>
-						                </div>
-						                <div class="row">
-						                <hr>
-										<div class="col-12">
-												<div class="top-selling c-dflx">
-													<div class="item c-dflx">
-														<div class="item-name topSaleName me-5">1.</div>
-														<div class="ms-2 me-2">
-															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
-														</div>
-														<div>
-															<div class="item-name topSaleName">Syringes</div>
-															<div class="item-price">Children</div>
-														</div>
-														
-													</div>
-													
-													<div class="item">
-														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
-													</div>
-
-													<div class="item">
-														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
-													</div>
-
-												</div>
-												<hr>
-												<div class="top-selling c-dflx">
-													<div class="item c-dflx">
-														<div class="item-name topSaleName me-5">2.</div>
-														<div class="ms-2 me-2">
-															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
-														</div>
-														<div>
-															<div class="item-name topSaleName">Syringes</div>
-															<div class="item-price">Children</div>
-														</div>
-														
-													</div>
-													
-													<div class="item">
-														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
-													</div>
-
-													<div class="item">
-														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
-													</div>
-
-												</div>
-												<hr>
-												<div class="top-selling c-dflx">
-													<div class="item c-dflx">
-														<div class="item-name topSaleName me-5">3.</div>
-														<div class="ms-2 me-2">
-															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
-														</div>
-														<div>
-															<div class="item-name topSaleName">Syringes</div>
-															<div class="item-price">Children</div>
-														</div>
-														
-													</div>
-													
-													<div class="item">
-														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
-													</div>
-
-													<div class="item">
-														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
-													</div>
-
-												</div>
-												<hr>
-												<div class="top-selling c-dflx" style="border-bottom: 0px;">
-													<div class="item c-dflx">
-														<div class="item-name topSaleName me-5">4.</div>
-														<div class="ms-2 me-2">
-															<i class="bi bi-file-earmark-person" style="font-size: 30px;"></i>
-														</div>
-														<div>
-															<div class="item-name topSaleName">Syringes</div>
-															<div class="item-price">Children</div>
-														</div>
-														
-													</div>
-													
-													<div class="item">
-														<div class="item-name topSaleName">2056 <span style="font-size: 13px;">Tests</span></div>
-													</div>
-
-													<div class="item">
-														<div class="item-name topSaleName">307,000 <span style="font-size: 13px;">ETB</span></div>
-													</div>
-
-												</div>
-										</div>
-										
-									
-
-									</div>
-						            </div>
-						        </div>
-						     </div>  
-					    	 -->
 						     <div class="row">
 						     	<div class="col-6">
 						     		<div class="card">
