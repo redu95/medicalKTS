@@ -437,6 +437,7 @@ public class MedicInstituteController {
 		medicService.setIsActive(1);
 		
 		medicalService.save(medicService);
+		medicService.getId();
 		return "redirect:/Institute/serviceData";
 	}
 	

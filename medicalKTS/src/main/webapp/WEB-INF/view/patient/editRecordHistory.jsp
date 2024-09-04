@@ -357,7 +357,7 @@
 					var loopLength = response.length;
 					console.log(loopLength);
 					for (var i = 0; i < loopLength; i++) {
-						$('.list-group-item-view').append('<div class="list-group-item"><input type="checkbox" class="checkboxIdGrop" id="itemId'+response[i].id+'" name="item'+response[i].id+'" value="'+response[i].id+'" onclick="handleSelection(this,'+response[i].id+')"><label for="item'+response[i].id+'">'+response[i].itemName+'</label><p class="small"><strong>On Hand:</strong>'+response[i].onHand+'<br><strong>Description:</strong> '+response[i].description+'<br></p> </div>');
+						$('.list-group-item-view').append('<div class="list-group-item"><input type="checkbox" class="checkboxIdGrop me-1" id="itemId'+response[i].id+'" name="item'+response[i].id+'" value="'+response[i].id+'" onclick="handleSelection(this,'+response[i].id+')"><label for="item'+response[i].id+'">'+response[i].itemName+'</label><div class="ms-3"><p class="small"><strong>On Hand:</strong>'+response[i].onHand+'<br><strong>Description:</strong> '+response[i].description+'<br></p></div></div>');
 					}
 					$('#p1').text(itemAjaxData.page1);
 					$('#p2').text(itemAjaxData.page2);

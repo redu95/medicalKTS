@@ -108,7 +108,8 @@
 								  -->
 							</div>
 							<div class="col-4 ig-dflx">
-								<a href="#" class="btn btn-primary" data-dismiss="modal" id="newServiceBtnOriginal" data-bs-toggle="modal" data-bs-target="#staticBackdrop">  <i class="bi bi-credit-card-2-back "></i> New Service</a>
+								<a href="${pageContext.request.contextPath}/Institute/addService" class="btn btn-primary" >  <i class="bi bi-credit-card-2-back "></i> New Service</a>
+								<!--  <a href="#" class="btn btn-primary" data-dismiss="modal" id="newServiceBtnOriginal" data-bs-toggle="modal" data-bs-target="#staticBackdrop">  <i class="bi bi-credit-card-2-back "></i> New Service</a>-->
 							</div>
 	
 						</div>
